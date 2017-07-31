@@ -3,7 +3,7 @@ class CreateShows < ActiveRecord::Migration[5.0]
     create_table :shows do |t|
       t.datetime :doors
       t.datetime :start
-      t.datetime :end
+      t.datetime :show_end
       t.belongs_to :venue
       t.timestamps
     end

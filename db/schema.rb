@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20170731181453) do
   create_table "shows", force: :cascade do |t|
     t.datetime "doors"
     t.datetime "start"
-    t.datetime "end"
+    t.datetime "show_end"
     t.integer  "venue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
