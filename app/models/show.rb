@@ -4,6 +4,10 @@ class Show < ApplicationRecord
   validates_presence_of :start
 
   def date
-    self.start.to_date
+    self.start.strftime('%A, %D')
+  end
+
+  def readable(time)
+    time.strftime('%H:%M%p')
   end
 end

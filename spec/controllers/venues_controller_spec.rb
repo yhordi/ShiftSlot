@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe VenuesController, type: :controller do
   describe '#index' do
-    before(:each) do
-    end
+
     it 'assigns the @venues variable' do
       get :index
       expect(assigns(:venues)).to be_an(ActiveRecord::Relation)

@@ -1,0 +1,40 @@
+<h1><%= @venue.name %>'s Shows</h1>
+<%= link_to 'back to venues', venues_path %>
+<table>
+  <tr>
+    <th>
+      Date
+    </th>
+    <th>
+      Doors
+    </th>
+    <th>
+      Start
+    </th>
+    <th>
+      End
+    </th>
+    <th>
+      Staffed?
+    </th>
+  </tr>
+<% @shows.each do |show| %>
+<tr>
+  <td>
+    <%= show.date %>
+  </td>
+  <td>
+    <%= show.readable(show.doors) %>
+  </td>
+  <td>
+    <%= show.readable(show.start) %>
+  </td>
+  <td>
+    <%= show.readable(show.show_end) %>
+  </td>
+  <td>
+    No
+  </td>
+</tr>
+<% end %>
+</table>

@@ -14,9 +14,16 @@ RSpec.describe Show, type: :model do
     end
   end
 
-  describe 'date' do
+  describe '#date' do
     it 'responds with just the date portion from the start field' do
-      expect(show.date).to eq(show.start.to_date)
+      expect(show.date).to eq(show.start.strftime('%A, %D'))
     end
   end
+
+  describe '#readable' do
+    it 'responds with the time formatted HH:MMam/pm' do
+      expect(show.readable(show.start)).to eq(show.start.strftime('%H:%M%p'))
+    end
+  end
+
 end
