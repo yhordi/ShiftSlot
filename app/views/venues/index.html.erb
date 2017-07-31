@@ -1,8 +1,8 @@
-<H1>ShiftSlot</H1>
+
 
 <% @venues.each do |venue| %>
   <h2>
-    <%= venue.name %>
+    <%= link_to venue.name, venue_shows_path(venue.id) %>
   </h2>
   <p>
     <%= venue.location %>

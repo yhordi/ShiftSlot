@@ -1,0 +1,24 @@
+<h2><%= @venue.name %>'s Shows</h2>
+<%= link_to 'back to venues', venues_path %>
+<table>
+  <tr>
+    <th>
+      Date
+    </th>
+    <th>
+      Doors
+    </th>
+    <th>
+      Start
+    </th>
+    <th>
+      End
+    </th>
+    <th>
+      Staffed?
+    </th>
+  </tr>
+<% @shows.each do |show| %>
+  <%= render partial: 'info', locals: {show: show} %>
+<% end %>
+</table>
