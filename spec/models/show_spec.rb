@@ -13,4 +13,10 @@ RSpec.describe Show, type: :model do
       end
     end
   end
+
+  describe 'date' do
+    it 'responds with just the date portion from the start field' do
+      expect(show.date).to eq(show.start.to_date)
+    end
+  end
 end
