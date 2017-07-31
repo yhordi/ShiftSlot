@@ -1,0 +1,25 @@
+<h2>
+  <%= @show.date %> @ <%= @show.venue.name %>:
+</h2>
+<%= link_to 'back to show list', venue_shows_path(@show.venue_id)%>
+<table>
+  <table>
+    <tr>
+      <th>
+        Date
+      </th>
+      <th>
+        Doors
+      </th>
+      <th>
+        Start
+      </th>
+      <th>
+        End
+      </th>
+      <th>
+        Staffed?
+      </th>
+    </tr>
+  <%= render partial: 'info', locals: {show: @show} %>
+</table>

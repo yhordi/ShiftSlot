@@ -4,4 +4,9 @@ class ShowsController < ApplicationController
     @shows = @venue.shows.order(:start)
     render :index
   end
+
+  def show
+    @show = Show.find(params[:id])
+    render :show
+  end
 end

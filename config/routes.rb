@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :venues, only: [:index, :show] do
     resources :shows
   end
+
   root 'venues#index'
 end
