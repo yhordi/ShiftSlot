@@ -8,6 +8,6 @@ class Show < ApplicationRecord
   end
 
   def readable(time)
-    time.strftime('%H:%M%p')
+    time.strftime('%I:%M%p')
   end
 end

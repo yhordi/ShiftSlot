@@ -22,7 +22,7 @@ RSpec.describe Show, type: :model do
 
   describe '#readable' do
     it 'responds with the time formatted HH:MMam/pm' do
-      expect(show.readable(show.start)).to eq(show.start.strftime('%H:%M%p'))
+      expect(show.readable(show.start)).to eq(show.start.strftime('%I:%M%p'))
     end
   end
 
