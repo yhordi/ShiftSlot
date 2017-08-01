@@ -12,22 +12,48 @@
 
   </head>
   <body>
-    <div class='container'>
-      <div class='row' id="top">
-        <span class='col span-11-d' id="title">ShiftSlot</span>
-        <div class='col span-1-d'>
-          <% if current_user %>
-          <%= current_user.email %>
-          <%= link_to 'Logout', destroy_user_session_path, method: 'DELETE' %>
-          <% else %>
-          <%= link_to 'Sign in', new_user_session_path %>
-          <%= link_to 'Sign up', new_user_registration_path %>
-          <% end %>
+    <div class='collapse navbar-collapse'>
+
+    </div>
+
+      <div id="top">
+        <div  class='navbar navbar-default'>
+          <span class='col navbar-brand' id="title">ShiftSlot</span>
+          <ul class="nav navbar-nav">
+              <% if current_user %>
+                <% if current_user.admin %>
+                  <li>
+                    <%= link_to 'Workers', users_path %>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to 'Venues', venues_path %>
+                </li>
+              <ul class='nav navbar-nav navbar-right'>
+                <li>
+                  <a><%= current_user.email %></a>
+                </li>
+                <li>
+                  <%= link_to 'Logout', destroy_user_session_path, method: 'DELETE' %>
+                </li>
+              </ul>
+              <% else %>
+                <li>
+                  <%= link_to 'Sign in', new_user_session_path %>
+                </li>
+                <li>
+                  <%= link_to 'Sign up', new_user_registration_path %>
+                </li>
+              <% end %>
+          </ul>
         </div>
       </div>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
-      <%= yield %>
-    </div>
+      <% if current_user %>
+        <%= yield %>
+      <% else %>
+       <%= render 'shared/landing' %>
+      <% end %>
   </body>
 </html>
