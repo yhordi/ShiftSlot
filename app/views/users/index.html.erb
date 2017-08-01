@@ -1,0 +1,21 @@
+<h2>Workers</h2>
+<table>
+    <tr>
+      <th>
+        name
+      </th>
+      <th>
+        email
+      </th>
+    </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= link_to user.name, user_path(user.id) %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+    </tr>
+  <% end %>
+</table>
