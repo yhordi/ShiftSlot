@@ -50,10 +50,6 @@
       </div>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
-      <% if current_user %>
         <%= yield %>
-      <% else %>
-       <%= render 'shared/landing' %>
-      <% end %>
   </body>
 </html>

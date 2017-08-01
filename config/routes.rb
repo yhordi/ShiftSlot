@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:edit, :show, :index]
-  root 'venues#index'
+  root 'landings#index'
 end
