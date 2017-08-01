@@ -1,0 +1,24 @@
+<div class='panel panel-default'>
+  <div class='panel panel-heading'>
+    <h2><%= @user.email %>'s Profile</h2>
+  </div>
+  <ul class='list-group'>
+    <li class='list-group-item'>
+      Email: <%= @user.email %>
+    </li>
+    <li class='list-group-item'>
+      Availability: A calendar or something of that sort will go here
+    </li>
+    <% if current_user.admin %>
+    <li class='list-group-item'>
+      Auhtorized for: [jobs go here like: Door, Bar, Sound, Security]
+    </li>
+    <li class='list-group-item'>
+      Verified: Maybe something that cofirms that they have worked and are trustworthy here
+    </li>
+    <li class='list-group-item'>
+      Notes
+    </li>
+    <% end %>
+  </ul>
+</div>
