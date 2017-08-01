@@ -1,3 +1,4 @@
+# :nocov:
 class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # You should configure your model like this:
   # devise :omniauthable, omniauth_providers: [:twitter]
@@ -26,3 +27,4 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   #   super(scope)
   # end
 end
+# :nocov:

@@ -1,3 +1,5 @@
+# :nocov:
+
 class User::PasswordsController < Devise::PasswordsController
   # GET /resource/password/new
   # def new
@@ -30,3 +32,4 @@ class User::PasswordsController < Devise::PasswordsController
   #   super(resource_name)
   # end
 end
+# :nocov:

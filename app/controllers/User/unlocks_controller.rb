@@ -1,3 +1,5 @@
+# :nocov:
+
 class User::UnlocksController < Devise::UnlocksController
   # GET /resource/unlock/new
   # def new
@@ -26,3 +28,4 @@ class User::UnlocksController < Devise::UnlocksController
   #   super(resource)
   # end
 end
+# :nocov:

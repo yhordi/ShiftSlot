@@ -1,3 +1,5 @@
+# :nocov:
+
 class User::ConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation/new
   # def new
@@ -26,3 +28,4 @@ class User::ConfirmationsController < Devise::ConfirmationsController
   #   super(resource_name, resource)
   # end
 end
+# :nocov:

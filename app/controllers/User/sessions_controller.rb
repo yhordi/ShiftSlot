@@ -1,3 +1,5 @@
+# :nocov:
+
 class User::SessionsController < Devise::SessionsController
   # skip_before_action :require_login
 
@@ -25,3 +27,4 @@ class User::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 end
+# :nocov:
