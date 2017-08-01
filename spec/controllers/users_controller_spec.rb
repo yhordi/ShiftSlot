@@ -20,6 +20,7 @@ RSpec.describe UsersController, type: :controller do
       expect(get :index).to render_template(:index)
     end
   end
+
   describe '#show' do
     let(:hit_user) { get :show, params: {id: user.id} }
     it 'assigns the @user variable' do
