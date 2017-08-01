@@ -12,9 +12,17 @@
 
   </head>
   <body>
-    <H1 id="top">ShiftSlot</H1>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class='container'>
+      <div class='row' id="top">
+        <span class='col span-11-d' id="title">ShiftSlot</span>
+        <div class='col span-1-d'>
+          <%= link_to 'Sign in', new_user_session_path %>
+          <%= link_to 'Sign up', new_user_registration_path %>
+        </div>
+      </div>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>
