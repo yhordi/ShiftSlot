@@ -11,8 +11,45 @@
 
 
   </head>
-<H1 id="top">ShiftSlot</H1>
   <body>
-    <%= yield %>
+    <div class='collapse navbar-collapse'>
+
+    </div>
+
+      <div id="top">
+        <div  class='navbar navbar-default'>
+          <span class='col navbar-brand' id="title">ShiftSlot</span>
+          <ul class="nav navbar-nav">
+              <% if current_user %>
+                <% if current_user.admin %>
+                  <li>
+                    <%= link_to 'Workers', users_path %>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to 'Venues', venues_path %>
+                </li>
+              <ul class='nav navbar-nav navbar-right'>
+                <li>
+                  <%= link_to current_user.email, user_path(current_user.id) %>
+                </li>
+                <li>
+                  <%= link_to 'Logout', destroy_user_session_path, method: 'DELETE' %>
+                </li>
+              </ul>
+              <% else %>
+                <li>
+                  <%= link_to 'Sign in', new_user_session_path %>
+                </li>
+                <li>
+                  <%= link_to 'Sign up', new_user_registration_path %>
+                </li>
+              <% end %>
+          </ul>
+        </div>
+      </div>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+        <%= yield %>
   </body>
 </html>
