@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     resources :shows
   end
 
-  resources :users, only: [:edit, :show, :index]
+  resources :users, only: [:edit, :show, :index, :update]
   root 'landings#index'
 end
