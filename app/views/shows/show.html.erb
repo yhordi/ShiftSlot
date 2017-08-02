@@ -1,25 +1,30 @@
-<h2>
-  <%= @show.date %> @ <%= @show.venue.name %>:
-</h2>
 <%= link_to 'back to show list', venue_shows_path(@show.venue_id)%>
-<table>
-  <table>
-    <tr>
-      <th>
-        Date
-      </th>
-      <th>
-        Doors
-      </th>
-      <th>
-        Start
-      </th>
-      <th>
-        End
-      </th>
-      <th>
-        Staffed?
-      </th>
-    </tr>
-  <%= render partial: 'info', locals: {show: @show} %>
-</table>
+<div class='row'>
+  <div class='panel panel-default col'>
+    <h2 class='panel panel-heading'>
+      <%= @show.date %> @ <%= @show.venue.name %>:
+    </h2>
+      <ul class='list-group'>
+        <li class='list-group-item'>
+          Date: <%= @show.date %>
+        </li>
+        <li class='list-group-item'>
+          Doors: <%= @show.readable(@show.doors) %>
+        </li>
+        <li class='list-group-item'>
+          Start: <%= @show.readable(@show.start) %>
+        </li>
+        <li class='list-group-item'>
+          End: <%= @show.readable(@show.show_end) %>
+        </li>
+        <li class='list-group-item'>
+          Staffed?
+        </li>
+      </ul>
+  </div>
+  <div class='panel panel-default col'>
+    <ul class='list-group'>
+      
+    </ul>
+  </div>
+</div>
