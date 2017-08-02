@@ -8,4 +8,5 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     render :show
   end
+
 end
