@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :shifts
+  has_many :shows, through: :shifts
   validates_presence_of :name, :email
   validates :name, length: { minimum: 3 }
   # Include default devise modules. Others available are:
