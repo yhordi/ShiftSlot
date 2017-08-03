@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802234450) do
+ActiveRecord::Schema.define(version: 20170803193319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20170802234450) do
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "jobs_venues", force: :cascade do |t|
+    t.integer  "job_id"
+    t.integer  "venue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_jobs_venues_on_job_id", using: :btree
+    t.index ["venue_id"], name: "index_jobs_venues_on_venue_id", using: :btree
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -74,6 +83,15 @@ ActiveRecord::Schema.define(version: 20170802234450) do
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "venues_jobs", force: :cascade do |t|
+    t.integer  "venue_id"
+    t.integer  "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_venues_jobs_on_job_id", using: :btree
+    t.index ["venue_id"], name: "index_venues_jobs_on_venue_id", using: :btree
   end
 
 end

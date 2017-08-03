@@ -11,7 +11,13 @@
 # 20.times do
 #   User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
 # end
-Job.create(title: 'Security')
-Job.create(title: 'Bar')
-Job.create(title: 'Door')
-Job.create(title: 'Sound')
+# Job.create(title: 'Security')
+# Job.create(title: 'Bar')
+# Job.create(title: 'Door')
+# Job.create(title: 'Sound')
+# Venue.all.each do |venue|
+#   Job.all.each do |job|
+#     venue.jobs << job
+#   end
+# end
+# Venue.find(2).jobs.delete(Job.find(2))
