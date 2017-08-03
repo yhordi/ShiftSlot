@@ -4,6 +4,7 @@ $(document).ready(function(){
   $('#get-search-form').on('click', function(e){
     e.preventDefault();
     var url = $(this).attr('href');
+    console.log(url)
     $.ajax({
       url: url
     }).done(function(response){
@@ -12,10 +13,10 @@ $(document).ready(function(){
   });
   $('#search-target').on('keyup', '#worker-search', function(e) {
     e.preventDefault();
-    var data = e.target.value
+    var data = $(this).parent().serialize()
     $.ajax({
       url: '/users/search',
-      data: {search: data},
+      data: data,
       method: 'POST'
     }).done(function(response){
       $('#search-container').html('')

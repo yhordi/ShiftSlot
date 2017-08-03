@@ -22,9 +22,11 @@ class UsersController < ApplicationController
   end
 
   def search
+    p params
     if params[:search].empty?
       render plain: 'No results matching that query'
     else
+      @show = Show.find(params[:show_id])
       @results = User.where('users.name LIKE :query', query: "#{params[:search]}%")
       render partial: 'search_results'
     end

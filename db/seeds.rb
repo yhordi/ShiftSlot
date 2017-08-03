@@ -21,3 +21,4 @@
 #   end
 # end
 # Venue.find(2).jobs.delete(Job.find(2))
+User.all.each { |user| user.jobs << Job.find(3)}
