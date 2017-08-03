@@ -8,6 +8,10 @@
 #   s.venue_id = [1,2,3].sample
 #   s.save!
 # end
-20.times do
-  User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
-end
+# 20.times do
+#   User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
+# end
+Job.create(title: 'Security')
+Job.create(title: 'Bar')
+Job.create(title: 'Door')
+Job.create(title: 'Sound')
