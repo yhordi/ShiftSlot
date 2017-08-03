@@ -1,30 +1,46 @@
-<%= link_to 'back to show list', venue_shows_path(@show.venue_id)%>
-<div class='row'>
-  <div class='panel panel-default col'>
-    <h2 class='panel panel-heading'>
-      <%= @show.date %> @ <%= @show.venue.name %>:
-    </h2>
+<div class='container'>
+  <%= link_to 'back to show list', venue_shows_path(@show.venue_id)%>
+  <div class='row'>
+    <div class='panel panel-default col-m'>
+      <h2 class='panel panel-heading'>
+        <%= @show.date %> @ <%= @show.venue.name %>:
+      </h2>
+        <ul class='list-group'>
+          <li class='list-group-item'>
+            Date: <%= @show.date %>
+          </li>
+          <li class='list-group-item'>
+            Doors: <%= @show.readable(@show.doors) %>
+          </li>
+          <li class='list-group-item'>
+            Start: <%= @show.readable(@show.start) %>
+          </li>
+          <li class='list-group-item'>
+            End: <%= @show.readable(@show.show_end) %>
+          </li>
+          <li class='list-group-item'>
+            Staffed?
+          </li>
+        </ul>
+    </div>
+    <div class='panel panel-default col-m'>
+      <h3 class='panel panel-heading'>Workers
+        <a href="/shows/<%= @show.id %>/shifts/new"id='get-search-form' class='glyphicon glyphicon-plus'></a>
+      </h3>
+      <div id='search-target'>
+        
+      </div>
       <ul class='list-group'>
-        <li class='list-group-item'>
-          Date: <%= @show.date %>
-        </li>
-        <li class='list-group-item'>
-          Doors: <%= @show.readable(@show.doors) %>
-        </li>
-        <li class='list-group-item'>
-          Start: <%= @show.readable(@show.start) %>
-        </li>
-        <li class='list-group-item'>
-          End: <%= @show.readable(@show.show_end) %>
-        </li>
-        <li class='list-group-item'>
-          Staffed?
-        </li>
+        <% if @show.shifts.empty? %>
+          No one is scheduled to work yet. Click the + up above to schedule someone.
+        <% else %>
+          <% @show.shifts.each do |shift| %>
+            <li>
+              <%= shift.user.name %>: <%= shift.job.title %>
+            </li>
+            <% end %>
+        <% end %>
       </ul>
-  </div>
-  <div class='panel panel-default col'>
-    <ul class='list-group'>
-      
-    </ul>
+    </div>
   </div>
 </div>
