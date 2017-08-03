@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-
+  post 'users/search', to: 'users#search'
 
 
   resources :users, only: [:edit, :show, :index, :update]

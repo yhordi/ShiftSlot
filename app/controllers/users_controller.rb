@@ -20,6 +20,15 @@ class UsersController < ApplicationController
     flash[:notice] = 'User updated'
     redirect_to edit_user_path(@user.id)
   end
+
+  def search
+    if params[:search].empty?
+      render plain: 'No results matching that query'
+    else
+      @results = User.where('users.name LIKE :query', query: "#{params[:search]}%")
+      render partial: 'search_results'
+    end
+  end
 end
 
 

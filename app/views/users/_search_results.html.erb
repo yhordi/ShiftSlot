@@ -1,0 +1,7 @@
+<ul id='search-container' class='list-group'>
+  <% @results.each do |result| %>
+    <li class='list-group-item'>
+      <%= link_to result.name, user_path(result.id) %> <%= select_tag "jobs", options_for_select(result.jobs.map {|j| j.title}), class: "btn btn-default btn-lg dropdown-toggle" %>
+    </li>
+  <% end %>
+</ul>
