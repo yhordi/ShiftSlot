@@ -101,15 +101,13 @@ RSpec.describe UsersController, type: :controller do
       expect(assigns[:show]).to eq(show)
     end
     describe 'assigns the @results variable' do
-      context 'to an empty ActiveRecord::Relation when given' do
-        it 'a non matching query' do
-          get :search, params: wrong_params
-          expect(assigns[:results]).to be_empty
-        end
-        it 'an empty query'
+      it 'to an empty ActiveRecord::Relation when given a non matching query' do
+        get :search, params: wrong_params
+        expect(assigns[:results]).to be_empty
       end
       it 'to an ActiveRecord::CollectionProxy containing users' do
-
+        hit_search
+        expect(assigns[:results]).to include(user)
       end
     end
   end
