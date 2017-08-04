@@ -3,4 +3,5 @@ class Job < ApplicationRecord
   has_many :users, through: :authorized_jobs
   has_many :jobs_venues
   has_many :jobs, through: :jobs_venues
+  belongs_to :shifts
 end

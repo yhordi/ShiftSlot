@@ -4,4 +4,15 @@ class ShiftsController < ApplicationController
     @jobs = @show.venue.jobs
     render partial: 'users/search_field', locals:{ show: @show }
   end
+
+  def create
+    shift = Shift.create(shift_params)
+    p shift
+  end
+
+  private
+
+  def shift_params
+    params.permit(:show_id, :user_id, :job_id)
+  end
 end

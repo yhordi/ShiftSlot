@@ -41,7 +41,7 @@
           No one is scheduled to work yet. Click the + up above to schedule someone.
         <% else %>
           <% @show.shifts.each do |shift| %>
-            <li>
+            <li class='list-group-item'>
               <%= shift.user.name %>: <%= shift.job.title %>
             </li>
             <% end %>

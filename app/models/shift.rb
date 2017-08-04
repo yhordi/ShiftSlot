@@ -1,5 +1,5 @@
 class Shift < ApplicationRecord
   belongs_to :user
   belongs_to :show
-  validates_associated :show
+  belongs_to :job
 end
