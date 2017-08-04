@@ -9,6 +9,7 @@ $(document).ready(function(){
       url: url
     }).done(function(response){
       $('#search-target').append(response)
+      $('#get-search-form').hide()
     });
   });
   $('#search-target').on('keyup', '#worker-search', function(e) {

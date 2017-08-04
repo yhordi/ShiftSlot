@@ -1,6 +1,4 @@
-Search
-
-<form class="navbar-form navbar-left search-form" action="users/search" method="post">
+<form action="users/search" method="post">
   <%= hidden_field_tag "show_id", value = show.id %>
   <%= text_field_tag "search", value =  nil, placeholder: 'Type your search here', id: 'worker-search' %>
 </form>

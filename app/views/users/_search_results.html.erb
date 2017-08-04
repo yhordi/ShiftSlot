@@ -1,11 +1,12 @@
 <ul id='search-container' class='list-group'>
   <% @results.each do |result| %>
     <li class='list-group-item'>
-      <%= form_for [@show, Shift.new], class: 'input-group' do |f| %>
-        <br />
-        <%= link_to result.name, user_path(result.id) %>
-        <%= select_tag 'jobs', options_for_select(result.jobs.map {|j| j.title}), class: "btn btn-default btn-lg dropdown-toggle form-control" %>
-        <%= f.submit 'Schedule Worker', class: 'btn btn-default' %>
+      <%= form_for [@show, Shift.new] do |f| %>
+      <div class='button-toolbar' role='toolbar'>
+        <%= link_to result.name, user_path(result.id), class: 'btn btn-default' %>
+        <%= select_tag 'jobs', options_for_select(result.jobs.map {|j| j.title}), class: "btn btn-default btn-lg dropdown-toggle " %>
+        <%= f.submit 'Schedule Worker', class: 'btn btn-default btn-success' %>
+      </div>
       <% end %>
     </li>
   <% end %>
