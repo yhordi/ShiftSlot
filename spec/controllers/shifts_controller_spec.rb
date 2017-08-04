@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ShiftsController, type: :controller do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:job) { FactoryGirl.create(:job) }
+  let(:venue) { FactoryGirl.create(:venue) }
+  let(:show) { FactoryGirl.create(:show, venue_id: venue.id) }
   describe '#new' do
-    let(:job) { FactoryGirl.create(:job) }
-    let(:venue) { FactoryGirl.create(:venue) }
-    let(:show) { FactoryGirl.create(:show, venue_id: venue.id) }
-    let(:user) { FactoryGirl.create(:user) }
     let(:hit_show) { get :new, params: {show_id: show.id} }
     before(:each) do
       sign_in user
@@ -29,9 +29,32 @@ RSpec.describe ShiftsController, type: :controller do
     end
   end
 
+  describe '#index' do
+  end
+
   describe '#create' do
-    it 'saves a shift to the database'
-    it 'responds with the newly created shift as a partial'
-    it 'responds with a status of 200'
+    before(:each) do
+      sign_in user
+    end
+    let(:post_shift) { post :create, params:
+      {"utf8"=>"✓",
+      "authenticity_token"=>"xeGssQrlK3sj1lV+VrAT6ysq321yNZ5tBCJi+rohawn1Kv+9Bs/Uq6QYH5rLHtOVolDqwl/lZnpD7A1GUfKuhg==",
+      "user_id"=>user.id,
+      "job_id"=>job.id,
+      "commit"=>"Schedule Worker",
+      "controller"=>"shifts",
+      "action"=>"create",
+      "show_id"=>show.id}
+      }
+      it 'saves a shift to the database' do
+        expect{post_shift}.to change{Shift.all.count}.by(1)
+      end
+      it 'responds with the newly created shift as a partial' do
+        expect(post_shift).to render_template('shifts/_index')
+      end
+      it 'responds with a status of 200' do
+        post_shift
+        expect(response.status).to eq(200)
+      end
   end
 end
