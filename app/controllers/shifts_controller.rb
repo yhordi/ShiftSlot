@@ -7,7 +7,6 @@ class ShiftsController < ApplicationController
 
   def create
     shift = Shift.create(shift_params)
-    p shift
   end
 
   private
