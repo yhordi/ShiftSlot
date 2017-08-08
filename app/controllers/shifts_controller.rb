@@ -7,7 +7,8 @@ class ShiftsController < ApplicationController
 
   def create
     shift = Shift.create(shift_params)
-    render partial: 'index'
+    shifts = Shift.where(show_id: params[:show_id])
+    render partial: 'index', locals: { shifts: shifts }
   end
 
   private
