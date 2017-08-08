@@ -24,4 +24,17 @@ $(document).ready(function(){
       $('#search-container').append(response);
     });
   });
+  $('#search-container').on('submit', '#new_shift', function(e){
+    e.preventDefault();
+    var data = $(this).serialize();
+    var url = $(this).attr('action')
+    $.ajax({
+      data: data,
+      url: url,
+      method: 'POST'
+    }).done(function(response){
+      $('#shifts-container').html('')
+      $('#shifts-container').append(response);
+    })
+  })
 });
