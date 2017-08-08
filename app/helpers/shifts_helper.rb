@@ -1,9 +1,10 @@
 module ShiftsHelper
 
   def available?(show, shifts)
-    shifts.map do |shift|
+    return true if shifts.empty?
+    shifts.each do |shift|
       return false if shift.show.date == show.date
-      true
+      return true
     end
   end
 end
