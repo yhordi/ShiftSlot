@@ -11,6 +11,12 @@ class ShiftsController < ApplicationController
     render partial: 'index', locals: { shifts: shifts }
   end
 
+  def destroy
+    shift = Shift.find(params[:id])
+    shift.delete
+    redirect_to show_path(shift.show_id)
+  end
+
   private
 
   def shift_params

@@ -5,6 +5,7 @@ RSpec.describe ShiftsController, type: :controller do
   let(:job) { FactoryGirl.create(:job) }
   let(:venue) { FactoryGirl.create(:venue) }
   let(:show) { FactoryGirl.create(:show, venue_id: venue.id) }
+  let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
   describe '#new' do
     let(:hit_show) { get :new, params: {show_id: show.id} }
     before(:each) do
@@ -56,5 +57,20 @@ RSpec.describe ShiftsController, type: :controller do
         post_shift
         expect(response.status).to eq(200)
       end
+  end
+  describe '#destroy' do
+    let(:hit_delete) { delete :destroy, params: {id: shift.id} }
+    before(:each) do
+      sign_in user
+    end
+
+    it 'responds with a status of 302' do
+      hit_delete
+      expect(response.status).to eq(302)
+    end
+    it 'deletes the shift from the database' do
+      hit_delete
+      expect{Shift.find(shift.id)}.to raise_error{ActiveRecord::RecordNotFound}
+    end
   end
 end
