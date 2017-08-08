@@ -6,7 +6,16 @@
         <%= hidden_field_tag 'user_id', value = result.id %>
         <%= link_to result.name, user_path(result.id), class: 'btn btn-default' %>
         <%= select_tag 'job_id', options_for_select(result.jobs.map {|j| [j.title, j.id]}), class: "btn btn-default btn-lg dropdown-toggle " %>
-        <%= f.submit 'Schedule Worker', class: 'btn btn-default btn-success' %>
+        <%= available?(@show, result.shifts) %>
+        <% if available?(@show, result.shifts) %>
+          <%= f.submit 'Schedule Worker', class: 'btn btn-default btn-success' %>
+        <% else %>
+        <%= f.submit 'Schedule Worker', class: 'btn btn-default  disabled' %>
+
+          <p class='red'>
+            Worker already scheduled for this day, or is otherwise unavailable
+          </p>
+        <% end %>
       </div>
       <% end %>
     </li>
