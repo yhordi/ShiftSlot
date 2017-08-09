@@ -30,7 +30,30 @@ RSpec.describe ShiftsController, type: :controller do
     end
   end
 
-  describe '#index' do
+  describe '#edit' do
+    let(:get_edit) { get :edit, params: {id: shift.id} }
+    before(:each) do
+      sign_in user
+    end
+    it 'assings the @shift variable' do
+      get_edit
+      expect(assigns[:shift]).to eq(shift)
+    end
+    it 'assings the @show variable' do
+      get_edit
+      expect(assigns[:show]).to eq(show)
+    end
+    it 'assings the @jobs variable' do
+      get_edit
+      expect(assigns[:jobs]).to all(be_a(Job))
+    end
+    it 'renders the users/search_field template' do
+      expect(get_edit).to render_template('users/_search_field')
+    end
+    it 'responds with a status of 200' do
+      get_edit
+      expect(response.status).to eq(200)
+    end
   end
 
   describe '#create' do
