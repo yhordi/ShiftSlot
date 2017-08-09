@@ -26,7 +26,7 @@ RSpec.describe ShiftsController, type: :controller do
       expect(assigns(:show)).to eq(show)
     end
     it 'renders the _search_field template' do
-      expect(hit_show).to render_template('_search_field')
+      expect(hit_show).to render_template("shifts/_new")
     end
   end
 
