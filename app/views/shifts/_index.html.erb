@@ -1,15 +1,25 @@
-<ul class='list-group'>
-  <% if shifts.empty? %>
-    No one is scheduled to work yet. Click the + up above to schedule someone.
-  <% else %>
-    <% shifts.each do |shift| %>
-      <li class='list-group-item'>
-        <% if shift.user%>
-          <%= shift.user.name %>: <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
-        <% else %>
-          No worker assigned: <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
-        <% end %>
-      </li>
+<div id='workers-target'>
+  <div id="search-target">
+
+  </div>
+  <div id='results'>
+    
+  </div>
+  <div id='shifts'>
+    <ul class='list-group'>
+      <% if shifts.empty? %>
+        No one is scheduled to work yet. Click the + up above to schedule someone.
+      <% else %>
+        <% shifts.each do |shift| %>
+          <li class='list-group-item'>
+            <% if shift.user%>
+              <%= shift.user.name %>: <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
+            <% else %>
+              <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %> <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
+            <% end %>
+          </li>
+          <% end %>
       <% end %>
-  <% end %>
-</ul>
+    </ul>
+</div>
+</div>

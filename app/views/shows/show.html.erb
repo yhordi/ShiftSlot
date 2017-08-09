@@ -1,53 +1,45 @@
 <div class='container'>
   <%= link_to 'back to show list', venue_shows_path(@show.venue_id)%>
   <div class='row'>
-    <div class='panel panel-default col-m'>
-      <h2 class='panel panel-heading'>
-        <%= @show.date %> @ <%= @show.venue.name %>:
-      </h2>
-        <ul class='list-group'>
-          <li class='list-group-item'>
-            Date: <%= @show.date %>
-          </li>
-          <li class='list-group-item'>
-            Doors: <%= @show.readable(@show.doors) %>
-          </li>
-          <li class='list-group-item'>
-            Start: <%= @show.readable(@show.start) %>
-          </li>
-          <li class='list-group-item'>
-            End: <%= @show.readable(@show.show_end) %>
-          </li>
-          <li class='list-group-item'>
-            Staffed?
-          </li>
-        </ul>
-    </div>
-    <div class='panel panel-default col-m'>
-      <div class='panel panel-heading' id='shifts-container'>
-        <h3>
-          Shifts
-          <a href="/shows/<%= @show.id %>/shifts/new" id='get-shift-form' class='glyphicon glyphicon-plus'></a>
-        </h3>
-        <div id='open-shifts-target' >
-        </div>
-        <div id='open-shifts'>
-          <%= render partial: 'shifts/index', locals: {shifts: @show.shifts } %>
-        </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class='panel panel-default'>
+        <h2 class='panel panel-heading'>
+          <%= @show.date %> @ <%= @show.venue.name %>:
+        </h2>
+          <ul class='list-group'>
+            <li class='list-group-item'>
+              Date: <%= @show.date %>
+            </li>
+            <li class='list-group-item'>
+              Doors: <%= @show.readable(@show.doors) %>
+            </li>
+            <li class='list-group-item'>
+              Start: <%= @show.readable(@show.start) %>
+            </li>
+            <li class='list-group-item'>
+              End: <%= @show.readable(@show.show_end) %>
+            </li>
+            <li class='list-group-item'>
+              Staffed?
+            </li>
+          </ul>
       </div>
     </div>
-    <div class='panel panel-default col-m'>
-      <div class='panel panel-heading'>
-        <h3>
-          Workers
-          <a href="/shows/<%= @show.id %>/shifts/new" id='get-search-form' class='glyphicon glyphicon-plus'>this will be for the update path</a>
-        </h3>
-        <div id='search-target' >
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class='panel panel-default'>
+        <div class='panel panel-heading' id='shifts-container'>
+          <h3>
+            Shifts
+            <a href="/shows/<%= @show.id %>/shifts/new" id='get-shift-form' class='glyphicon glyphicon-plus'></a>
+          </h3>
+          <div id='open-shifts-target' >
+          </div>
         </div>
+          <div id='open-shifts'>
+            <%= render partial: 'shifts/index', locals: {shifts: @show.shifts, show: @show } %>
+          </div>
       </div>
-      <ul id='search-container' class='list-group'>
+    </div>
 
-      </ul>
-    </div>
   </div>
 </div>

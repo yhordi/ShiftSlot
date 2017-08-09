@@ -1,18 +1,18 @@
 $(document).ready(function(){
 
-  $('#get-search-form').on('click', function(e){
+  $('#open-shifts').on('click', '#assign-worker', function(e){
     e.preventDefault();
     const url = $(this).attr('href');
-    console.log(url)
     $.ajax({
       url: url
     }).done(function(response){
+      $('#shifts').hide()
       $('#search-target').append(response)
-      $('#get-search-form').hide()
     });
   });
 
-  $('#search-target').on('keyup', '#worker-search', function(e) {
+  $('#open-shifts').on('keyup', '#worker-search', function(e) {
+    console.log('hey')
     e.preventDefault();
     const data = $(this).parent().serialize()
     $.ajax({
@@ -20,8 +20,8 @@ $(document).ready(function(){
       data: data,
       method: 'POST'
     }).done(function(response){
-      $('#search-container').html('')
-      $('#search-container').append(response);
+      $('#results').html('')
+      $('#results').append(response);
     });
   });
 
@@ -50,7 +50,7 @@ $(document).ready(function(){
     });
   });
 
-  $('#shifts-container').on('submit', '#new_shift', function(e) {
+  $('#shifts-container').on('submit', '#edit_shift', function(e) {
     e.preventDefault();
     const url = $(this).attr('action')
     const data = $(this).serialize()
@@ -58,7 +58,8 @@ $(document).ready(function(){
       url: url,
       data: data,
       method: 'POST'
-    }).done((response)=>{
+    }).done((response)=> {
+      $(this).remove()
       $('#open-shifts').html('')
       $('#open-shifts').append(response)
     })

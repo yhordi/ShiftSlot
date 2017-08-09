@@ -1,7 +1,7 @@
 <ul id='search-container' class='list-group'>
   <% @results.each do |result| %>
     <li class='list-group-item'>
-      <%= form_for [@show, Shift.new] do |f| %>
+      <%= form_for @shift do |f| %>
       <div class='button-toolbar' role='toolbar'>
         <%= hidden_field_tag 'user_id', value = result.id %>
         <%= link_to result.name, user_path(result.id), class: 'btn btn-default' %>

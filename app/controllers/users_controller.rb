@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     if @results.length == 0 || params[:search].empty?
       render plain: 'No results matching that query'
     else
+      @shift = Shift.find(params[:shift_id])
       @show = Show.find(params[:show_id])
       render partial: 'search_results'
     end
