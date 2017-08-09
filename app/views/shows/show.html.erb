@@ -24,12 +24,15 @@
         </ul>
     </div>
     <div class='panel panel-default col-m'>
-      <div class='panel panel-heading'>
+      <div class='panel panel-heading' id='shifts-container'>
         <h3>
           Shifts
           <a href="/shows/<%= @show.id %>/shifts/new" id='get-shift-form' class='glyphicon glyphicon-plus'></a>
         </h3>
         <div id='open-shifts-target' >
+        </div>
+        <div id='open-shifts'>
+          <%= render partial: 'shifts/index', locals: {shifts: @show.shifts } %>
         </div>
       </div>
     </div>
@@ -45,9 +48,6 @@
       <ul id='search-container' class='list-group'>
 
       </ul>
-      <div id='shifts-container'>
-        <%= render partial: 'shifts/index', locals: {shifts: @show.shifts } %>
-      </div>
     </div>
   </div>
 </div>

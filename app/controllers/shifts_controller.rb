@@ -12,10 +12,16 @@ class ShiftsController < ApplicationController
     render partial: 'index', locals: { shifts: shifts }
   end
 
-  def update
+  def edit
     @show = Show.find(params[:show_id])
     @jobs = @show.venue.jobs
     render partial: 'users/search_field', locals: { show: @show }
+  end
+
+  def update
+    # @show = Show.find(params[:show_id])
+    # @jobs = @show.venue.jobs
+    # render partial: 'users/search_field', locals: { show: @show }
   end
 
   def destroy
