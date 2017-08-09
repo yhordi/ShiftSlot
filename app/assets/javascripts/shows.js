@@ -12,6 +12,16 @@ $(document).ready(function(){
       $('#get-search-form').hide()
     });
   });
+  $('#get-shift-form').on('click', function(e){
+    e.preventDefault();
+    var url = $(this).attr('href');
+    console.log(url)
+    $.ajax({
+      url: url
+    }).done(function(response){
+      $('#open-shifts-target').append(response)
+    });
+  });
   $('#search-target').on('keyup', '#worker-search', function(e) {
     e.preventDefault();
     var data = $(this).parent().serialize()

@@ -1,14 +1,21 @@
 class ShiftsController < ApplicationController
   def new
+    @shift = Shift.new
     @show = Show.find(params[:show_id])
     @jobs = @show.venue.jobs
-    render partial: 'users/search_field', locals: { show: @show }
+    render partial: 'new', locals: {show: @show, jobs: @jobs}
   end
 
   def create
     shift = Shift.create(shift_params)
     shifts = Shift.where(show_id: params[:show_id])
     render partial: 'index', locals: { shifts: shifts }
+  end
+
+  def update
+    @show = Show.find(params[:show_id])
+    @jobs = @show.venue.jobs
+    render partial: 'users/search_field', locals: { show: @show }
   end
 
   def destroy
