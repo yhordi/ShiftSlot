@@ -11,8 +11,9 @@ $(document).ready(function(){
     });
   });
 
+  
+
   $('#open-shifts').on('keyup', '#worker-search', function(e) {
-    console.log('hey')
     e.preventDefault();
     const data = $(this).parent().serialize()
     $.ajax({

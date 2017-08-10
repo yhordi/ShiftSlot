@@ -28,7 +28,11 @@ class ShiftsController < ApplicationController
 
   def update
     shift = Shift.find(params[:id])
-    shift.user_id = params[:user_id]
+    if current_user.admin
+      shift.user_id = params[:user_id]
+    else
+      shift.user_id = current_user.id
+    end
     shift.save
     redirect_to show_path(shift.show_id)
   end
