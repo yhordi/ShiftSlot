@@ -9,7 +9,7 @@ class ShiftsController < ApplicationController
   def create
     shift = Shift.create(shift_params)
     shifts = Shift.where(show_id: params[:show_id])
-    render partial: 'index', locals: { shifts: shifts }
+    redirect_to show_path(shift.show_id)
   end
 
   def edit
@@ -30,7 +30,7 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     shift.user_id = params[:user_id]
     shift.save
-    render plain: "#{User.find(params[:user_id]).name} scheduled for the shift"
+    redirect_to show_path(shift.show_id)
   end
   private
 

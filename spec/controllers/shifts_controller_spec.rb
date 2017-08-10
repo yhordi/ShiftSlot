@@ -75,9 +75,9 @@ RSpec.describe ShiftsController, type: :controller do
     }
     let!(:patch_request) { patch :update, params: patch_params }
 
-    it 'responds with a status of 200' do
+    it 'responds with a status of 302' do
       patch_request
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
     it 'updates a shift in the database' do
       patch_request
@@ -103,12 +103,12 @@ RSpec.describe ShiftsController, type: :controller do
       it 'saves a shift to the database' do
         expect{post_shift}.to change{Shift.all.count}.by(1)
       end
-      it 'responds with the newly created shift as a partial' do
-        expect(post_shift).to render_template('shifts/_index')
+      it 'redirects to the shows/show page' do
+        expect(post_shift).to redirect_to(show_path(show.id))
       end
-      it 'responds with a status of 200' do
+      it 'responds with a status of 302' do
         post_shift
-        expect(response.status).to eq(200)
+        expect(response.status).to eq(302)
       end
   end
 
