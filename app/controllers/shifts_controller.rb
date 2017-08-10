@@ -33,7 +33,11 @@ class ShiftsController < ApplicationController
     else
       shift.user_id = current_user.id
     end
-    shift.save
+    if shift.save
+      flash[:notice] = "You're signed up to work!"
+    else
+      flash[:alert] = shift.errors.full_messages
+    end
     redirect_to show_path(shift.show_id)
   end
   private
