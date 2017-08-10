@@ -60,7 +60,7 @@ RSpec.describe ShiftsController, type: :controller do
     before(:each) do
       sign_in user
     end
-    let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id) }
+    let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
     let(:patch_params) {
       {"utf8"=>"✓",
         "_method"=>"patch",
@@ -81,8 +81,7 @@ RSpec.describe ShiftsController, type: :controller do
     end
     it 'updates a shift in the database' do
       patch_request
-      p shift.inspect
-      # expect(shift_no_user.user.reload.name).to eq(user.name)
+      expect(shift_no_user.reload.user.name).to eq(user.name)
     end
     it 'renders a template'
   end
