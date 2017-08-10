@@ -35,15 +35,15 @@ RSpec.describe ShiftsController, type: :controller do
     before(:each) do
       sign_in user
     end
-    it 'assings the @shift variable' do
+    it 'assigns the @shift variable' do
       get_edit
       expect(assigns[:shift]).to eq(shift)
     end
-    it 'assings the @show variable' do
+    it 'assigns the @show variable' do
       get_edit
       expect(assigns[:show]).to eq(show)
     end
-    it 'assings the @jobs variable' do
+    it 'assigns the @jobs variable' do
       get_edit
       expect(assigns[:jobs]).to all(be_a(Job))
     end
@@ -54,6 +54,37 @@ RSpec.describe ShiftsController, type: :controller do
       get_edit
       expect(response.status).to eq(200)
     end
+  end
+
+  describe '#update' do
+    before(:each) do
+      sign_in user
+    end
+    let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id) }
+    let(:patch_params) {
+      {"utf8"=>"✓",
+        "_method"=>"patch",
+        "authenticity_token"=>"QxAEn4qOdUace+klqMn8mu/cBLQgW3pPwfClc/GkgU/1bu5Be/laYo3m5h/utjCc1N82l9R/oL7UeZApDRSJyQ==",
+        "user_id"=>user.id,
+        "job_id"=>job.id,
+        "commit"=>"Schedule Worker",
+        "controller"=>"shifts",
+        "action"=>"update",
+        "id"=>shift_no_user.id
+      }
+    }
+    let!(:patch_request) { patch :update, params: patch_params }
+
+    it 'responds with a status of 200' do
+      patch_request
+      expect(response.status).to eq(200)
+    end
+    it 'updates a shift in the database' do
+      patch_request
+      p shift.inspect
+      # expect(shift_no_user.user.reload.name).to eq(user.name)
+    end
+    it 'renders a template'
   end
 
   describe '#create' do
@@ -81,6 +112,7 @@ RSpec.describe ShiftsController, type: :controller do
         expect(response.status).to eq(200)
       end
   end
+
   describe '#destroy' do
     let(:hit_delete) { delete :destroy, params: {id: shift.id} }
     before(:each) do

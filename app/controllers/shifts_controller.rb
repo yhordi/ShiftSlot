@@ -19,12 +19,6 @@ class ShiftsController < ApplicationController
     render partial: 'users/search_field', locals: { show: @show, shift: @shift }
   end
 
-  def update
-    shift = Shift.find(params[:id])
-    shift.user_id = params[:user_id]
-    shift.save
-    render plain: "#{User.find(params[:user_id]).name} scheduled for the shift"
-  end
 
   def destroy
     shift = Shift.find(params[:id])
@@ -32,6 +26,12 @@ class ShiftsController < ApplicationController
     redirect_to show_path(shift.show_id)
   end
 
+  def update
+    shift = Shift.find(params[:id])
+    shift.user_id = params[:user_id]
+    shift.save
+    render plain: "#{User.find(params[:user_id]).name} scheduled for the shift"
+  end
   private
 
   def shift_params
