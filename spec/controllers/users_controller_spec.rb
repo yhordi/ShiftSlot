@@ -77,4 +77,40 @@ RSpec.describe UsersController, type: :controller do
       expect(response.status).to eq(302)
     end
   end
+
+  describe '#search' do
+    let(:show) { FactoryGirl.create(:show) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:job) { FactoryGirl.create(:job)}
+    let(:shift) { FactoryGirl.create(:shift, job_id: job.id) }
+    let(:params) { {"show_id"=>show.id, "search"=>user.name, "controller"=>"users", "action"=>"search", "shift_id"=>shift.id} }
+    let(:empty_params) { {"show_id"=>show.id, "search"=>"", "controller"=>"users", "action"=>"search"} }
+    let(:wrong_params) { {"show_id"=>show.id, "search"=>"i823y4heogjvough34o2iwhbnlfdkbjlowi", "controller"=>"users", "action"=>"search"} }
+    let(:hit_search) { get :search, params: params }
+    it 'renders a string when blank' do
+      get :search, params: empty_params
+      expect(response.body).to eq('No results matching that query')
+    end
+    it 'renders the search_results template' do
+      expect(hit_search).to render_template(:_search_results)
+    end
+    it 'responds with a status of 200' do
+      hit_search
+      expect(response.status).to eq(200)
+    end
+    it 'assigns the @show variable' do
+      hit_search
+      expect(assigns[:show]).to eq(show)
+    end
+    describe 'assigns the @results variable' do
+      it 'to an empty ActiveRecord::Relation when given a non matching query' do
+        get :search, params: wrong_params
+        expect(assigns[:results]).to be_empty
+      end
+      it 'to an ActiveRecord::CollectionProxy containing users' do
+        hit_search
+        expect(assigns[:results]).to include(user)
+      end
+    end
+  end
 end

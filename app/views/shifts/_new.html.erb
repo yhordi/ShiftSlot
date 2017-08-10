@@ -1,0 +1,4 @@
+<%= form_for [@show, @shift] do |f| %>
+  <%= select_tag 'job_id', options_for_select(jobs.map {|j| [j.title, j.id]}), class: "btn btn-default btn-lg dropdown-toggle "  %>
+  <%= f.submit 'Create Shift', class: 'btn btn-default btn-success' %>
+<% end %>

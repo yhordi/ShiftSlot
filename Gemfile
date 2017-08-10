@@ -28,6 +28,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'simplecov'
   gem 'rails-controller-testing'
+  gem 'database_cleaner'
 end
 
 group :development do
