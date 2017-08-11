@@ -58,33 +58,76 @@ RSpec.describe ShiftsController, type: :controller do
   end
 
   describe '#update' do
-    before(:each) do
-      sign_in user
-    end
-    let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
-    let(:patch_params) {
-      {"utf8"=>"✓",
-        "_method"=>"patch",
-        "authenticity_token"=>"QxAEn4qOdUace+klqMn8mu/cBLQgW3pPwfClc/GkgU/1bu5Be/laYo3m5h/utjCc1N82l9R/oL7UeZApDRSJyQ==",
-        "user_id"=>user.id,
-        "job_id"=>job.id,
-        "commit"=>"Schedule Worker",
-        "controller"=>"shifts",
-        "action"=>"update",
-        "id"=>shift_no_user.id
-      }
-    }
-    let!(:patch_request) { patch :update, params: patch_params }
+    context 'a signed in worker' do
+      context 'on success' do
+        before(:each) do
+          sign_in user
+        end
+        let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
+        let(:patch_params) {
+          {"utf8"=>"✓",
+            "_method"=>"patch",
+            "authenticity_token"=>"QxAEn4qOdUace+klqMn8mu/cBLQgW3pPwfClc/GkgU/1bu5Be/laYo3m5h/utjCc1N82l9R/oL7UeZApDRSJyQ==",
+            "user_id"=>user.id,
+            "job_id"=>job.id,
+            "commit"=>"Schedule Worker",
+            "controller"=>"shifts",
+            "action"=>"update",
+            "id"=>shift_no_user.id
+          }
+        }
 
-    it 'responds with a status of 302' do
-      patch_request
-      expect(response.status).to eq(302)
+        let!(:patch_request) { patch :update, params: patch_params }
+
+        it 'responds with a status of 302' do
+          patch_request
+          expect(response.status).to eq(302)
+        end
+        it 'updates a shift in the database' do
+          patch_request
+          expect(shift_no_user.reload.user.name).to eq(user.name)
+        end
+        it 'redirects to the show show page' do
+          expect(patch_request).to redirect_to(show_path(show))
+        end
+        context 'when given a commit of "Unschedule Me"' do
+          let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: Random.new_seed.to_s[0..3])}
+          let(:unschedule_patch_params) {
+            {
+              "utf8"=>"✓",
+              "authenticity_token"=>"xXsnquheIKGjFk2GjDapFVF8v7b9gD6QF2rl6eYlXWd4DXPmc7uzbWYCZNJLYf0BVsoEC50BXtVgM5Cj+uGy8A==",
+              "commit"=>"Unschedule Me",
+              "id"=>shift.id}
+            }
+          it 'removes the a schedule user from a shift' do
+            patch :update, params: unschedule_patch_params
+            expect(shift.reload.user_id).to be_nil
+          end
+        end
+      end
+
+      context 'on failure' do
+        let(:job2) { FactoryGirl.create(:job) }
+        let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job2.id, show_id: show.id, user_id: nil) }
+        let(:invalid_patch_params) {
+          {"utf8"=>"✓",
+            "_method"=>"patch",
+            "authenticity_token"=>"QxAEn4qOdUace+klqMn8mu/cBLQgW3pPwfClc/GkgU/1bu5Be/laYo3m5h/utjCc1N82l9R/oL7UeZApDRSJyQ==",
+            "user_id"=>user.id,
+            "job_id"=>job.id,
+            "commit"=>"Schedule Worker",
+            "controller"=>"shifts",
+            "action"=>"update",
+            "id"=>shift_no_user.id
+          }
+        }
+        it 'sends errors back through flash on bad params' do
+          sign_in user
+          patch :update, params: invalid_patch_params
+          expect(flash.inspect).to include("#{user.name} is not authorized to work door")
+        end
+      end
     end
-    it 'updates a shift in the database' do
-      patch_request
-      expect(shift_no_user.reload.user.name).to eq(user.name)
-    end
-    it 'renders a template'
   end
 
   describe '#create' do
@@ -92,14 +135,15 @@ RSpec.describe ShiftsController, type: :controller do
       sign_in user
     end
     let(:post_shift) { post :create, params:
-      {"utf8"=>"✓",
-      "authenticity_token"=>"xeGssQrlK3sj1lV+VrAT6ysq321yNZ5tBCJi+rohawn1Kv+9Bs/Uq6QYH5rLHtOVolDqwl/lZnpD7A1GUfKuhg==",
-      "user_id"=>user.id,
-      "job_id"=>job.id,
-      "commit"=>"Schedule Worker",
-      "controller"=>"shifts",
-      "action"=>"create",
-      "show_id"=>show.id}
+      {
+        "utf8"=>"✓",
+        "authenticity_token"=>"xeGssQrlK3sj1lV+VrAT6ysq321yNZ5tBCJi+rohawn1Kv+9Bs/Uq6QYH5rLHtOVolDqwl/lZnpD7A1GUfKuhg==",
+        "user_id"=>user.id,
+        "job_id"=>job.id,
+        "commit"=>"Schedule Worker",
+        "controller"=>"shifts",
+        "action"=>"create",
+        "show_id"=>show.id}
       }
       it 'saves a shift to the database' do
         expect{post_shift}.to change{Shift.all.count}.by(1)
