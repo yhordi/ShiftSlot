@@ -14,4 +14,15 @@ class User < ApplicationRecord
     self.jobs.include?(job)
   end
 
+  def add_new_jobs(jobs)
+    p "*"*90
+    jobs.each do |job|
+      self.jobs << Job.find_by_id(job) if !authorized?(job)
+    end
+    p jobs
+  end
+
+  def adjust_jobs
+  end
+
 end

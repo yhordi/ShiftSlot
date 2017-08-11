@@ -13,12 +13,12 @@
         <% @jobs.each do |job| %>
           <% if @user.authorized?(job) %>
             <li class='list-group-item'>
-              <%= f.check_box job.title.to_sym, checked: true, name: "jobs[#{job.title}]" %>
+              <%= check_box_tag "job_ids[]", job.id, checked: true %>
               <%= f.label job.title %>
             </li>
           <% else %>
             <li class='list-group-item'>
-              <%= check_box_tag "jobs[#{job.title}]" %>
+              <%= check_box_tag "job_ids[]", job.id %>
               <%= f.label job.title  %>
             </li>
           <% end%>
