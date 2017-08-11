@@ -76,6 +76,7 @@ RSpec.describe ShiftsController, type: :controller do
             "id"=>shift_no_user.id
           }
         }
+
         let!(:patch_request) { patch :update, params: patch_params }
 
         it 'responds with a status of 302' do
@@ -88,6 +89,20 @@ RSpec.describe ShiftsController, type: :controller do
         end
         it 'redirects to the show show page' do
           expect(patch_request).to redirect_to(show_path(show))
+        end
+        context 'when given a commit of "Unschedule Me"' do
+          let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: Random.new_seed.to_s[0..3])}
+          let(:unschedule_patch_params) {
+            {
+              "utf8"=>"✓",
+              "authenticity_token"=>"xXsnquheIKGjFk2GjDapFVF8v7b9gD6QF2rl6eYlXWd4DXPmc7uzbWYCZNJLYf0BVsoEC50BXtVgM5Cj+uGy8A==",
+              "commit"=>"Unschedule Me",
+              "id"=>shift.id}
+            }
+          it 'removes the a schedule user from a shift' do
+            patch :update, params: unschedule_patch_params
+            expect(shift.reload.user_id).to be_nil
+          end
         end
       end
 
