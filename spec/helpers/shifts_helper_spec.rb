@@ -7,6 +7,9 @@ RSpec.describe ShiftsHelper, type: :helper do
   let(:unscheduled_worker) { FactoryGirl.create(:user)}
   let(:scheduled_worker) { FactoryGirl.create(:user)}
   let!(:job) { FactoryGirl.create(:job)}
+  let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: unavailable_worker.id)}
+  let!(:aut_job2) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: unscheduled_worker.id)}
+  let!(:aut_job3) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: scheduled_worker.id)}
   let!(:shift) { FactoryGirl.create(:shift, show_id: show.id, user_id: unavailable_worker.id, job_id: job.id) }
   let!(:shift_2) { FactoryGirl.create(:shift, show_id: show_2.id, user_id: scheduled_worker.id, job_id: job.id) }
   describe '#available?' do

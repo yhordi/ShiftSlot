@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  let(:user) { FactoryGirl.create(:user) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:job) { FactoryGirl.create(:job) }
+  let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
   before(:each) do
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
     allow(controller).to receive(:current_user).and_return(user)
@@ -80,9 +82,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#search' do
     let(:show) { FactoryGirl.create(:show) }
-    let(:user) { FactoryGirl.create(:user) }
-    let(:job) { FactoryGirl.create(:job)}
-    let(:shift) { FactoryGirl.create(:shift, job_id: job.id) }
+    let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
     let(:params) { {"show_id"=>show.id, "search"=>user.name, "controller"=>"users", "action"=>"search", "shift_id"=>shift.id} }
     let(:empty_params) { {"show_id"=>show.id, "search"=>"", "controller"=>"users", "action"=>"search"} }
     let(:wrong_params) { {"show_id"=>show.id, "search"=>"i823y4heogjvough34o2iwhbnlfdkbjlowi", "controller"=>"users", "action"=>"search"} }

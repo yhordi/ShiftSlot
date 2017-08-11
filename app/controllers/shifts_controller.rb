@@ -28,8 +28,16 @@ class ShiftsController < ApplicationController
 
   def update
     shift = Shift.find(params[:id])
-    shift.user_id = params[:user_id]
-    shift.save
+    if current_user.admin
+      shift.user_id = params[:user_id]
+    else
+      shift.user_id = current_user.id
+    end
+    if shift.save
+      flash[:notice] = "You're signed up to work!"
+    else
+      flash[:alert] = shift.errors.full_messages
+    end
     redirect_to show_path(shift.show_id)
   end
   private
