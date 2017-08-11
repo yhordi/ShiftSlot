@@ -16,11 +16,7 @@
               <%= shift.user.name %>: <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
               <%= form_tag shift_path(shift), method: :patch, class: 'inline' do %>
                 <% hidden_field_tag value: 'shift.user.id'%>
-                <% if current_user.admin %>
-                  <%= submit_tag 'Remove Worker', class: 'btn btn-warning' %>
-                <% else %>
-                  <%= submit_tag 'Remove Worker', class: 'btn btn-warning' %>
-                <% end %>
+                <%= submit_tag 'Remove Worker', class: 'btn btn-warning' %>
               <% end %>
             <% else %>
               <% if current_user.admin %>
