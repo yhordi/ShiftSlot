@@ -13,14 +13,18 @@
         <% shifts.each do |shift| %>
           <li class='list-group-item'>
             <% if shift.user %>
-              <%= shift.user.name %>: <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
+              <%= shift.user.name %>: <%= shift.job.title %>
               <%= form_tag shift_path(shift), method: :patch, class: 'inline' do %>
                 <% hidden_field_tag value: 'shift.user.id'%>
-                <%= submit_tag 'Remove Worker', class: 'btn btn-warning' %>
+                <% if current_user.admin %>
+                  <%= submit_tag 'Remove Worker', class: 'btn btn-warning'%> <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
+                <% else %>
+                  <%= submit_tag 'Unschedule Me', class: 'btn btn-danger', data: { confirm: 'You will be unscheduled from this shift. Are you sure?' } %>
+                <% end %>
               <% end %>
             <% else %>
               <% if current_user.admin %>
-                <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %> <%= shift.job.title %> <%= link_to '', shift_path(shift), class: 'glyphicon glyphicon-remove red', method: :delete %>
+                <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %> <%= shift.job.title %> <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
               <% else %>
                 <%= form_tag shift_path(shift), method: 'PATCH', class: 'inline' do %>
                   <% hidden_field_tag :user_id, value: current_user.id %>
