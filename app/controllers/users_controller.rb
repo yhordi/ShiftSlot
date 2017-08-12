@@ -10,12 +10,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @jobs = Job.all
     @user = User.find(params[:id])
     render :edit
   end
 
   def update
     @user = User.find(params[:id])
+    @user.adjust_jobs(params[:job_ids])
     @user.update!(user_params)
     flash[:notice] = 'User updated'
     redirect_to edit_user_path(@user.id)

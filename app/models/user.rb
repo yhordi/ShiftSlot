@@ -10,5 +10,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  def authorized?(job)
+    self.jobs.include?(job)
+  end
 
+  def adjust_jobs(job_ids)
+    self.jobs = job_ids.map do |job_id|
+      Job.find_by_id(job_id)
+    end
+  end
 end

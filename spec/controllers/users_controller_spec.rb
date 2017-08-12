@@ -55,11 +55,12 @@ RSpec.describe UsersController, type: :controller do
 
   describe '#update' do
     let(:params) {
-      {"utf8"=>"✓",
-      "authenticity_token"=>"SipsF8z0O9ioN5y7E/q7qikVVB1Q5tNz1Aj1noi1DVEsFwEJ7mzf8Q5yAqvAqpz+Y9N4C1av/JNBa7dvNP6CHw==",
-      "user"=>{"admin"=>"1"},
-      "commit"=>"Update User",
-      "id"=>user.id}
+       {"utf8"=>"✓",
+         "authenticity_token"=>"6q5va/I4MW7HpnRCIDtVxFU0AIoVBPZeC+tyFQsn93ZEDQlbY2kn51/bugeXRwRAENaDryVXajnhOt9KswqDAw==",
+          "user"=>{"admin"=>"1"},
+          "job_ids"=>[job.id.to_s],
+          "commit"=>"Update User",
+          "id"=>user.id}
     }
     let(:hit_update) { patch :update, params: params}
     it 'updates the user in the database' do

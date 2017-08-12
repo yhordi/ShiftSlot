@@ -4,6 +4,7 @@
       <%= @user.name %>'s Profile
         <% if current_user == @user %>
           <%= link_to '', edit_user_registration_path, html_options = {class: 'glyphicon glyphicon-edit'}%>
+
         <% elsif current_user.admin %>
           <%= link_to '', edit_user_path(@user.id), html_options = {class: 'glyphicon glyphicon-edit'}%>
       <% end %>
@@ -24,7 +25,12 @@
     </li>
     <% if current_user.admin %>
     <li class='list-group-item'>
-      Auhtorized for: [jobs go here like: Door, Bar, Sound, Security]
+      Auhtorized for:
+      <div>
+        <% @user.jobs.each do |job| %>
+        <%= job.title %>
+        <% end %>
+      </div>
     </li>
     <li class='list-group-item'>
       Verified: Maybe something that cofirms that they have worked and are trustworthy here
