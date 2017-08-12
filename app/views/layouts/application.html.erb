@@ -29,8 +29,15 @@
                     <%= link_to 'Workers', users_path, class: 'nav-link'  %>
                   </li>
                 <% end %>
-                <li class="nav-item">
-                  <%= link_to 'Venues', venues_path, class: 'nav-link' %>
+                <li class="dropdown">
+                  <a href='#' class='dropdown-toggle', data-toggle='dropdown' role='button' aria-haspopup='true', aria-expanded='false'>Venues</a>
+                  <ul class='dropdown-menu'>
+                    <% Venue.all.each do |venue| %>
+                      <li>
+                        <%= link_to venue.name, venue_path(venue) %>
+                      </li>
+                    <% end %>
+                  </ul>
                 </li>
                 <ul class='nav navbar-nav navbar-right'>
                   <li class="nav-item">
