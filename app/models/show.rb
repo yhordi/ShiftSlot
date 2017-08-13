@@ -12,4 +12,8 @@ class Show < ApplicationRecord
   def readable(time)
     time.strftime('%I:%M%p')
   end
+
+  def day
+    self.start.strftime('%A')
+  end
 end
