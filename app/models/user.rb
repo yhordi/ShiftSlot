@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :preferred_days
   has_many :shifts
   has_many :shows, through: :shifts
   has_many :authorized_jobs
