@@ -3,42 +3,43 @@
     <%= @user.name.titleize %>'s Permissions
   </h2>
   <div class="row">
-    <div class="col-lg-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class='panel-title'>
-            Authorize for:
-          </h3>
-        </div>
-        <%= form_for @user, method: :patch do |f| %>
-        <ul class="list-group">
-          <li class='list-group-item'>
-            <%= f.check_box :admin %>
-            <%= f.label 'make admin?' %>
-          </li>
-          <% @jobs.each do |job| %>
-          <% if @user.authorized?(job) %>
-          <li class='list-group-item'>
-            <%= check_box_tag "job_ids[]", job.id, checked: true %>
-            <%= f.label job.title %>
-          </li>
-          <% else %>
-          <li class='list-group-item'>
-            <%= check_box_tag "job_ids[]", job.id %>
-            <%= f.label job.title  %>
-          </li>
-          <% end%>
+    <% if current_user.admin %>
+      <div class="col-lg-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class='panel-title'>
+              Authorize for:
+            </h3>
+          </div>
+          <%= form_for @user, method: :patch do |f| %>
+          <ul class="list-group">
+            <li class='list-group-item'>
+              <%= f.check_box :admin %>
+              <%= f.label 'make admin?' %>
+            </li>
+            <% @jobs.each do |job| %>
+            <% if @user.authorized?(job) %>
+            <li class='list-group-item'>
+              <%= check_box_tag "job_ids[]", job.id, checked: true %>
+              <%= f.label job.title %>
+            </li>
+            <% else %>
+            <li class='list-group-item'>
+              <%= check_box_tag "job_ids[]", job.id %>
+              <%= f.label job.title  %>
+            </li>
+            <% end%>
+            <% end %>
+          </ul>
+          <div>
+            <%= f.submit 'Update Permissions', class: 'btn btn-default' %>
+          </div>
           <% end %>
-        </ul>
-        <div>
-          <%= f.submit %>
         </div>
-        <% end %>
       </div>
-    </div>
+    <% end %>
     <div class="col-lg-8">
-
-      <div class="panel panel-default">
+      <div class="panel panel-info">
         <div class="panel-heading">
           <h3 class="panel-title">Work Availability</h3>
         </div>
@@ -55,11 +56,14 @@
               Leave it blank if you could go either way
             </div>
           </div>
-          <div class="btn-group" role="group" aria-label="...">
-            <% PreferredDay.days.each do |day| %>
-              <input type="button" value="<%= day %>" class="btn btn-default day" data-preferred='neutral'></input>
-            <% end %>
-          </div>
+          <%= form_for [@user, PreferredDay.new] do |f| %>
+            <div class="btn-group" role="group" aria-label="...">
+              <% PreferredDay.days.each do |day| %>
+                <%= f.button day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
+              <% end %>
+            </div>
+            <%= f.submit 'Update Availability',  class: 'btn btn-default'%>
+          <% end %>
         </div>
       </div>
     </div>
