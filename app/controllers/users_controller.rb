@@ -10,7 +10,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @days = PreferredDay.all
     @jobs = Job.all
     @user = User.find(params[:id])
     render :edit

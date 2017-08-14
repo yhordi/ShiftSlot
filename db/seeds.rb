@@ -22,9 +22,5 @@ Venue.all.each do |venue|
 end
 Venue.find(2).jobs.delete(Job.find(2))
 User.all.each { |user| user.jobs << Job.find(3)}
-days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-days.each do |day|
-  PreferredDay.create(name: day)
-end
 
 User.create(name: 'admin', admin: true, email: 'admin@email.com', password: ENV['PASSWORD'])

@@ -30,8 +30,27 @@
       <% end %>
   </div>
   <div class="col-lg-6">
-    <% @days.each do |day| %>
-      <%= check_box_tag "preferred_days[]", day.id %>
-    <% end %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Work Availability</h3>
+      </div>
+      <div class="panel-body">
+        <div>
+          Click a day to change your availability
+          <div>
+            <span class='green'>Green = you'd prefer to work that day</span>
+          </div>
+          <div>
+            <span class="red"> Red = You can't work that day</span>
+          </div>
+        </div>
+        <div class="btn-group" role="group" aria-label="...">
+        <% PreferredDay.days.each do |day| %>
+          <button type="button" class="btn btn-default day"> <%= day %> </button>
+        <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
