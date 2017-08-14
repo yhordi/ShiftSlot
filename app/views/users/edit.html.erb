@@ -1,57 +1,65 @@
-<h2>
-  <%= @user.name %>'s Permissions
-</h2>
-<div class="row">
-  <div class="col-lg-6">
-    Authorize for:
-      <%= form_for @user, method: :patch do |f| %>
-      <ul class="list-group">
-        <li class='list-group-item'>
-          <%= f.check_box :admin %>
-          <%= f.label 'make admin?' %>
-        </li>
-        <% @jobs.each do |job| %>
-          <% if @user.authorized?(job) %>
-            <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id, checked: true %>
-              <%= f.label job.title %>
-            </li>
-          <% else %>
-            <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id %>
-              <%= f.label job.title  %>
-            </li>
-          <% end%>
-        <% end %>
-    </ul>
-      <div>
-        <%= f.submit %>
-      </div>
-      <% end %>
-  </div>
-  <div class="col-lg-6">
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Work Availability</h3>
-      </div>
-      <div class="panel-body">
-        <div>
-          Click a day to change your availability:
-          <div>
-            <span class='green'>Green = you'd prefer to work that day</span>
-          </div>
-          <div>
-            <span class="red"> Red = You can't work that day</span>
-          </div>
-          <div>
-            Leave it blank if you could go either way
-          </div>
+<div class="container well well-sm">
+  <h2>
+    <%= @user.name.titleize %>'s Permissions
+  </h2>
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class='panel-title'>
+            Authorize for:
+          </h3>
         </div>
-        <div class="btn-group" role="group" aria-label="...">
-        <% PreferredDay.days.each do |day| %>
-          <button type="button" class="btn btn-default day" data-preferred='neutral'> <%= day %> </button>
+        <%= form_for @user, method: :patch do |f| %>
+        <ul class="list-group">
+          <li class='list-group-item'>
+            <%= f.check_box :admin %>
+            <%= f.label 'make admin?' %>
+          </li>
+          <% @jobs.each do |job| %>
+          <% if @user.authorized?(job) %>
+          <li class='list-group-item'>
+            <%= check_box_tag "job_ids[]", job.id, checked: true %>
+            <%= f.label job.title %>
+          </li>
+          <% else %>
+          <li class='list-group-item'>
+            <%= check_box_tag "job_ids[]", job.id %>
+            <%= f.label job.title  %>
+          </li>
+          <% end%>
+          <% end %>
+        </ul>
+        <div>
+          <%= f.submit %>
+        </div>
         <% end %>
+      </div>
+    </div>
+    <div class="col-lg-8">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Work Availability</h3>
+        </div>
+        <div class="panel-body">
+          <div>
+            Click a day to change your availability:
+            <div>
+              <span class='green'>Green = you'd prefer to work that day</span>
+            </div>
+            <div>
+              <span class="red"> Red = You can't work that day</span>
+            </div>
+            <div>
+              Leave it blank if you could go either way
+            </div>
+          </div>
+          <div class="btn-group" role="group" aria-label="...">
+          <% PreferredDay.days.each do |day| %>
+            <button type="button" class="btn btn-default day" data-preferred='neutral'> <%= day %> </button>
+          <% end %>
+          </div>
         </div>
       </div>
     </div>
