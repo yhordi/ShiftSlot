@@ -21,7 +21,7 @@
       Last show worked:
     </li>
     <li class='list-group-item'>
-      Availability: A calendar or something of that sort will go here
+      Availability: <%= link_to 'Change Availability', edit_user_path(@user) %>
     </li>
     <% if current_user.admin %>
     <li class='list-group-item'>

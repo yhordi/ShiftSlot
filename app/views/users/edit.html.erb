@@ -29,4 +29,9 @@
       </div>
       <% end %>
   </div>
+  <div class="col-lg-6">
+    <% @days.each do |day| %>
+      <%= check_box_tag "preferred_days[]", day.id %>
+    <% end %>
+  </div>
 </div>
