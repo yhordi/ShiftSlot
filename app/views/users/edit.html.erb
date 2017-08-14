@@ -56,9 +56,9 @@
             </div>
           </div>
           <div class="btn-group" role="group" aria-label="...">
-          <% PreferredDay.days.each do |day| %>
-            <button type="button" class="btn btn-default day" data-preferred='neutral'> <%= day %> </button>
-          <% end %>
+            <% PreferredDay.days.each do |day| %>
+              <input type="button" value="<%= day %>" class="btn btn-default day" data-preferred='neutral'></input>
+            <% end %>
           </div>
         </div>
       </div>

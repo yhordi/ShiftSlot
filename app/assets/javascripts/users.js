@@ -9,19 +9,18 @@ $(document).ready(function(){
 const determinePreferrence = ($button) => {
   // I'm trying to figure out how to determine if the button has been clicked
   // based on data available from the dom
-  if($button.data('preferred') == 'neutral') {
-    $button.data('preferred', true);
+  console.log($button.attr('data-preferred'))
+  if($button.attr('data-preferred') == 'neutral') {
+    $button.attr('data-preferred', true);
     $button.removeClass('btn-default');
     $button.addClass('btn-success');
-  } else if($button.data('preferred') == true) {
-    console.log*'yoyoyo'
-    $button.data('preferred', false);
+  } else if($button.attr('data-preferred') == 'true') {
+    $button.attr('data-preferred', false);
     $button.removeClass('btn-success');
     $button.addClass('btn-danger');
   } else {
-    $button.data('preferred', 'neutral')
+    $button.attr('data-preferred', 'neutral')
     $button.removeClass('btn-danger')
     $button.addClass('btn-default');
-
   }
 }
