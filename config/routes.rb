@@ -10,12 +10,7 @@ Rails.application.routes.draw do
   post 'users/search', to: 'users#search'
 
   resources :users, only: [:edit, :show, :index, :update] do
-
-    resources :preferred_days, only: [:create] do
-      collection do
-        put 'update_all'
-      end
-    end
+    resources :preferred_days, only: [:create, :update]
   end
   root 'landings#index'
 end

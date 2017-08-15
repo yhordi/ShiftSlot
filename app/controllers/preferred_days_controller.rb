@@ -13,7 +13,16 @@ class PreferredDaysController < ApplicationController
   end
 
   def update_all
-    p params
+    p "*"*100
+    p User.find(params[:user_id]).day_preferences
+      # # if the day exists update it otherwise create it
+      # if params[:days][day] == 'false'
+      #   PreferredDay.create(name: day, preferred: false, user_id: params[:user_id])
+      # else params[:days][day] == 'true/'
+      #   PreferredDay.create(name: day, preferred: true, user_id: params[:user_id])
+      # end
+    # flash[:notice] = 'days updated'
+    redirect_to edit_user_path(params[:user_id])
   end
 
 end

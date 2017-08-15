@@ -56,29 +56,22 @@
               Leave it blank if you could go either way
             </div>
           </div>
-          <% if @user.preferred_days.any? %>
-            <%= form_tag "/users/#{@user.id}/preferred_days/update_all", id: 'preferred_day', method: 'PUT' do |f| %>
               <% @user.day_preferences.each_pair do |day, pref| %>
+              <% pref_day = PreferredDay.where(user_id: @user.id, name: day)[0] %>
                 <% if pref %>
-                  <%= button_tag day, type: 'button', name: day, value: 'true', class: "btn-success btn day", data: {preferred: 'true'} %>
+                  <%= form_for [@user, pref_day], html: {class: 'inline'} do |f| %>
+                    <%= button_tag day, type: 'button', name: day, value: 'true', class: "btn-success btn day", data: {preferred: 'true'} %>
+                  <% end %>
                 <% elsif pref == false %>
-                  <%= button_tag day, type: 'button', name: day, value: 'false', class: "btn-danger btn day", data: {preferred: 'false'} %>
+                  <%= form_for [@user, pref_day], html: {class: 'inline'} do |f| %>
+                    <%= button_tag day, type: 'button', name: day, value: 'false', class: "btn-danger btn day", data: {preferred: 'false'} %>
+                  <% end %>
                 <% else %>
-                  <%= button_tag day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
+                  <%= form_for [@user, PreferredDay.new], html: {class: 'inline'} do |f| %>
+                    <%= button_tag day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
+                  <% end %>
                 <% end %>
-              <% end %>
-              <%= submit_tag 'Update Availability',  class: 'btn btn-default'%>
             <% end %>
-          <% else %>
-            <%= form_for [@user, PreferredDay.new] do |f| %>
-              <div class="btn-group" role="group" aria-label="...">
-                <% PreferredDay.days.each new_preferred_day(@user), id: 'preferred_day' do |day| %>
-                  <%= f.button day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
-                <% end %>
-              </div>
-              <%= f.submit 'Update Availability',  class: 'btn btn-default'%>
-            <% end %>
-          <% end %>
         </div>
       </div>
     </div>
