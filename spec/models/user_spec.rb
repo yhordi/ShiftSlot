@@ -27,12 +27,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#day_preferences' do
-    it 'constructs a hash of the day preference for the user' do
-      expect(user.day_preferences[day.name]).to eq(true)
-    end
-  end
-
   describe '#add_days' do
     it 'automatically sets up a user with seven preferred days after save' do
       new_user.save
