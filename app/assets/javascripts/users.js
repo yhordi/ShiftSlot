@@ -29,7 +29,7 @@ const determinePreferrence = ($button) => {
 }
 
 const addHidden = ($button) => {
-  $('#new_preferred_day').prepend(`<input type='hidden' id=${$button.attr('name')}Attr name=days[${$button.attr('name')}] value=true/>`)
+  $('#preferred_day').prepend(`<input type='hidden' id=${$button.attr('name')}Attr name=days[${$button.attr('name')}] value=true/>`)
 }
 
 const updateHidden = (preference, $button) => {

@@ -19,15 +19,15 @@
             </li>
             <% @jobs.each do |job| %>
             <% if @user.authorized?(job) %>
-            <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id, checked: true %>
-              <%= f.label job.title %>
-            </li>
+              <li class='list-group-item'>
+                <%= check_box_tag "job_ids[]", job.id, checked: true %>
+                <%= f.label job.title %>
+              </li>
             <% else %>
-            <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id %>
-              <%= f.label job.title  %>
-            </li>
+              <li class='list-group-item'>
+                <%= check_box_tag "job_ids[]", job.id %>
+                <%= f.label job.title  %>
+              </li>
             <% end%>
             <% end %>
           </ul>
@@ -57,11 +57,22 @@
             </div>
           </div>
           <% if @user.preferred_days.any? %>
-            <% # next step is to conditionally render days with success or alert classes based on the user's preference %>
+            <%= form_tag "/users/#{@user.id}/preferred_days/update_all", id: 'preferred_day', method: 'PUT' do |f| %>
+              <% @user.day_preferences.each_pair do |day, pref| %>
+                <% if pref %>
+                  <%= button_tag day, type: 'button', name: day, value: 'true', class: "btn-success btn day", data: {preferred: 'true'} %>
+                <% elsif pref == false %>
+                  <%= button_tag day, type: 'button', name: day, value: 'false', class: "btn-danger btn day", data: {preferred: 'false'} %>
+                <% else %>
+                  <%= button_tag day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
+                <% end %>
+              <% end %>
+              <%= submit_tag 'Update Availability',  class: 'btn btn-default'%>
+            <% end %>
           <% else %>
             <%= form_for [@user, PreferredDay.new] do |f| %>
               <div class="btn-group" role="group" aria-label="...">
-                <% PreferredDay.days.each do |day| %>
+                <% PreferredDay.days.each new_preferred_day(@user), id: 'preferred_day' do |day| %>
                   <%= f.button day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
                 <% end %>
               </div>

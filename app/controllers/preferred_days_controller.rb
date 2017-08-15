@@ -12,7 +12,8 @@ class PreferredDaysController < ApplicationController
     redirect_to edit_user_path(params[:user_id])
   end
 
-  def update
+  def update_all
+    p params
   end
 
 end
