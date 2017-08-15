@@ -1,0 +1,10 @@
+<% if day.preferred %>
+  <%= f.hidden_field :preferred, value: false %>
+  <%= button_tag day.name, name: day.name, value: 'true', class: "btn-success btn day" %>
+<% elsif day.preferred == false %>
+  <%= f.hidden_field :preferred, value: nil %>
+  <%= button_tag day.name, name: day.name, value: 'true', class: "btn-danger btn day" %>
+<% else %>
+  <%= f.hidden_field :preferred, value: true %>
+  <%= button_tag day.name, name: day.name, value: 'true', class: "btn-default btn day" %>
+<% end %>

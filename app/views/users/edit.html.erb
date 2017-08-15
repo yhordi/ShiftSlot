@@ -56,22 +56,11 @@
               Leave it blank if you could go either way
             </div>
           </div>
-              <% @user.day_preferences.each_pair do |day, pref| %>
-              <% pref_day = PreferredDay.where(user_id: @user.id, name: day)[0] %>
-                <% if pref %>
-                  <%= form_for [@user, pref_day], html: {class: 'inline'} do |f| %>
-                    <%= button_tag day, type: 'button', name: day, value: 'true', class: "btn-success btn day", data: {preferred: 'true'} %>
-                  <% end %>
-                <% elsif pref == false %>
-                  <%= form_for [@user, pref_day], html: {class: 'inline'} do |f| %>
-                    <%= button_tag day, type: 'button', name: day, value: 'false', class: "btn-danger btn day", data: {preferred: 'false'} %>
-                  <% end %>
-                <% else %>
-                  <%= form_for [@user, PreferredDay.new], html: {class: 'inline'} do |f| %>
-                    <%= button_tag day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
-                  <% end %>
-                <% end %>
+          <div id='daysContainer'>
+            <% @user.preferred_days.each do |day| %>
+              <%= render partial: '/preferred_days/day_form', locals: {day: day, user: @user} %>
             <% end %>
+          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  after_save :add_days
   has_many :preferred_days
   has_many :shifts
   has_many :shows, through: :shifts
@@ -21,15 +22,10 @@ class User < ApplicationRecord
     end
   end
 
-  def day_preferences
-    prefs = {}
+  def add_days
     PreferredDay.days.each do |day|
-      prefs[day] = nil
+      self.preferred_days << PreferredDay.create(name: day, user_id: self.id)
     end
-    self.preferred_days.each do |day|
-      prefs[day.name] = day.preferred
-    end
-    prefs
   end
 
 end

@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) {FactoryGirl.create :user}
+  let(:new_user) {FactoryGirl.build :user}
   let(:job) {FactoryGirl.create :job}
-  let!(:day) {FactoryGirl.create :preferred_day, user_id: user.id}
+  # let!(:day) {FactoryGirl.create :preferred_day, user_id: user.id}
   describe 'validations' do
     it { is_expected.to validate_presence_of :email }
     it { is_expected.to validate_length_of(:name).is_at_least(3) }
@@ -26,9 +27,16 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'day_preferences' do
+  describe '#day_preferences' do
     it 'constructs a hash of the day preference for the user' do
       expect(user.day_preferences[day.name]).to eq(true)
+    end
+  end
+
+  describe '#add_days' do
+    it 'automatically sets up a user with seven preferred days after save' do
+      new_user.save
+      expect(new_user.preferred_days.length).to eq(7)
     end
   end
 end
