@@ -20,4 +20,16 @@ class User < ApplicationRecord
       Job.find_by_id(job_id)
     end
   end
+
+  def day_preferences
+    prefs = {}
+    PreferredDay.days.each do |day|
+      prefs[day] = nil
+    end
+    self.preferred_days.each do |day|
+      prefs[day.name] = day.preferred
+    end
+    prefs
+  end
+
 end
