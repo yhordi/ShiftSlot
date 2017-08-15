@@ -56,13 +56,17 @@
               Leave it blank if you could go either way
             </div>
           </div>
-          <%= form_for [@user, PreferredDay.new] do |f| %>
-            <div class="btn-group" role="group" aria-label="...">
-              <% PreferredDay.days.each do |day| %>
-                <%= f.button day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
-              <% end %>
-            </div>
-            <%= f.submit 'Update Availability',  class: 'btn btn-default'%>
+          <% if @user.preferred_days.any? %>
+            <% # next step is to conditionally render days with success or alert classes based on the user's preference %>
+          <% else %>
+            <%= form_for [@user, PreferredDay.new] do |f| %>
+              <div class="btn-group" role="group" aria-label="...">
+                <% PreferredDay.days.each do |day| %>
+                  <%= f.button day, type: 'button', name: day, value: 'neutral', class: "btn btn-default day", data: {preferred: 'neutral'} %>
+                <% end %>
+              </div>
+              <%= f.submit 'Update Availability',  class: 'btn btn-default'%>
+            <% end %>
           <% end %>
         </div>
       </div>
