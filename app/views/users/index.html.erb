@@ -7,6 +7,9 @@
       <th>
         email
       </th>
+      <th>
+        authorized jobs
+      </th>
     </tr>
   <% @users.each do |user| %>
     <tr>
@@ -15,6 +18,11 @@
       </td>
       <td>
         <%= user.email %>
+      </td>
+      <td>
+        <% user.jobs.each do |job| %>
+          <%= job.title %>
+        <% end %>
       </td>
     </tr>
   <% end %>

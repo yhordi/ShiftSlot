@@ -1,32 +1,68 @@
-<h2>
-  <%= @user.name %>'s Permissions
-</h2>
-<div class="row">
-  <div class="col-lg-6">
-    Authorize for:
-      <%= form_for @user, method: :patch do |f| %>
-      <ul class="list-group">
-        <li class='list-group-item'>
-          <%= f.check_box :admin %>
-          <%= f.label 'make admin?' %>
-        </li>
-        <% @jobs.each do |job| %>
-          <% if @user.authorized?(job) %>
+<div class="container well well-sm">
+  <h2>
+    <%= @user.name.titleize %>'s Permissions
+  </h2>
+  <div class="row">
+    <% if current_user.admin %>
+      <div class="col-lg-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class='panel-title'>
+              Authorize for:
+            </h3>
+          </div>
+          <%= form_for @user, method: :patch do |f| %>
+          <ul class="list-group">
             <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id, checked: true %>
-              <%= f.label job.title %>
+              <%= f.check_box :admin %>
+              <%= f.label 'make admin?' %>
             </li>
-          <% else %>
-            <li class='list-group-item'>
-              <%= check_box_tag "job_ids[]", job.id %>
-              <%= f.label job.title  %>
-            </li>
-          <% end%>
-        <% end %>
-    </ul>
-      <div>
-        <%= f.submit %>
+            <% @jobs.each do |job| %>
+            <% if @user.authorized?(job) %>
+              <li class='list-group-item'>
+                <%= check_box_tag "job_ids[]", job.id, checked: true %>
+                <%= f.label job.title %>
+              </li>
+            <% else %>
+              <li class='list-group-item'>
+                <%= check_box_tag "job_ids[]", job.id %>
+                <%= f.label job.title  %>
+              </li>
+            <% end%>
+            <% end %>
+          </ul>
+          <div>
+            <%= f.submit 'Update Permissions', class: 'btn btn-default' %>
+          </div>
+          <% end %>
+        </div>
       </div>
-      <% end %>
+    <% end %>
+    <div class="col-lg-8">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Work Availability</h3>
+        </div>
+        <div class="panel-body">
+          <div>
+            Click a day to change your availability:
+            <div>
+              <span class='green'>Green = you'd prefer to work that day</span>
+            </div>
+            <div>
+              <span class="red"> Red = You can't work that day</span>
+            </div>
+            <div>
+              Leave it blank if you could go either way
+            </div>
+          </div>
+          <div id='daysContainer'>
+            <% @user.preferred_days.each do |day| %>
+              <%= render partial: '/preferred_days/day_form', locals: {day: day, user: @user} %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  after_save :add_days
+  has_many :preferred_days
   has_many :shifts
   has_many :shows, through: :shifts
   has_many :authorized_jobs
@@ -19,4 +21,11 @@ class User < ApplicationRecord
       Job.find_by_id(job_id)
     end
   end
+
+  def add_days
+    PreferredDay.days.each do |day|
+      self.preferred_days << PreferredDay.create(name: day, user_id: self.id)
+    end
+  end
+
 end

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   post 'users/search', to: 'users#search'
 
-  resources :users, only: [:edit, :show, :index, :update]
+  resources :users, only: [:edit, :show, :index, :update] do
+    resources :preferred_days, only: [:update]
+  end
   root 'landings#index'
 end

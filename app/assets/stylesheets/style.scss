@@ -6,7 +6,7 @@
   margin-top: 0;
   padding: .5em;
 }
-table, a {
+table, a, button, .day {
   font-family: 'Source Code Pro', monospace;
 }
 
@@ -16,6 +16,10 @@ table, a {
 
 .red{
   color: red;
+}
+
+.green{
+  color: #36d834;
 }
 
 table, tr, th, td { border: 1px solid #ccc; }
