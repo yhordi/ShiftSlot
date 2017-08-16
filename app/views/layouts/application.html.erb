@@ -34,7 +34,7 @@
                   <ul class='dropdown-menu'>
                     <% Venue.all.each do |venue| %>
                       <li>
-                        <%= link_to venue.name, venue_path(venue) %>
+                        <%= link_to venue.name, venue_shows_path(venue) %>
                       </li>
                     <% end %>
                   </ul>
