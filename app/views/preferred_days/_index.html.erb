@@ -1,0 +1,14 @@
+<td>
+  <% user.preferred_days.each do |day| %>
+    <% if day.preferred %>
+      <%=  day.name %>
+    <% end %>
+  <% end %>
+</td>
+<td>
+  <% user.preferred_days.each do |day| %>
+    <% if day.preferred == false%>
+      <span class='red'><%= day.name %></span>
+    <% end %>
+  <% end %>
+</td>
