@@ -1,24 +1,6 @@
-# README
+# ShiftSlot
+A DIY music scheduling application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![circleci build badge](https://circleci.com/gh/:owner/:repo.svg?style=shield&circle-token=:circle-tokenÂ)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+---
