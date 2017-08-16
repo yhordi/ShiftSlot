@@ -1,29 +1,59 @@
-<h2>Workers</h2>
-<table>
-    <tr>
-      <th>
-        name
-      </th>
-      <th>
-        email
-      </th>
-      <th>
-        authorized jobs
-      </th>
-    </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td>
-        <%= link_to user.name, user_path(user.id) %>
-      </td>
-      <td>
-        <%= user.email %>
-      </td>
-      <td>
-        <% user.jobs.each do |job| %>
-          <%= job.title %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+<div class="container">
+  <div class="row">
+    <div class="panel panel-warning">
+      <div class="panel panel-heading">
+        <h2 class='panel-title'>Workers</h2>
+      </div>
+        <table class='table'>
+            <tr>
+              <th>
+                Name
+              </th>
+              <th>
+                Email
+              </th>
+              <th>
+                Authorized Jobs
+              </th>
+              <th>
+                Preferred Days
+              </th>
+              <th>
+                Unavailable Days
+              </th>
+            </tr>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                <%= link_to user.name, user_path(user.id) %>
+              </td>
+              <td>
+                <%= user.email %>
+              </td>
+              <td>
+                <% user.jobs.each do |job| %>
+                  <%= job.title %>
+                <% end %>
+              </td>
+              <td>
+                <% user.preferred_days.each do |day| %>
+                  <% if day.preferred %>
+                    <%=  day.name %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td>
+                <% user.preferred_days.each do |day| %>
+                  <% if day.preferred == false%>
+                    <span class='red'><%= day.name %></span>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+
+      </div>
+    </div>
+
+</div>

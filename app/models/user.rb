@@ -28,4 +28,25 @@ class User < ApplicationRecord
     end
   end
 
+  def available?(show)
+    !scheduled?(show) && can_work?(show)
+  end
+
+  private
+
+  def can_work?(show)
+    work_day = self.preferred_days.find do |day|
+      show.day == day.name
+    end
+    return true if work_day.preferred != false
+    false
+  end
+
+  def scheduled?(show)
+    self.shifts.each do |shift|
+      return true if shift.show.date == show.date
+    end
+    false
+  end
+
 end

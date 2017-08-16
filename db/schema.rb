@@ -95,13 +95,4 @@ ActiveRecord::Schema.define(version: 20170813005746) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "venues_jobs", force: :cascade do |t|
-    t.integer  "venue_id"
-    t.integer  "job_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["job_id"], name: "index_venues_jobs_on_job_id", using: :btree
-    t.index ["venue_id"], name: "index_venues_jobs_on_venue_id", using: :btree
-  end
-
 end
