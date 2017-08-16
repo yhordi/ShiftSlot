@@ -48,9 +48,9 @@ jobs:
       - run: bundle exec rake db:schema:load
 
       # run tests!
-      test:
-        override:
-          - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
+      - test:
+          override:
+            - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
       - run:
           name: run tests
           command: |
