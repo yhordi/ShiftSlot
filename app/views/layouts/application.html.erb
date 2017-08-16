@@ -58,8 +58,12 @@
             </ul>
           </div>
         </div>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+        <div class="container">
+          <div class="row">
+            <h3 class="notice"><%= notice %></h3>
+            <h3 class="alert red"><%= alert %></h3>
+          </div>
+        </div>
         <%= yield %>
   </body>
 </html>
