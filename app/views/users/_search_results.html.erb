@@ -4,13 +4,19 @@
       <%= form_for @shift do |f| %>
       <div class='button-toolbar' role='toolbar'>
         <%= hidden_field_tag 'user_id', value = result.id %>
-        <%= link_to result.name, user_path(result.id), class: 'btn btn-default' %>
-        <%= select_tag 'job_id', options_for_select(result.jobs.map {|j| [j.title, j.id]}), class: "btn btn-default btn-lg dropdown-toggle " %>
+        <% link_to result.name, user_path(result.id), class: 'btn btn-default' %>
         <% if result.available?(@show) %>
-          <%= f.submit 'Schedule Worker', class: 'btn btn-default btn-success' %>
+          <%= f.submit result.name, class: 'btn btn-default btn-success' %>
+          <% select_tag 'job_id', options_for_select(result.jobs.map {|j| [j.title, j.id]}), class: "btn btn-default btn-lg dropdown-toggle " %>
+          <%= 'Authorized for:' %>
+          <% result.jobs.each do |job| %>
+            <%= job.title  %>
+          <% end %>
         <% else %>
-        <%= f.submit 'Schedule Worker', class: 'btn btn-default  disabled' %>
-            Worker already scheduled for this day, or is otherwise unavailable.
+          <%= f.submit 'Schedule Worker', class: 'btn btn-default  disabled' %>
+        <div class='red'>
+          Worker already scheduled for this day, or is otherwise unavailable.
+        </div>
         <% end %>
       </div>
       <% end %>
