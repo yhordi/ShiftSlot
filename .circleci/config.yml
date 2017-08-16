@@ -17,9 +17,6 @@ jobs:
           POSTGRES_USER: shift_slot
           POSTGRES_DB: shift_slot-test
           POSTGRES_PASSWORD: ""
-        - test:
-            override:
-              - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
