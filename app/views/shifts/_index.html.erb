@@ -24,7 +24,9 @@
               <% end %>
             <% else %>
               <% if current_user.admin %>
-                <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %> <%= shift.job.title %> <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
+              <div class='btn-group'>
+                <span class="btn btn-default disabled"><%= shift.job.title %></span> <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %>  <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
+              </div>
               <% else %>
                 <%= form_tag shift_path(shift), method: 'PATCH', class: 'inline' do %>
                   <% hidden_field_tag :user_id, value: current_user.id %>
