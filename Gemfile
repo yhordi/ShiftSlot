@@ -17,10 +17,10 @@ gem 'devise'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'bootstrap-sass'
+gem 'faker'
 
 
 group :development, :test do
-  gem 'faker'
   gem 'byebug', platform: :mri
 end
 
