@@ -57,7 +57,7 @@
             </div>
           </div>
           <div id='daysContainer'>
-            <% @user.preferred_days.each do |day| %>
+            <% @user.preferred_days.order(:created_at).each do |day| %>
               <%= render partial: '/preferred_days/day_form', locals: {day: day, user: @user} %>
             <% end %>
           </div>
