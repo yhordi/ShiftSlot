@@ -10,9 +10,6 @@
                 Name
               </th>
               <th>
-                Email
-              </th>
-              <th>
                 Authorized Jobs
               </th>
               <th>
@@ -26,9 +23,6 @@
             <tr>
               <td>
                 <%= link_to user.name, user_path(user.id) %>
-              </td>
-              <td>
-                <%= user.email %>
               </td>
               <td>
                 <% user.jobs.each do |job| %>
