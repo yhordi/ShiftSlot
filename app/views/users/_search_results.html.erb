@@ -13,7 +13,7 @@
             <%= job.title  %>
           <% end %>
         <% else %>
-          <%= f.submit 'Schedule Worker', class: 'btn btn-default  disabled' %>
+          <%= f.submit "#{result.name}", class: 'btn btn-default  disabled' %>
         <div class='red'>
           Worker already scheduled for this day, or is otherwise unavailable.
         </div>

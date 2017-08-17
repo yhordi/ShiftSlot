@@ -33,7 +33,8 @@ class ShiftsController < ApplicationController
     else
       shift.user_id = current_user.id
     end
-    if shift.save
+    shift.save
+    if shift.user_id
       if !current_user.admin
         flash[:notice] = "You're signed up to work!"
       elsif current_user.admin
@@ -41,7 +42,7 @@ class ShiftsController < ApplicationController
         flash[:notice] = "#{worker.name} is signed up to work!"
       end
     else
-      flash[:alert] = shift.errors.full_messages
+      flash[:notice] = 'Worker removed'
     end
     redirect_to show_path(shift.show_id)
   end
