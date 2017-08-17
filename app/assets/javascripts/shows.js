@@ -11,7 +11,9 @@ $(document).ready(function(){
     });
   });
 
-  
+  $('#open-shifts').on('submit', '#searchForm', e => {
+    e.preventDefault();
+  })
 
   $('#open-shifts').on('keyup', '#worker-search', function(e) {
     e.preventDefault();
