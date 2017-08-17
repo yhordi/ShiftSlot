@@ -1,43 +1,5 @@
-<div class='panel panel-default'>
-  <div class='panel panel-heading'>
-    <h2>
-      <%= @user.name %>'s Profile
-        <% if current_user == @user %>
-          <%= link_to '', edit_user_registration_path, html_options = {class: 'glyphicon glyphicon-edit'}%>
-
-        <% elsif current_user.admin %>
-          <%= link_to '', edit_user_path(@user.id), html_options = {class: 'glyphicon glyphicon-edit'}%>
-      <% end %>
-    </h2>
+<div class="container">
+  <div class="row">
+    <%= render partial: 'users/show' %>
   </div>
-  <ul class='list-group'>
-    <li class='list-group-item'>
-      Email: <%= @user.email %>
-    </li>
-    <li class='list-group-item'>
-      Status:
-    </li>
-    <li class='list-group-item'>
-      Last show worked:
-    </li>
-    <li class='list-group-item'>
-      Availability: <%= link_to 'Change Availability', edit_user_path(@user) %>
-    </li>
-    <% if current_user.admin %>
-    <li class='list-group-item'>
-      Auhtorized for:
-      <div>
-        <% @user.jobs.each do |job| %>
-        <%= job.title %>
-        <% end %>
-      </div>
-    </li>
-    <li class='list-group-item'>
-      Verified: Maybe something that cofirms that they have worked and are trustworthy here
-    </li>
-    <li class='list-group-item'>
-      Notes
-    </li>
-    <% end %>
-  </ul>
 </div>

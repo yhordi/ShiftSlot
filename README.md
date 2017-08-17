@@ -1,24 +1,22 @@
-# README
+# ShiftSlot
+A DIY music scheduling application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+![circleci build badge](https://circleci.com/gh/:owner/:repo.svg?style=shield&circle-token=:circle-tokenÂ)
 
-Things you may want to cover:
+---
 
-* Ruby version
+#### Change log
 
-* System dependencies
+#### V1.0.1: bug fixes
 
-* Configuration
+#### General
+- Better error/notice rendering.
+- Now more responsive!™
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#### Admin
+- User availability displayed on the users/show page.
+- Remove email from users/index.
+- Remove schedule worker on search results. Now just click the worker's name to schedule them.
+- "You're scheduled to work" message now changed to reflect which worker was scheduled.
+- Search form no longer submits when enter is pressed
+- Search now shows which workers are unavailable by name

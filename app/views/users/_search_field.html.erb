@@ -1,4 +1,4 @@
-<form action="users/search" method="post">
+<form action="users/search" id="searchForm" method="post">
   <%= hidden_field_tag "show_id", value = show.id %>
   <%= hidden_field_tag "shift_id", value = shift.id %>
   <%= text_field_tag "search", value = nil, placeholder: 'Type your search here', id: 'worker-search' %>
