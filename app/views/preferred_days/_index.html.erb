@@ -1,14 +1,9 @@
 <td>
-  <% user.preferred_days.each do |day| %>
+  <% user.preferred_days.order(:created_at).each do |day| %>
     <% if day.preferred %>
-      <%=  day.name %>
-    <% end %>
-  <% end %>
-</td>
-<td>
-  <% user.preferred_days.each do |day| %>
-    <% if day.preferred == false%>
-      <span class='red'><%= day.name %></span>
+      <%=  day.name[0..1] %>
+    <% elsif day.preferred == false %>
+      <span class='red'><%= day.name[0..1] %></span>
     <% end %>
   <% end %>
 </td>
