@@ -1,7 +1,8 @@
 # ShiftSlot
 A DIY music scheduling application
 
-![circleci build badge](https://circleci.com/gh/:owner/:repo.svg?style=shield&circle-token=:circle-tokenÂ)
+![circleci build badge](https://circleci.com/gh/yhordi/ShiftSlot.svg?style=shield&circle-token=2ce3067a538a9061c4588456b2c0d20dcd95867d)
+
 
 ---
 
