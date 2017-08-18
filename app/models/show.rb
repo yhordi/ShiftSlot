@@ -16,4 +16,18 @@ class Show < ApplicationRecord
   def day
     self.start.strftime('%A')
   end
+
+  def staffed?
+    return false if self.shifts.empty?
+    self.shifts.each do |shift|
+      return false if !shift.user_id
+    end
+    true
+  end
+
+  private
+
+  def all_staffed?
+
+  end
 end
