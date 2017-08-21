@@ -7,7 +7,9 @@ class Shift < ApplicationRecord
   validate :authorized?
 
   def authorized?
+    p 'in auth'
     user = User.find_by(id: self.user_id)
+    p user.jobs
     if user && !user.jobs.include?(self.job)
       errors.add(:authorization, "#{user.name} is not authorized to work #{self.job.title}")
     end
