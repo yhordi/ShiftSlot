@@ -7,7 +7,11 @@
   <div id='shifts'>
     <ul class='list-group'>
       <% if shifts.empty? %>
-        No one is scheduled to work yet. Click the + up above to schedule someone.
+        <% if current_user.admin %>
+          No one is scheduled to work yet. Click the + up above to schedule someone.
+        <% else %>
+          The show organizer hasn't set up shifts yet. Check back later, or talk to the show organizer.
+        <% end %>
       <% else %>
       <% disabled = shifts.map(&:user).include?(current_user) %>
         <% shifts.each do |shift| %>
@@ -24,9 +28,19 @@
               <% end %>
             <% else %>
               <% if current_user.admin %>
-              <div class='btn-group'>
-                <span class="btn btn-default disabled"><%= shift.job.title %></span> <%= link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %>  <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
-              </div>
+                <%= form_for shift do |f| %>
+                  <span class="btn btn-default disabled"><%= shift.job.title %></span>
+                  <% if available_workers(shift).class == Array %>
+                    <%= select_tag 'worker_name', options_for_select(available_workers(shift).map {|w| w.name}), class: 'form-control btn btn-default' %>
+                  <% else %>
+                    <div class='red'>
+                      <%= available_workers(shift) %>
+                      <%= link_to 'Authorize a worker', users_path %>
+                    </div>
+                  <% end %>
+                  <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
+                  <%= f.submit 'Update Shift', class: 'btn' %>
+                <% end %>
               <% else %>
                 <%= form_tag shift_path(shift), method: 'PATCH', class: 'inline' do %>
                   <% hidden_field_tag :user_id, value: current_user.id %>

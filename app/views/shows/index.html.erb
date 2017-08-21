@@ -1,16 +1,27 @@
-<h1>shows</h1>
-
-<%= month_calendar events: @shows do |date, shows| %>
-  <%= date %>
-    <% shows.each do |show| %>
-      <% if show.staffed? %>
-      <div>
-        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
+<div class="container">
+  <div class="row">
+    <div class="col-12-lg">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Shows Calendar</h1>
+        </div>
+        <div class="panel-body">
+          <%= month_calendar events: @shows do |date, shows| %>
+            <%= date %>
+            <% shows.each do |show| %>
+              <% if show.staffed? %>
+              <div>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
+              </div>
+              <% else %>
+              <div>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
+              </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
       </div>
-      <% else %>
-      <div>
-        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
-      </div>
-      <% end %>
-    <% end %>
-<% end %>
+    </div>
+  </div>
+</div>

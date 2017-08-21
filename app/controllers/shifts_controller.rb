@@ -28,8 +28,9 @@ class ShiftsController < ApplicationController
 
   def update
     shift = Shift.find(params[:id])
+    worker = User.find_by(name: params[:worker_name])
     if current_user.admin || params[:commit] == 'Unschedule Me'
-      shift.user_id = params[:user_id]
+      shift.user_id = nil
     else
       shift.user_id = current_user.id
     end
@@ -49,6 +50,6 @@ class ShiftsController < ApplicationController
   private
 
   def shift_params
-    params.permit(:show_id, :user_id, :job_id)
+    params.permit(:show_id, :worker_name, :job_id)
   end
 end
