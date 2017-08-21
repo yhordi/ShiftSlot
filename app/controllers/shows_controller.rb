@@ -1,6 +1,7 @@
 class ShowsController < ApplicationController
   def index
-    # this will be the calendar route
+    @shows = Show.order(:created_at)
+    render :index
   end
 
   def show

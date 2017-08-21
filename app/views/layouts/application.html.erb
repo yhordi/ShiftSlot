@@ -24,6 +24,9 @@
         <div class='navbar-collapse collapse' id='collapse'>
           <ul class="nav navbar-nav">
             <% if current_user %>
+            <li class='nav-item'>
+              <%= link_to 'Calendar', calendar_path %>
+            </li>
             <% if current_user.admin %>
             <li class="nav-item">
               <%= link_to 'Workers', users_path, class: 'nav-link'  %>
