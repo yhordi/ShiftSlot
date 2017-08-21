@@ -24,18 +24,12 @@
               <% end %>
             <% else %>
               <% if current_user.admin %>
-              <div class='btn-group'>
-                <span class="btn btn-default disabled"><%= shift.job.title %></span>
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Assign Worker
-                    <%= available_workers(shift) %>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-
-                    </ul>
-                </div>
-                <% link_to 'Assign Worker', edit_shift_path(shift), class: 'btn btn-default', id: 'assign-worker' %>  <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
-              </div>
+                <%= form_for shift do |f| %>
+                  <span class="btn btn-default disabled"><%= shift.job.title %></span>
+                  <%= select_tag 'worker_name', options_for_select(available_workers(shift).map {|w| w.name}), class: 'form-control btn btn-default' %>
+                  <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
+                  <%= f.submit 'Update Shift', class: 'btn' %>
+                <% end %>
               <% else %>
                 <%= form_tag shift_path(shift), method: 'PATCH', class: 'inline' do %>
                   <% hidden_field_tag :user_id, value: current_user.id %>
