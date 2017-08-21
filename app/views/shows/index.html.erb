@@ -4,12 +4,12 @@
   <%= date %>
     <% shows.each do |show| %>
       <% if show.staffed? %>
-      <div class='green'>
-        <%= show.headliner %> @ <%= show.venue.name %>
+      <div>
+        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
       </div>
       <% else %>
-      <div class='red'>
-        <%= show.headliner %> @ <%= show.venue.name %>
+      <div>
+        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
       </div>
       <% end %>
     <% end %>
