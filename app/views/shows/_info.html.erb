@@ -1,6 +1,9 @@
 <tr>
   <td>
-    <%= link_to show.date, [show.venue, show] %>
+    <%= show.date %>
+  </td>
+  <td>
+    <%= link_to show.headliner, [show.venue, show] %>
   </td>
   <td>
     <%= show.readable(show.doors) %>
