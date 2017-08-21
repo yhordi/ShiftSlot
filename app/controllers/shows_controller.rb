@@ -1,8 +1,6 @@
 class ShowsController < ApplicationController
   def index
-    @venue = Venue.find(params[:venue_id])
-    @shows = @venue.shows.order(:start)
-    render :index
+    # this will be the calendar route
   end
 
   def show
