@@ -8,6 +8,7 @@ Venue.create!(name: 'Lucky Liquor', location: 'Tukwila, WA')
   s.start = s.doors + 30.minutes
   s.show_end = s.doors + 4.hours
   s.venue_id = [1,2,3].sample
+  s.headliner = Faker::RockBand.name
   s.save!
 end
 20.times do

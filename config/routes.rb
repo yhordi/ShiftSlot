@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :shifts, only: [:new, :create, :update, :destroy, :edit]
     end
   end
+  get 'shows/' => 'shows#index', as: 'calendar'
 
   post 'users/search', to: 'users#search'
 

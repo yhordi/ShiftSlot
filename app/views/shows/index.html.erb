@@ -1,36 +1,16 @@
-<div class="container">
-  <div class="row">
-    <%= link_to 'back to venues', venues_path %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class='panel-title'>
-          <%= @venue.name %>'s Shows
-        </h2>
+<h1>shows</h1>
+
+<%= month_calendar events: @shows do |date, shows| %>
+  <%= date %>
+    <% shows.each do |show| %>
+      <% if show.staffed? %>
+      <div>
+        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
       </div>
-      <table class='table'>
-        <tr>
-          <th>
-            Date
-          </th>
-          <th>
-            Doors
-          </th>
-          <th>
-            Start
-          </th>
-          <th>
-            End
-          </th>
-          <th>
-            Staffed?
-          </th>
-        </tr>
-        <% @shows.each do |show| %>
-          <%= render partial: 'info', locals: {show: show} %>
-        <% end %>
-      </table>
-
-    </div>
-
-  </div>
-</div>
+      <% else %>
+      <div>
+        <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
+      </div>
+      <% end %>
+    <% end %>
+<% end %>
