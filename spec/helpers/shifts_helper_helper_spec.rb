@@ -20,7 +20,7 @@ RSpec.describe ShiftsHelper, type: :helper do
       expect(available_workers(shift1)).to_not include(user2)
     end
     it 'returns a message if no workers match the given criteria' do
-      expect(available_workers(shift2)).to eq("No workers are available to work that day, or are authorized for that job")
+      expect(available_workers(shift2)).to eq("No workers are available to work that day that are authorized for that job.")
     end
   end
 end

@@ -15,6 +15,10 @@
     <%= show.readable(show.show_end) %>
   </td>
   <td>
-    <%= show.staffed? %>
+    <% if show.staffed? %>
+      <span class='green'><%= show.staffed? %></span>
+    <% else %>
+    <span class='red'><%= show.staffed? %></span>  
+    <% end %>
   </td>
 </tr>
