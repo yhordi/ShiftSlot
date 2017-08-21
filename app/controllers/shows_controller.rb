@@ -1,6 +1,6 @@
 class ShowsController < ApplicationController
   def index
-    @shows = Show.order(:created_at)
+    @shows = Show.all
     render :index
   end
 

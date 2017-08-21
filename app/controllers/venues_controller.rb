@@ -5,10 +5,7 @@ class VenuesController < ApplicationController
   end
 
   def show
-    p params
-    p "*"*100
     @venue = Venue.find(params[:id])
-    p @venue
     @shows = @venue.shows.order(:start)
     render :show
   end

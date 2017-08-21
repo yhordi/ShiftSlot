@@ -25,6 +25,10 @@ class Show < ApplicationRecord
     true
   end
 
+  def start_time
+    self.start
+  end
+
   private
 
   def all_staffed?

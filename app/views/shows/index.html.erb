@@ -1,1 +1,16 @@
 <h1>shows</h1>
+
+<%= month_calendar events: @shows do |date, shows| %>
+  <%= date %>
+    <% shows.each do |show| %>
+      <% if show.staffed? %>
+      <div class='green'>
+        <%= show.headliner %> @ <%= show.venue.name %>
+      </div>
+      <% else %>
+      <div class='red'>
+        <%= show.headliner %> @ <%= show.venue.name %>
+      </div>
+      <% end %>
+    <% end %>
+<% end %>
