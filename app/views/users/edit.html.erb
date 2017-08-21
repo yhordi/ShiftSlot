@@ -8,34 +8,36 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class='panel-title'>
-              Authorize for:
+              User Permissions
             </h3>
           </div>
           <%= form_for @user, method: :patch do |f| %>
-          <ul class="list-group">
-            <li class='list-group-item'>
+          <div class="input-group">
+            <span class='input-group-addon'>
               <%= f.check_box :admin %>
-              <%= f.label 'make admin?' %>
-            </li>
+            </span>
+            <%= f.label 'make admin?', class: 'form-control' %>
+          </div>
             <% @jobs.each do |job| %>
-            <% if @user.authorized?(job) %>
-              <li class='list-group-item'>
-                <%= check_box_tag "job_ids[]", job.id, checked: true %>
-                <%= f.label job.title %>
-              </li>
-            <% else %>
-              <li class='list-group-item'>
-                <%= check_box_tag "job_ids[]", job.id %>
-                <%= f.label job.title  %>
-              </li>
-            <% end%>
+              <% if @user.authorized?(job) %>
+                <div class='input-group'>
+                  <span class='input-group-addon'>
+                    <%= check_box_tag "job_ids[]", job.id, checked: true %>
+                  </span>
+                  <%= f.label job.title, class: 'form-control' %>
+                </div>
+              <% else %>
+                <div class='input-group'>
+                  <span class='input-group-addon'>
+                    <%= check_box_tag "job_ids[]", job.id %>
+                  </span>
+                  <%= f.label job.title, class: 'form-control'  %>
+                </div>
+              <% end%>
             <% end %>
-          </ul>
-          <div>
-            <%= f.submit 'Update Permissions', class: 'btn btn-default' %>
+            <%= f.submit 'Update Permissions', class: 'btn btn-default form-control' %>
           </div>
           <% end %>
-        </div>
       </div>
     <% end %>
     <div class="col-lg-8">
