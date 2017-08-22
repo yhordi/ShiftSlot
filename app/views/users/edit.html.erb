@@ -19,30 +19,34 @@
                 <%= f.label 'make admin?', class: 'form-control' %>
               </div>
               <% @venues.each do |venue| %>
-                <div class="panel panel-default">
-                  <div class="panel-heading clickable panel-collapsed">
+                <div class="panel panel-default no-bottom">
+                  <div class="panel-heading">
                     <h2 class='panel-title'>
-                      <%= venue.name %> <span class='caret'></span>
+                      <a  role="button" data-toggle="collapse" href="#jobs<%= venue.id %>" aria-expanded="false" aria-controls="jobs<%= venue.id %>">
+                        <%= venue.name %> <span class='caret'></span>
+                      </a>
                     </h2>
                   </div>
-                </div>
-                <% venue.jobs.each do |job| %>
-                  <% if @user.authorized?(job) %>
-                    <div class='input-group'>
-                      <span class='input-group-addon'>
-                        <%= check_box_tag "job_ids[]", job.id, checked: true %>
-                      </span>
-                      <%= f.label job.title, class: 'form-control' %>
-                    </div>
+                <div class="collapse" id="jobs<%= venue.id %>">
+                  <% venue.jobs.each do |job| %>
+                    <% if @user.authorized?(job) %>
+                      <div class='input-group'>
+                        <span class='input-group-addon'>
+                          <%= check_box_tag "job_ids[]", job.id, checked: true %>
+                        </span>
+                        <%= f.label job.title, class: 'form-control' %>
+                      </div>
                     <% else %>
-                    <div class='input-group'>
-                      <span class='input-group-addon'>
-                        <%= check_box_tag "job_ids[]", job.id %>
-                      </span>
-                      <%= f.label job.title, class: 'form-control'  %>
-                    </div>
-                  <% end%>
-                <% end %>
+                      <div class='input-group'>
+                        <span class='input-group-addon'>
+                          <%= check_box_tag "job_ids[]", job.id %>
+                        </span>
+                        <%= f.label job.title, class: 'form-control'  %>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
               <% end %>
             <%= f.submit 'Update Permissions', class: 'btn btn-default form-control' %>
           <% end %>
