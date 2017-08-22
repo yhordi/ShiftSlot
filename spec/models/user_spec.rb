@@ -5,6 +5,7 @@ RSpec.describe User, type: :model do
   let(:user) {FactoryGirl.create :user}
   let(:new_user) {FactoryGirl.build :user}
   let(:job) {FactoryGirl.create :job, venue: venue}
+  let(:job2) {FactoryGirl.create :job, title: 'Hamster', venue: venue}
   let(:show) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:show2) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:shift) {FactoryGirl.create :shift, show_id: show2.id, user_id: user.id, job_id: job.id}
@@ -55,6 +56,19 @@ RSpec.describe User, type: :model do
       user.jobs << job
       shift
       expect(user.available?(show)).to eq(false)
+    end
+  end
+
+  describe '#venues' do
+    it 'returns an array of venue objects associated with the jobs for the user' do
+      user.jobs << job
+      expect(user.venues).to eq([job.venue])
+    end
+
+    it 'returns an array with no duplicate venues' do
+      user.jobs << job
+      user.jobs << job2
+      expect(user.venues).to eq([job.venue])
     end
   end
 end

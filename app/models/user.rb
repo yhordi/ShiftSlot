@@ -32,6 +32,13 @@ class User < ApplicationRecord
     !scheduled?(show) && can_work?(show)
   end
 
+  def venues
+    clubs = self.jobs.map do |job|
+      job.venue
+    end
+    clubs.uniq
+  end
+
   private
 
   def can_work?(show)

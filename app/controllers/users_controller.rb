@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    @venues = Venue.order(:name)
     @users = User.all
     render :index
   end

@@ -11,8 +11,4 @@ $(document).ready(function(){
       $(this).html(response);
     }.bind(this));
   });
-  $('.clickable').on('click', function(e){
-    console.log('hey')
-    
-  });
 });
