@@ -1,9 +1,10 @@
 require 'rails_helper'
 RSpec.describe ShiftsHelper, type: :helper do
+  let(:venue) { FactoryGirl.create :venue }
   let(:show) { FactoryGirl.create :show, start: DateTime.new(2001,1)}
-  let!(:door) { FactoryGirl.create :job, title: 'door'}
-  let(:sound) { FactoryGirl.create :job, title: 'sound'}
-  let(:bar) { FactoryGirl.create :job, title: 'bar'}
+  let!(:door) { FactoryGirl.create :job, title: 'door', venue: venue}
+  let(:sound) { FactoryGirl.create :job, title: 'sound', venue: venue}
+  let(:bar) { FactoryGirl.create :job, title: 'bar', venue: venue}
   let!(:user1) { FactoryGirl.create :user, jobs: [door]}
   let(:user2) { FactoryGirl.create :user, jobs: [sound]}
   let(:shift1) {FactoryGirl.build :shift, job: door, show: show}

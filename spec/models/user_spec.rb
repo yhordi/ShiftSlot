@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:venue) { FactoryGirl.create :venue}
   let(:user) {FactoryGirl.create :user}
   let(:new_user) {FactoryGirl.build :user}
-  let(:job) {FactoryGirl.create :job}
+  let(:job) {FactoryGirl.create :job, venue: venue}
   let(:show) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:show2) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:shift) {FactoryGirl.create :shift, show_id: show2.id, user_id: user.id, job_id: job.id}

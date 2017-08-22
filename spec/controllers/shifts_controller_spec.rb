@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ShiftsController, type: :controller do
-  let!(:job) { FactoryGirl.create(:job) }
+  let!(:venue) { FactoryGirl.create(:venue) }
+  let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:user) { FactoryGirl.create(:user) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
-  let(:venue) { FactoryGirl.create(:venue) }
   let(:show) { FactoryGirl.create(:show, venue_id: venue.id) }
   let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
   describe '#new' do
