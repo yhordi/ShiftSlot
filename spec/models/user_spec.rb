@@ -26,10 +26,15 @@ RSpec.describe User, type: :model do
     end
 
   end
+
   describe '#adjust_jobs' do
     it 'authorizes a user for jobs based on a passed in array' do
       user.adjust_jobs([job.id.to_s])
       expect(user.jobs).to include(job)
+    end
+    it 'removes all associated jobs if passed nil' do
+      user.adjust_jobs(nil)
+      expect(user.jobs).to be_empty
     end
   end
 
