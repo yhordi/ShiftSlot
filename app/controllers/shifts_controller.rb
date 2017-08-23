@@ -36,12 +36,11 @@ class ShiftsController < ApplicationController
     else
       shift.user_id = current_user.id
     end
-    shift.save
+    shift.save!
     if shift.user_id
       if !current_user.admin
         flash[:notice] = "You're signed up to work!"
       elsif current_user.admin
-        worker = User.find(shift.user_id)
         flash[:notice] = "#{worker.name} is signed up to work!"
       end
     else

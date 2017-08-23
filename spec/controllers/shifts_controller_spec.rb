@@ -129,6 +129,30 @@ RSpec.describe ShiftsController, type: :controller do
         end
       end
     end
+
+    context 'a signed in admin' do
+      let!(:admin) { FactoryGirl.create(:user, admin: true) }
+      let!(:user2) { FactoryGirl.create(:user, jobs: [job])}
+      let!(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
+      let(:patch_params) {
+        {
+          "worker_name"=>user2.name,
+          "job_id"=>job.id,
+          "id"=>shift_no_user.id
+        }
+      }
+      let(:patch_request) { patch :update, params: patch_params }
+      before(:each) do
+        sign_in admin
+        patch_request
+      end
+      it 'sets the shift id to the passed in user id' do
+        expect(shift_no_user.reload.user.id).to eq(user2.id)
+      end
+      it 'sets a flash notice stating the passed in worker has been signed up' do
+        expect(flash[:notice]).to eq("#{user2.name} is signed up to work!")
+      end
+    end
   end
 
   describe '#create' do
