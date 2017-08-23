@@ -1,6 +1,7 @@
 RSpec.describe Show, type: :model do
+  let(:venue) { FactoryGirl.create :venue }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
-  let(:job) { FactoryGirl.create :job}
+  let(:job) { FactoryGirl.create :job, venue: venue}
   let(:show) { FactoryGirl.create :show}
   let(:user) { FactoryGirl.create :user}
 

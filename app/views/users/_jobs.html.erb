@@ -1,0 +1,19 @@
+<div class='list-group'>
+  <% user.venues.each do |venue| %>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">
+        <%= link_to venue.name, venue_path(venue) %>
+      </h4>
+      <div>
+
+      </div>
+      <% user.jobs.each do |job| %>
+        <div class='list-group-item-text'>
+          <% if job.venue == venue %>
+            <%= job.title %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

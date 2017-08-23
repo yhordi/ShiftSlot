@@ -18,17 +18,15 @@
                         </th>
                     </tr>
                     <% @users.each do |user| %>
-                    <tr>
+                      <tr>
                         <td>
                             <%= link_to user.name, user_path(user.id) %>
                         </td>
                         <td>
-                            <% user.jobs.each do |job| %>
-                            <%= job.title %>
-                            <% end %>
+                            <%= render partial: 'jobs', locals: { user: user } %>
                         </td>
                         <%= render partial: 'preferred_days/index', locals: {user: user}%>
-                    </tr>
+                      </tr>
                     <% end %>
                 </table>
             </div>

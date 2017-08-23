@@ -17,6 +17,7 @@ class User < ApplicationRecord
   end
 
   def adjust_jobs(job_ids)
+    return remove_jobs if job_ids == nil
     self.jobs = job_ids.map do |job_id|
       Job.find_by_id(job_id)
     end
@@ -32,7 +33,18 @@ class User < ApplicationRecord
     !scheduled?(show) && can_work?(show)
   end
 
+  def venues
+    clubs = self.jobs.map do |job|
+      job.venue
+    end
+    clubs.uniq
+  end
+
   private
+
+  def remove_jobs
+    self.jobs.delete_all
+  end
 
   def can_work?(show)
     work_day = self.preferred_days.find do |day|

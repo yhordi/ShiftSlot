@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let!(:venue) { FactoryGirl.create(:venue)}
   let!(:user) { FactoryGirl.create(:user) }
-  let!(:job) { FactoryGirl.create(:job) }
+  let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
   before(:each) do
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)

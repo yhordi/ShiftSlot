@@ -29,17 +29,18 @@ class ShiftsController < ApplicationController
   def update
     shift = Shift.find(params[:id])
     worker = User.find_by(name: params[:worker_name])
-    if current_user.admin || params[:commit] == 'Unschedule Me'
+    if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker'
       shift.user_id = nil
+    elsif current_user.admin
+      shift.user_id = worker.id
     else
       shift.user_id = current_user.id
     end
-    shift.save
+    shift.save!
     if shift.user_id
       if !current_user.admin
         flash[:notice] = "You're signed up to work!"
       elsif current_user.admin
-        worker = User.find(shift.user_id)
         flash[:notice] = "#{worker.name} is signed up to work!"
       end
     else

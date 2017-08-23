@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    @venues = Venue.order(:name)
     @users = User.all
     render :index
   end
@@ -10,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @jobs = Job.all
+    @venues = Venue.all
     @user = User.find(params[:id])
     render :edit
   end

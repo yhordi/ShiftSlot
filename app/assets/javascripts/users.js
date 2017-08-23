@@ -11,4 +11,4 @@ $(document).ready(function(){
       $(this).html(response);
     }.bind(this));
   });
-})
+});

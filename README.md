@@ -8,7 +8,10 @@ A DIY music scheduling application
 
 #### Change log
 
-#### V1.0.1: bug fixes
+#### 1.0.2: venue authorization
+- Users can now be given authorization to work specific jobs at specific venues
+
+#### 1.0.1: bug fixes
 
 #### General
 - Better error/notice rendering.

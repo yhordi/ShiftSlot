@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:venue) { FactoryGirl.create :venue}
   let(:user) {FactoryGirl.create :user}
   let(:new_user) {FactoryGirl.build :user}
-  let(:job) {FactoryGirl.create :job}
+  let(:job) {FactoryGirl.create :job, venue: venue}
+  let(:job2) {FactoryGirl.create :job, title: 'Hamster', venue: venue}
   let(:show) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:show2) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
   let(:shift) {FactoryGirl.create :shift, show_id: show2.id, user_id: user.id, job_id: job.id}
@@ -24,10 +26,15 @@ RSpec.describe User, type: :model do
     end
 
   end
+
   describe '#adjust_jobs' do
     it 'authorizes a user for jobs based on a passed in array' do
       user.adjust_jobs([job.id.to_s])
       expect(user.jobs).to include(job)
+    end
+    it 'removes all associated jobs if passed nil' do
+      user.adjust_jobs(nil)
+      expect(user.jobs).to be_empty
     end
   end
 
@@ -54,6 +61,19 @@ RSpec.describe User, type: :model do
       user.jobs << job
       shift
       expect(user.available?(show)).to eq(false)
+    end
+  end
+
+  describe '#venues' do
+    it 'returns an array of venue objects associated with the jobs for the user' do
+      user.jobs << job
+      expect(user.venues).to eq([job.venue])
+    end
+
+    it 'returns an array with no duplicate venues' do
+      user.jobs << job
+      user.jobs << job2
+      expect(user.venues).to eq([job.venue])
     end
   end
 end
