@@ -29,7 +29,7 @@ class ShiftsController < ApplicationController
   def update
     shift = Shift.find(params[:id])
     worker = User.find_by(name: params[:worker_name])
-    if params[:commit] == 'Unschedule Me'
+    if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker'
       shift.user_id = nil
     elsif current_user.admin
       shift.user_id = worker.id
