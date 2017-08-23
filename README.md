@@ -8,8 +8,11 @@ A DIY music scheduling application
 
 #### Change log
 
+#### 1.0.3: Canellation validation
+- A worker signed up for a show cannot cancel their shift if it is within two days of the show.
+
 #### 1.0.2: venue authorization
-- Users can now be given authorization to work specific jobs at specific venues
+- Users can now be given authorization to work specific jobs at specific venues.
 
 #### 1.0.1: bug fixes
 
@@ -22,5 +25,5 @@ A DIY music scheduling application
 - Remove email from users/index.
 - Remove schedule worker on search results. Now just click the worker's name to schedule them.
 - "You're scheduled to work" message now changed to reflect which worker was scheduled.
-- Search form no longer submits when enter is pressed
-- Search now shows which workers are unavailable by name
+- Search form no longer submits when enter is pressed.
+- Search now shows which workers are unavailable by name.
