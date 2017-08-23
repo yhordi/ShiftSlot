@@ -20,11 +20,10 @@
               </div>
               <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
               <% @venues.each do |venue| %>
-
                 <div class="panel panel-default">
                   <div class="panel-heading">
                     <h2 class='panel-title'>
-                      <a  role="button" data-toggle="collapse" href="#jobs<%= venue.id %>" aria-expanded="false" aria-controls="jobs<%= venue.id %>">
+                      <a role="button" data-toggle="collapse" href="#jobs<%= venue.id %>" aria-expanded="false" aria-controls="jobs<%= venue.id %>">
                         <%= venue.name %> <span class='caret'></span>
                       </a>
                     </h2>
