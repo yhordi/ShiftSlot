@@ -30,7 +30,11 @@ class ShiftsController < ApplicationController
     shift = Shift.find(params[:id])
     worker = User.find_by(name: params[:worker_name])
     if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker'
-      shift.user_id = nil
+      shift.remove_worker
+      if shift.errors.any?
+        flash[:alert] = shift.errors.full_messages
+        return redirect_to show_path(shift.show_id)
+      end
     elsif current_user.admin
       shift.user_id = worker.id
     else
@@ -41,6 +45,7 @@ class ShiftsController < ApplicationController
       if !current_user.admin
         flash[:notice] = "You're signed up to work!"
       elsif current_user.admin
+        worker = User.find(shift.user_id)
         flash[:notice] = "#{worker.name} is signed up to work!"
       end
     else
@@ -48,6 +53,7 @@ class ShiftsController < ApplicationController
     end
     redirect_to show_path(shift.show_id)
   end
+
   private
 
   def shift_params
