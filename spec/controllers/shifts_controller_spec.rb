@@ -106,26 +106,25 @@ RSpec.describe ShiftsController, type: :controller do
         end
       end
 
-      xcontext 'on failure' do
-        pending('A failure spec should be written here, though the failure has currently changed.')
-        let(:job2) { FactoryGirl.create(:job) }
-        let(:shift_no_user) { FactoryGirl.create(:shift, job_id: job2.id, show_id: show.id, user_id: nil) }
+      context 'on failure' do
+        let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue }
+        let(:shift2) { FactoryGirl.create :shift, show: show_tomorrow, job: job, user: user}
         let(:invalid_patch_params) {
           {"utf8"=>"✓",
             "_method"=>"patch",
             "authenticity_token"=>"QxAEn4qOdUace+klqMn8mu/cBLQgW3pPwfClc/GkgU/1bu5Be/laYo3m5h/utjCc1N82l9R/oL7UeZApDRSJyQ==",
             "user_id"=>user.id,
             "job_id"=>job.id,
-            "commit"=>"Schedule Worker",
+            "commit"=>"Unschedule Me",
             "controller"=>"shifts",
             "action"=>"update",
-            "id"=>shift_no_user.id
+            "id"=>shift2.id
           }
         }
         it 'sends errors back through flash on bad params' do
           sign_in user
           patch :update, params: invalid_patch_params
-          expect(flash.inspect).to include("#{user.name} is not authorized to work door")
+          expect(flash.inspect).to include('You cannot cancel your shift from the app within two days of the show. Contact your show organizer for details.')
         end
       end
     end

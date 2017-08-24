@@ -1,7 +1,6 @@
 module Shiftable
   extend ActiveSupport::Concern
 
-
   def update_shift(params, shift)
     worker = User.find_by(name: params[:worker_name])
     if unschedule_worker?(params)
@@ -16,8 +15,7 @@ module Shiftable
   def remove_worker(shift)
     shift.remove_worker(current_user)
     if shift.errors.any?
-      flash[:alert] = shift.errors.full_messages
-      return redirect_to show_path(shift.show_id)
+      return flash[:alert] = shift.errors.full_messages
     end
     shift.save!
     flash[:notice] = 'Worker removed'
