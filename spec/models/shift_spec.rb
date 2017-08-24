@@ -28,16 +28,20 @@ RSpec.describe Shift, type: :model do
     end
   end
   describe '#remove_worker' do
-    let!(:user2) {FactoryGirl.create(:user, jobs: [job])}
+    let!(:user2) { FactoryGirl.create(:user, jobs: [job]) }
+    let(:admin) { FactoryGirl.create(:user, admin: true) }
     let(:scheduled_shift) { FactoryGirl.create(:shift, job: job, user: user2)}
     let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue }
     let(:bad_shift) { FactoryGirl.create(:shift, show: show_tomorrow, job: job, user: user2)}
     it 'removes a worker from a shift' do
-      scheduled_shift.remove_worker
+      scheduled_shift.remove_worker(user2)
       expect(scheduled_shift.user_id).to be_nil
     end
     it 'responds with a message that the worker cannot be removed if within two days of the show associated with the shift' do
-      expect(bad_shift.remove_worker).to include('You cannot cancel your shift from the app within two days of the show. Contact your show organizer for details.')
+      expect(bad_shift.remove_worker(user2)).to include('You cannot cancel your shift from the app within two days of the show. Contact your show organizer for details.')
+    end
+    it 'allows an admin to remove a worker regardless of the day' do
+      expect(bad_shift.remove_worker(admin)).to eq(true)
     end
   end
 end

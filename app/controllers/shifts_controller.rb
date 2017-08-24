@@ -1,4 +1,5 @@
 class ShiftsController < ApplicationController
+  include Shiftable
   def new
     @shift = Shift.new
     @show = Show.find(params[:show_id])
@@ -28,29 +29,7 @@ class ShiftsController < ApplicationController
 
   def update
     shift = Shift.find(params[:id])
-    worker = User.find_by(name: params[:worker_name])
-    if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker'
-      shift.remove_worker
-      if shift.errors.any?
-        flash[:alert] = shift.errors.full_messages
-        return redirect_to show_path(shift.show_id)
-      end
-    elsif current_user.admin
-      shift.user_id = worker.id
-    else
-      shift.user_id = current_user.id
-    end
-    shift.save!
-    if shift.user_id
-      if !current_user.admin
-        flash[:notice] = "You're signed up to work!"
-      elsif current_user.admin
-        worker = User.find(shift.user_id)
-        flash[:notice] = "#{worker.name} is signed up to work!"
-      end
-    else
-      flash[:notice] = 'Worker removed'
-    end
+    update_shift(params, shift)
     redirect_to show_path(shift.show_id)
   end
 
