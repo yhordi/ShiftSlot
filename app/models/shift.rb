@@ -12,8 +12,8 @@ class Shift < ApplicationRecord
     end
   end
 
-  def remove_worker
-    return errors.add(:invalid_canellation, 'You cannot cancel your shift from the app within two days of the show. Contact your show organizer for details.')  if invalid_cancellation?
+  def remove_worker(current_user)
+    return errors.add(:invalid_canellation, 'You cannot cancel your shift from the app within two days of the show. Contact your show organizer for details.')  if invalid_cancellation? && !current_user.admin
     self.user_id = nil
     true
   end

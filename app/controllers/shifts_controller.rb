@@ -29,8 +29,8 @@ class ShiftsController < ApplicationController
   def update
     shift = Shift.find(params[:id])
     worker = User.find_by(name: params[:worker_name])
-    if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker'
-      shift.remove_worker
+    if params[:commit] == 'Unschedule Me' || params[:commit] == 'Remove Worker' #if app sends remove worker message
+      shift.remove_worker(current_user)
       if shift.errors.any?
         flash[:alert] = shift.errors.full_messages
         return redirect_to show_path(shift.show_id)
@@ -40,6 +40,7 @@ class ShiftsController < ApplicationController
     else
       shift.user_id = current_user.id
     end
+
     shift.save!
     if shift.user_id
       if !current_user.admin
