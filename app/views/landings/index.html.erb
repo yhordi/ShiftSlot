@@ -4,11 +4,11 @@
       <h3>
         Dashboard
       </h3>
-      <div class="panel-body">
+      <div class="col-lg-6">
         <div class="panel-info">
           <div class="panel-heading">
             <h3 class=panel-title>
-              my upcoming shows
+              My Upcoming Shifts
             </h3>
           </div>
           <div class="panel-body">
@@ -24,6 +24,29 @@
                 </div>
               <% end %>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="panel-success">
+          <div class="panel-heading">
+            <h3 class='panel-title'>
+              Upcoming Available Shifts
+            </h3>
+          </div>
+          <div class="panel-body">
+              <% @shows.each do |show| %>
+                <% show.shifts.each do |shift| %>
+                  <% if current_user.authorized?(shift.job) && !shift.user_id %>
+                    <div class="list-group-item">
+                      <h4 class='list-group-item-heading'>
+                        <%= shift.job.title %>
+                      </h4>
+                      <%= link_to "#{show.date}: #{show.headliner} @ #{show.venue.name}", show_path(show) %>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
           </div>
         </div>
       </div>
