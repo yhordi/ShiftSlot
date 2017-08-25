@@ -17,7 +17,9 @@
                 <div class="list-group-item">
                   <% show.shifts.each do |shift| %>
                     <% if shift.user_id == current_user.id %>
+                    <h4 class='list-group-item-heading'>
                       <%= shift.job.title %>
+                    </h4>
                     <% end %>
                   <% end %>
                   <%= link_to "#{show.date}: #{show.headliner} @ #{show.venue.name}", show_path(show) %>
@@ -38,25 +40,42 @@
               <% @shows.each do |show| %>
                 <% show.shifts.each do |shift| %>
                   <% if current_user.authorized?(shift.job) && !shift.user_id %>
-                    <div class="list-group-item">
-                      <h4 class='list-group-item-heading'>
-                        <%= shift.job.title %>
-                      </h4>
-                      <%= link_to "#{show.date}: #{show.headliner} @ #{show.venue.name}", show_path(show) %>
-                    </div>
+                    <%= render partial: 'event', locals: {shift: shift, show: show} %>
                   <% end %>
                 <% end %>
               <% end %>
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            Past Shows
+          </h4>
+        </div>
+        <div class="panel-body">
+          <% current_user.shows.each do |show| %>
+            <% if show.show_end.past? %>
+              <% show.shifts.each do |shift| %>
+                <% if shift.user == current_user %>
+                  <%= render partial: 'event', locals: {show: show, shift: shift} %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
     <% else %>
+    <div class="row">
       <div class='jumbotron'>
         <h1>Welcome to ShiftSlot</h1>
         <p>
           ShiftSlot is a place for volunteers and workers to sign up for shifts at some Seattle music venues. <%= link_to 'Sign in', user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> above to get started.
         </p>
       </div>
+    </div>
     <% end %>
-  </div>
 </div>

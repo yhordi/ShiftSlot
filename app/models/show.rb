@@ -3,7 +3,7 @@ class Show < ApplicationRecord
   has_many :shifts
   has_many :users, through: :shifts
   validates_associated :venue
-  validates_presence_of :start
+  validates_presence_of :start, :doors, :show_end
 
   def date
     self.start.strftime('%A, %D')
