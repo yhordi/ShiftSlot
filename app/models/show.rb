@@ -29,6 +29,10 @@ class Show < ApplicationRecord
     self.start
   end
 
+  def already_working?(user)
+    self.shifts.map{ |shift| shift.user_id }.include?(user.id)
+  end
+
   private
 
   def all_staffed?

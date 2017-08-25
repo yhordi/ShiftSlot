@@ -38,9 +38,11 @@
           </div>
           <div class="panel-body">
               <% @shows.each do |show| %>
-                <% show.shifts.each do |shift| %>
-                  <% if current_user.authorized?(shift.job) && !shift.user_id %>
-                    <%= render partial: 'event', locals: {shift: shift, show: show} %>
+                <% if !show.already_working?(current_user) %>
+                  <% show.shifts.each do |shift| %>
+                    <% if current_user.authorized?(shift.job) && shift.user_id == nil %>
+                      <%= render partial: 'event', locals: {shift: shift, show: show} %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
