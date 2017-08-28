@@ -11,7 +11,7 @@
               My Upcoming Shifts
             </h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body scroll-panel">
             <div class="list-group">
               <% current_user.shows.each do |show| %>
                 <div class="list-group-item">
@@ -36,7 +36,7 @@
               Upcoming Available Shifts
             </h3>
           </div>
-          <div class="panel-body">
+          <div class="panel-body scroll-panel">
               <% @shows.each do |show| %>
                 <% if !show.already_working?(current_user) %>
                   <% show.shifts.each do |shift| %>
@@ -57,7 +57,7 @@
             Past Shows
           </h4>
         </div>
-        <div class="panel-body">
+        <div class="panel-body scroll-panel">
           <% current_user.shows.each do |show| %>
             <% if show.show_end.past? %>
               <% show.shifts.each do |shift| %>
