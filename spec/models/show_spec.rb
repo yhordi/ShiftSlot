@@ -1,9 +1,9 @@
 RSpec.describe Show, type: :model do
   let(:venue) { FactoryGirl.create :venue }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
-  let(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show}
-  let(:user) { FactoryGirl.create :user}
+  let!(:job) { FactoryGirl.create :job, venue: venue}
+  let(:show) { FactoryGirl.create :show, venue: venue}
+  let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :start }
@@ -46,6 +46,19 @@ RSpec.describe Show, type: :model do
     it 'returns true when there are users signed up for every shift' do
       show.shifts << Shift.create(job: job, user_id: user.id)
       expect(show.staffed?).to eq(true)
+    end
+  end
+
+  describe 'Show.available_shifts_for' do
+    let!(:job2) { FactoryGirl.create :job, venue: venue, title: 'Coat Check' }
+    let!(:shift) { FactoryGirl.create :shift, show: show, job: job2, user_id: nil }
+    it 'returns an empty array when no shifts are available' do
+      user.jobs << job
+      expect(Show.available_shifts_for(user)).to eq([])
+    end
+    it 'returns an array containing shifts that the user can work' do
+      user.jobs << job2
+      expect(Show.available_shifts_for(user)).to eq([shift])
     end
   end
 

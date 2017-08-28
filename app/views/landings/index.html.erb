@@ -13,17 +13,21 @@
           </div>
           <div class="panel-body scroll-panel">
             <div class="list-group">
-              <% current_user.shows.each do |show| %>
-                <div class="list-group-item">
-                  <% show.shifts.each do |shift| %>
-                    <% if shift.user_id == current_user.id %>
-                    <h4 class='list-group-item-heading'>
-                      <%= shift.job.title %>
-                    </h4>
+              <% if current_user.shows.any? %>
+                <% current_user.shows.each do |show| %>
+                  <div class="list-group-item">
+                    <% show.shifts.each do |shift| %>
+                      <% if shift.user_id == current_user.id %>
+                      <h4 class='list-group-item-heading'>
+                        <%= shift.job.title %>
+                      </h4>
+                      <% end %>
                     <% end %>
-                  <% end %>
-                  <%= link_to "#{show.date}: #{show.headliner} @ #{show.venue.name}", show_path(show) %>
-                </div>
+                    <%= link_to "#{show.date}: #{show.headliner} @ #{show.venue.name}", show_path(show) %>
+                  </div>
+                <% end %>
+              <% else %>
+                You're not signed up to work any shifts right now
               <% end %>
             </div>
           </div>
@@ -37,15 +41,13 @@
             </h3>
           </div>
           <div class="panel-body scroll-panel">
-              <% @shows.each do |show| %>
-                <% if !show.already_working?(current_user) %>
-                  <% show.shifts.each do |shift| %>
-                    <% if current_user.authorized?(shift.job) && shift.user_id == nil %>
-                      <%= render partial: 'event', locals: {shift: shift, show: show} %>
-                    <% end %>
-                  <% end %>
-                <% end %>
+            <% if @shifts.any? %>
+              <% @shifts.each do |shift| %>
+                <%= render partial: 'event', locals: {shift: shift, show: shift.show} %>
               <% end %>
+            <% else %>
+              There are no available shifts coming up.
+            <% end %>
           </div>
         </div>
       </div>

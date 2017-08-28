@@ -33,9 +33,13 @@ class Show < ApplicationRecord
     self.shifts.map{ |shift| shift.user_id }.include?(user.id)
   end
 
-  private
-
-  def all_staffed?
-
+  def self.available_shifts_for(current_user)
+    shows = Show.all.select { |show| !show.already_working?(current_user) }
+    shifts = []
+    shows.map do |show|
+      shifts << show.shifts.select { |shift| current_user.authorized?(shift.job) && shift.user_id == nil }
+    end
+    shifts.flatten!
   end
+
 end
