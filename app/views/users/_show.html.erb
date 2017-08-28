@@ -1,15 +1,28 @@
 <div class="col-lg-6">
   <div class='panel panel-default'>
     <div class='panel panel-heading'>
-      <h2>
+      <h2 class='panel-title'>
         <%= @user.name %>'s Profile
-          <% if current_user == @user %>
-            <%= link_to '', edit_user_registration_path, html_options = {class: 'glyphicon glyphicon-edit'}%>
-
-          <% elsif current_user.admin %>
-            <%= link_to '', edit_user_path(@user.id), html_options = {class: 'glyphicon glyphicon-edit'}%>
-        <% end %>
       </h2>
+        <div class="btn-group" role='group'>
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Options <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <% if current_user == @user %>
+              <li>
+                <%= link_to 'Account Settings', edit_user_registration_path %>
+              </li>
+              <li>
+                <%= link_to 'Set Availability Preferrences', edit_user_path(@user.id) %>
+              </li>
+            <% elsif current_user.admin %>
+              <li>
+                <%= link_to 'Admin: Edit Permissions', edit_user_path(@user.id) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
     </div>
     <ul class='list-group'>
       <li class='list-group-item'>

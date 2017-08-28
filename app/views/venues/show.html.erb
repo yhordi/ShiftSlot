@@ -4,7 +4,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h2 class='panel-title'>
-          <%= @venue.name %>'s Shows
+          <%= @venue.name %>'s Upcoming Shows
         </h2>
       </div>
       <table class='table'>
@@ -29,7 +29,9 @@
           </th>
         </tr>
         <% @shows.each do |show| %>
-          <%= render partial: 'shows/info', locals: {show: show} %>
+          <% if !show.start.past? %>
+            <%= render partial: 'shows/info', locals: {show: show} %>
+          <% end %>
         <% end %>
       </table>
 

@@ -3,7 +3,7 @@ class Show < ApplicationRecord
   has_many :shifts
   has_many :users, through: :shifts
   validates_associated :venue
-  validates_presence_of :start
+  validates_presence_of :start, :doors, :show_end
 
   def date
     self.start.strftime('%A, %D')
@@ -29,9 +29,17 @@ class Show < ApplicationRecord
     self.start
   end
 
-  private
-
-  def all_staffed?
-
+  def already_working?(user)
+    self.shifts.map{ |shift| shift.user_id }.include?(user.id)
   end
+
+  def self.available_shifts_for(current_user)
+    shows = Show.all.select { |show| !show.already_working?(current_user) }
+    shifts = []
+    shows.map do |show|
+      shifts << show.shifts.select { |shift| current_user.authorized?(shift.job) && shift.user_id == nil }
+    end
+    shifts.flatten!
+  end
+
 end
