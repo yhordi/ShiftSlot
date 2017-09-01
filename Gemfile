@@ -19,6 +19,7 @@ gem 'turbolinks', '~> 5'
 gem 'bootstrap-sass'
 gem 'faker'
 gem "simple_calendar", "~> 2.0"
+gem "rest-client"
 
 
 group :development, :test do
