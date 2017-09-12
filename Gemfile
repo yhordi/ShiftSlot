@@ -1,12 +1,10 @@
 source 'https://rubygems.org'
 ruby "2.4.1"
 
-
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
-
 
 gem 'rails', '~> 5.0.4'
 gem 'pg', '~> 0.18'
@@ -21,6 +19,7 @@ gem 'faker'
 gem "simple_calendar", "~> 2.0"
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'oauth2'
+gem 'rest-client'
 
 group :development, :test do
   gem 'byebug', platform: :mri
