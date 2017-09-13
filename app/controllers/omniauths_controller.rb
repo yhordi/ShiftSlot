@@ -1,20 +1,25 @@
 require 'oauth2'
 require 'uri'
-require 'rest-client'
+require 'httparty'
 class OmniauthsController < ApplicationController
+  include HTTParty
   def redirect
     p '*' * 1000
-    p params
     base = "https://www.googleapis.com/oauth2/v4/token"
-    data = URI.encode_www_form("code" => params[:code], "client_id" => ENV['CAL_CLIENT_ID'], "client_secret" => ENV['CLIENT_SECRET'], "redirect_uri" => 'http://localhost:3000/redirect', 'grant_type' => "authorization_code")
-    uri = URI(base)
-    p "#{base}?#{data}"
-    # req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-    # req.body = data.to_json
-    # response = Net::HTTP.start(uri.hostname, uri.port {|http| http.request(req)})
-    p response
+    data = {
+      "code" => params[:code],
+      "client_id" => ENV['CAL_CLIENT_ID'],
+      "client_secret" => ENV['CLIENT_SECRET'],
+      "redirect_uri" => 'http://localhost:3000/redirect',
+      'grant_type' => "authorization_code",
+      "project_id" => ENV['PROJECT_ID']
+    }
+    p data
+    req = HTTParty.post(base, body: data)
     p "*"* 100
-    # response = RestClient.post(base, data.to_json, content_type: :json, accept: :json)
+    p req
+    # p params
+    # p"#{base}?#{data}"
   end
 
   def callback

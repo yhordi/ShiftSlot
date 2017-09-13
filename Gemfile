@@ -19,7 +19,7 @@ gem 'faker'
 gem "simple_calendar", "~> 2.0"
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'oauth2'
-gem 'rest-client'
+gem 'httparty'
 
 group :development, :test do
   gem 'byebug', platform: :mri
