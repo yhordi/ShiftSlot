@@ -1,5 +1,5 @@
 class CalendarsController < ApplicationController
-  def show
-    render :show
+  def sync
+    
   end
 end
