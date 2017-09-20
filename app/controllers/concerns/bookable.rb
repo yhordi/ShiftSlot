@@ -3,14 +3,25 @@ module Bookable
   extend ActiveSupport::Concern
 
   def build(response)
+    p response
     shows = []
     response["items"].each do |item|
-      shows << Show.new(start: DateTime.parse(item["start"]["dateTime"]), show_end: DateTime.parse(item["end"]["dateTime"]), info: item["summary"])
+      if all_day?(item)
+        start = item["start"]['date']
+        end_date = item["end"]['date']
+        shows << Show.new(start: DateTime.parse(start), show_end: DateTime.parse(end_date), info: item["summary"])
+      else
+        shows << Show.new(start: DateTime.parse(item["start"]["dateTime"]), show_end: DateTime.parse(item["end"]["dateTime"]), info: item["summary"])
+      end
     end
     {shows: shows, conflicts: find_conflicts(shows)}
   end
 
   private
+
+  def all_day?(item)
+    !item['start'].has_key?('dateTime')
+  end
 
   def find_conflicts(imported_shows)
     conflicts = []
