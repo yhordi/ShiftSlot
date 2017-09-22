@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :preferred_days, only: [:update]
   end
   root 'landings#index'
+  post '/shows' => 'calendars#create'
   get '/sync' => 'calendars#sync'
   get '/callback' => 'omniauths#callback'
   get '/redirect' => 'omniauths#redirect'
