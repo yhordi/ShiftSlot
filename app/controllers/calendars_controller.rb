@@ -12,13 +12,13 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    p abbreviations
     params[:shows].map do |show|
       new_show = Show.new()
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
       assign_venue(new_show)
-      new_show.save!
+      new_show.save
+      # next step is to figure out what action to take here when you have errors
     end
   end
 end

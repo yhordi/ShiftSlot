@@ -5,10 +5,13 @@
       <div class='panel panel-default'>
         <div class='panel panel-heading'>
           <h2 >
-            <%= @show.headliner %> @ <%= @show.venue.name %>:
+            <%= @show.info %> @ <%= @show.venue.name %>:
           </h2>
         </div>
           <ul class='list-group'>
+            <li class='list-group-item'>
+              info: <%= @show.info %>
+            </li>
             <li class='list-group-item'>
               Date: <%= @show.date %>
             </li>

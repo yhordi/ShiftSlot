@@ -19,7 +19,7 @@ module Bookable
   def assign_venue(show)
     abbreviations.each do |abbrev|
       return show.venue = Venue.find_by(abbreviation: abbrev) if show.info.include? abbrev
-      show.errors << "Cannot automatically infer venue, you must select it manually"
+      show.errors.full_messages << "Cannot automatically infer venue, you must select it manually"
     end
   end
 

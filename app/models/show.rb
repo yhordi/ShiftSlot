@@ -10,7 +10,8 @@ class Show < ApplicationRecord
   end
 
   def readable(time)
-    time.strftime('%I:%M%p')
+    return time.strftime('%I:%M%p') if time
+    'time not set'
   end
 
   def day

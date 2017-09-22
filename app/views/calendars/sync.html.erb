@@ -1,12 +1,6 @@
 <div class="container">
   <h2>Google Calendar Import Results</h2>
 
-  <% if @google_shows[:conflicts].any? %>
-    <h3>The following shows may conflict with shows you've already imported</h3>
-    <% @google_shows.conflicts.each do |show| %>
-      <%= show.inspect %>
-    <% end %>
-  <% end %>
 
   <div class="panel panel-primary">
     <div class="panel-heading">
@@ -36,7 +30,7 @@
         </li>
       <% end %>
     </ul>
-    <%= @google_shows[:shows]  %>
+    <% @google_shows[:shows]  %>
     <%= form_for :shows, url: shows_path do |f| %>
       <% @google_shows[:shows].each.with_index do |show, index| %>
         <%= f.hidden_field "#{index}[info]", value: show.info %>
@@ -45,4 +39,19 @@
       <%= f.submit %>
     <% end %>
   </div>
+  <% if @google_shows[:conflicts].any? %>
+    <div class="panel panel-danger">
+      <div class='panel-heading'>
+        <h4>The following shows conflict with shows you've already imported and will be ignored</h3>
+      </div>
+      <ul class="list-group">
+        <% @google_shows[:conflicts].each do |show| %>
+        <li class="list-group-item">
+          <%= show.info %> on <%= show.date %>
+        </li>
+        <% end %>
+      </ul>
+
+    </div>
+  <% end %>
 </div>
