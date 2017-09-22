@@ -1,4 +1,5 @@
 class Show < ApplicationRecord
+  validate :assign_venue
   belongs_to :venue
   has_many :shifts
   has_many :users, through: :shifts
@@ -12,6 +13,15 @@ class Show < ApplicationRecord
   def readable(time)
     return time.strftime('%I:%M%p') if time
     'time not set'
+  end
+
+  def assign_venue
+    venue_abbreviation = nil
+    Venue.abbreviations.each do |abbrev|
+      venue_abbreviation = abbrev if self.info.include? abbrev
+    end
+    return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation
+    self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for the show on #{self.date}. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}")
   end
 
   def day
@@ -42,5 +52,6 @@ class Show < ApplicationRecord
     end
     shifts.flatten!
   end
+
 
 end

@@ -1,4 +1,11 @@
 <h1>Calendar</h1>
+<% if errors.any? %>
+  <% errors.each do |error| %>
+    <p>
+      <%= error %>
+    </p>
+  <% end %>
+<% end %>
 
 <%= month_calendar do |date| %>
   <%= date %>

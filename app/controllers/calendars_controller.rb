@@ -12,13 +12,16 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    params[:shows].map do |show|
+    errors = []
+    shows = params[:shows].map do |show|
       new_show = Show.new()
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
-      assign_venue(new_show)
       new_show.save
-      # next step is to figure out what action to take here when you have errors
+      if new_show.errors.any?
+        errors << new_show.errors.full_messages
+      end
     end
+    redirect_to calendar_path, flash: {errors: errors}
   end
 end

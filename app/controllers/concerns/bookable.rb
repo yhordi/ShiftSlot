@@ -16,20 +16,10 @@ module Bookable
     {shows: shows, conflicts: find_conflicts(shows)}
   end
 
-  def assign_venue(show)
-    abbreviations.each do |abbrev|
-      return show.venue = Venue.find_by(abbreviation: abbrev) if show.info.include? abbrev
-      show.errors.full_messages << "Cannot automatically infer venue, you must select it manually"
-    end
-  end
+
 
   private
 
-  def abbreviations
-    Venue.all.map do |venue|
-      venue.abbreviation
-    end
-  end
 
   def all_day?(item)
     !item['start'].has_key?('dateTime')

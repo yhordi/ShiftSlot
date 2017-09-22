@@ -5,6 +5,20 @@
         <div class="panel-heading">
           <h1 class="panel-title">Shows Calendar</h1>
         </div>
+          <% if flash[:errors] %>
+          <div class='panel panel-danger'>
+            <div class="panel-heading">
+              <h4>Some shows were not added</h4>
+            </div>
+            <% flash[:errors].each do |error| %>
+              <% error.each do |err| %>
+              <p>
+                <%= err %>
+              </p>
+              <% end %>
+            <% end %>
+          </div>
+          <% end %>
         <div class="panel-body">
           <%= month_calendar events: @shows do |date, shows| %>
             <%= date %>
