@@ -18,8 +18,7 @@ class OmniauthsController < ApplicationController
     req = HTTParty.post(base, body: data)
     p "*"* 100
     p req
-    # p params
-    # p"#{base}?#{data}"
+    redirect_to sync_path
   end
 
   def callback

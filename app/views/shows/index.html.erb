@@ -3,7 +3,7 @@
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title">Shows Calendar</h1>
+          <%= link_to 'Sync with Google Calendar', callback_path, class: 'btn btn-primary' %>
         </div>
           <% if flash[:errors] %>
           <div class='panel panel-danger'>
@@ -35,6 +35,7 @@
             <% end %>
           <% end %>
         </div>
+
       </div>
     </div>
   </div>
