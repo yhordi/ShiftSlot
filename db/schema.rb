@@ -56,10 +56,10 @@ ActiveRecord::Schema.define(version: 20170922184637) do
     t.datetime "start"
     t.datetime "show_end"
     t.integer  "venue_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "headliner"
-    t.string   "info"
+    t.string   "info",       default: "No info provided"
     t.index ["venue_id"], name: "index_shows_on_venue_id", using: :btree
   end
 
