@@ -2,11 +2,10 @@ class CalendarsController < ApplicationController
   include JSON
   include Bookable
   def sync
-    headers = "Bearer #{ENV['TOKEN']}"
+    headers = "Bearer #{params[:token]}"
     url = "https://www.googleapis.com/calendar/v3/#{ENV['CAL_ID']}/events?key=#{ENV['CAL_KEY']}"
     req = HTTParty.get(url, headers: {"Authorization" => headers})
     @google_shows = build(req.parsed_response)
-    # try sending this as a nested hash
     @shows = Show.all
     render 'sync'
   end
