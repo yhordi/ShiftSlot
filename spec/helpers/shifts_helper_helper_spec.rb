@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe ShiftsHelper, type: :helper do
   let(:venue) { FactoryGirl.create :venue }
-  let(:show) { FactoryGirl.create :show, start: DateTime.new(2001,1)}
+  let(:show) { FactoryGirl.create(:show, start: DateTime.new(2001,1), info: venue.abbreviation)}
   let!(:door) { FactoryGirl.create :job, title: 'door', venue: venue}
   let(:sound) { FactoryGirl.create :job, title: 'sound', venue: venue}
   let(:bar) { FactoryGirl.create :job, title: 'bar', venue: venue}

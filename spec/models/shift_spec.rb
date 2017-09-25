@@ -31,7 +31,7 @@ RSpec.describe Shift, type: :model do
     let!(:user2) { FactoryGirl.create(:user, jobs: [job]) }
     let(:admin) { FactoryGirl.create(:user, admin: true) }
     let(:scheduled_shift) { FactoryGirl.create(:shift, job: job, user: user2)}
-    let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue }
+    let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.abbreviation }
     let(:bad_shift) { FactoryGirl.create(:shift, show: show_tomorrow, job: job, user: user2)}
     it 'removes a worker from a shift' do
       scheduled_shift.remove_worker(user2)

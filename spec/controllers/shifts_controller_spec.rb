@@ -5,7 +5,7 @@ RSpec.describe ShiftsController, type: :controller do
   let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:user) { FactoryGirl.create(:user) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
-  let(:show) { FactoryGirl.create(:show, venue_id: venue.id) }
+  let(:show) { FactoryGirl.create(:show, venue_id: venue.id, info: venue.abbreviation) }
   let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
   describe '#new' do
     let(:hit_show) { get :new, params: {show_id: show.id} }
@@ -107,7 +107,7 @@ RSpec.describe ShiftsController, type: :controller do
       end
 
       context 'on failure' do
-        let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue }
+        let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.abbreviation }
         let(:shift2) { FactoryGirl.create :shift, show: show_tomorrow, job: job, user: user}
         let(:invalid_patch_params) {
           {"utf8"=>"✓",
