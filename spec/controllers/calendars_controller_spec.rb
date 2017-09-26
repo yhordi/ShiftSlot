@@ -3,6 +3,7 @@ require_relative '../support/response'
 RSpec.describe CalendarsController, type: :controller do
   let(:user) { FactoryGirl.create(:user)}
   describe '#sync' do
+    let(:get_sync) {}
     let(:resp_double) { double(parsed_response: fake_response)}
     before(:each) do
       sign_in user
