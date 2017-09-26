@@ -2,11 +2,13 @@ require 'rails_helper'
 require_relative '../support/response'
 RSpec.describe CalendarsController, type: :controller do
   let(:user) { FactoryGirl.create(:user)}
+  before(:each) do
+    sign_in user
+  end
   describe '#sync' do
     let(:get_sync) {}
     let(:resp_double) { double(parsed_response: fake_response)}
     before(:each) do
-      sign_in user
       allow(HTTParty).to receive(:get).and_return(resp_double)
     end
     it 'responds with a 200' do
@@ -17,7 +19,7 @@ RSpec.describe CalendarsController, type: :controller do
       get :sync, params: {token: 'HAM'}
       expect(response).to render_template('calendars/sync')
     end
-    it 'assigns @google_shows' do
+    it 'assigns @google_shows to a hash containing imported values' do
       get :sync, params: {token: 'HAM'}
       expect(assigns[:google_shows][:shows][0][:info]).to include('Four Lights')
     end
@@ -28,7 +30,12 @@ RSpec.describe CalendarsController, type: :controller do
   end
 
   describe '#create' do
+    let(:venue) {FactoryGirl.create(:venue)}
+    let(:shows_params) {{"shows"=>{"0"=>{"info"=>"#{venue.abbreviation} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"}}}}
+    it 'responds with a status of 302' do
+      post :create, params: shows_params
+      expect(response.status).to eq(302)
+    end
     it 'saves new shows to the database as parsed from the google response'
-    it 'responds with a status of 302'
   end
 end
