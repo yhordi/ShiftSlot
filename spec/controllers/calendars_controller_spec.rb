@@ -10,21 +10,18 @@ RSpec.describe CalendarsController, type: :controller do
     let(:resp_double) { double(parsed_response: fake_response)}
     before(:each) do
       allow(HTTParty).to receive(:get).and_return(resp_double)
+      get :sync, params: {token: 'HAM'}
     end
     it 'responds with a 200' do
-      get :sync, params: {token: 'HAM'}
       expect(response.status).to eq(200)
     end
     it 'renders the sync template' do
-      get :sync, params: {token: 'HAM'}
       expect(response).to render_template('calendars/sync')
     end
     it 'assigns @google_shows to a hash containing imported values' do
-      get :sync, params: {token: 'HAM'}
       expect(assigns[:google_shows][:shows][0][:info]).to include('Four Lights')
     end
     it 'assigns @shows' do
-      get :sync, params: {token: 'HAM'}
       expect(assigns[:shows]).to eq(Show.all)
     end
   end
@@ -32,10 +29,15 @@ RSpec.describe CalendarsController, type: :controller do
   describe '#create' do
     let(:venue) {FactoryGirl.create(:venue)}
     let(:shows_params) {{"shows"=>{"0"=>{"info"=>"#{venue.abbreviation} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"}}}}
-    it 'responds with a status of 302' do
-      post :create, params: shows_params
-      expect(response.status).to eq(302)
+    describe 'on success' do
+      it 'responds with a status of 302' do
+        post :create, params: shows_params
+        expect(response.status).to eq(302)
+      end
+      it 'saves new shows to the database as parsed from the google response' do
+        post :create, params: shows_params
+        expect(Show.last.info).to eq(shows_params["shows"]["0"]["info"])
+      end
     end
-    it 'saves new shows to the database as parsed from the google response'
   end
 end
