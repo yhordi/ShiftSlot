@@ -20,7 +20,10 @@ RSpec.describe CalendarsController, type: :controller do
       get :sync, params: {token: 'HAM'}
       expect(assigns[:google_shows][:shows][0][:info]).to include('Four Lights')
     end
-    it 'assigns @shows'
+    it 'assigns @shows' do
+      get :sync, params: {token: 'HAM'}
+      expect(assigns[:shows]).to eq(Show.all)
+    end
   end
 
   describe '#create' do
