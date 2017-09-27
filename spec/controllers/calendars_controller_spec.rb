@@ -34,7 +34,6 @@ RSpec.describe CalendarsController, type: :controller do
       it 'assigns @google_shows with a conflicts key containing conflicting shows' do
         FactoryGirl.create(:show, info: "Vic- Four Lights, Coyote Bred, Ol' Doris, The Subjunctives", start: DateTime.parse('2017-10-03T09:00:00-07:00'))
         get :sync, params: {token: 'HAM'}
-        p assigns[:google_shows]
         expect(assigns[:google_shows][:conflicts][0][:info]).to include('Four Lights')
       end
     end
