@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShowsController, type: :controller do
   let(:venue) { FactoryGirl.create(:venue) }
-  let(:show) { FactoryGirl.create(:show) }
+  let(:show) { FactoryGirl.create(:show, info: venue.abbreviation) }
   let(:user) { FactoryGirl.create(:user) }
   before(:each) do
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)

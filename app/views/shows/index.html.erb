@@ -3,8 +3,22 @@
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title">Shows Calendar</h1>
+          <%= link_to 'Sync with Google Calendar', callback_path, class: 'btn btn-primary' %>
         </div>
+          <% if flash[:errors] %>
+          <div class='panel panel-danger'>
+            <div class="panel-heading">
+              <h4>Some shows were not added</h4>
+            </div>
+            <% flash[:errors].each do |error| %>
+              <% error.each do |err| %>
+              <p>
+                <%= err %>
+              </p>
+              <% end %>
+            <% end %>
+          </div>
+          <% end %>
         <div class="panel-body">
           <%= month_calendar events: @shows do |date, shows| %>
             <%= date %>
@@ -21,6 +35,7 @@
             <% end %>
           <% end %>
         </div>
+
       </div>
     </div>
   </div>

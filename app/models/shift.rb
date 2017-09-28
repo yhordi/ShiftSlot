@@ -18,8 +18,6 @@ class Shift < ApplicationRecord
     true
   end
 
-
-
   private
 
   def invalid_cancellation?

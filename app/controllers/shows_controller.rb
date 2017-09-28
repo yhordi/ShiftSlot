@@ -1,6 +1,5 @@
 class ShowsController < ApplicationController
   def index
-    
     @shows = Show.all
     render :index
   end
@@ -9,4 +8,5 @@ class ShowsController < ApplicationController
     @show = Show.find(params[:id])
     render :show
   end
+
 end

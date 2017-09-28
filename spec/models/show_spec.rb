@@ -2,19 +2,13 @@ RSpec.describe Show, type: :model do
   let(:venue) { FactoryGirl.create :venue }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show, venue: venue}
+  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.abbreviation }
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of :info }
     it { is_expected.to validate_presence_of :start }
-    describe 'validates_associated :venue' do
-      it 'in invalid without an associated venue' do
-        expect(bad_show).to_not be_valid
-      end
-      it 'is valid with an associated venue' do
-        expect(show).to be_valid
-      end
-    end
+    it { is_expected.to validate_presence_of :venue_id }
   end
 
   describe '#date' do
