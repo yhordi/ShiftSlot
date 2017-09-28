@@ -6,14 +6,8 @@ RSpec.describe Show, type: :model do
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
-    it 'is valid with a date in the start field' do
-      expect(show).to be_valid
-    end
-    it 'is invalid with a date in the start field' do
-      show.start = nil
-      expect(show).to_not be_valid
-    end
     it { is_expected.to validate_presence_of :info }
+    it { is_expected.to validate_presence_of :start }
     it { is_expected.to validate_presence_of :venue_id }
   end
 

@@ -22,7 +22,8 @@ class Show < ApplicationRecord
       end
     end
     return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation
-    return self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for the show on #{self.date}. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}") if self.info
+    return self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for the show on #{self.date}. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}") if self.info && self.date
+    return self.errors.add(:missing_date, "Shifslot couldn't find the date form google calendar.")
     self.errors.add(:info, "The info for this show has not been set.")
   end
 
