@@ -9,7 +9,7 @@ RSpec.describe OmniauthsController, type: :controller do
     allow(ENV).to receive(:[]).with('PROJECT_ID').and_return('Big Dang Project')
   end
   describe '/redirect' do
-    let(:resp_double) { double(parsed_response: fake_response)}
+    let(:resp_double) { double(parsed_response: oauth2_response)}
     before(:each) do
       allow(HTTParty).to receive(:post).and_return(resp_double)
     end
@@ -17,7 +17,10 @@ RSpec.describe OmniauthsController, type: :controller do
       get :redirect
       expect(response.status).to eq(302)
     end
-    it 'sends a token in params'
+    it 'sends a token in params' do
+      get :redirect
+      expect(get :redirect).to redirect_to("http://test.host/sync?token=#{resp_double.parsed_response['access_token']}")
+    end
   end
   describe '/callback' do
 

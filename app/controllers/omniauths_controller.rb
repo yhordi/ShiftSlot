@@ -4,7 +4,6 @@ require 'httparty'
 class OmniauthsController < ApplicationController
   include HTTParty
   def redirect
-    p '*' * 1000
     base = "https://www.googleapis.com/oauth2/v4/token"
     data = {
       "code" => params[:code],
@@ -14,10 +13,7 @@ class OmniauthsController < ApplicationController
       'grant_type' => "authorization_code",
       "project_id" => ENV['PROJECT_ID']
     }
-    p data
     req = HTTParty.post(base, body: data)
-    p "*"* 100
-    p req
     redirect_to sync_path(token: req.parsed_response['access_token'])
   end
 
