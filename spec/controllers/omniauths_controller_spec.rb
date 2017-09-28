@@ -1,7 +1,9 @@
 require 'rails_helper'
 require_relative '../support/response'
 RSpec.describe OmniauthsController, type: :controller do
+  let(:user) { FactoryGirl.create(:user)}
   before(:each) do
+    sign_in user
     allow(ENV).to receive(:[]).with('CAL_CLIENT_ID').and_return('bobobobobo')
     allow(ENV).to receive(:[]).with('CLIENT_SECRET').and_return('Big Dang Secret™')
     allow(ENV).to receive(:[]).with('PROJECT_ID').and_return('Big Dang Project')
@@ -23,6 +25,8 @@ RSpec.describe OmniauthsController, type: :controller do
       get :callback
       expect(response.status).to eq(302)
     end
-    it 'redirects to a url based on environment variables'
+    it 'redirects to a url based on environment variables' do
+      expect(get :callback).to redirect_to("https://accounts.google.com/o/oauth2/v2/auth?client_id=bobobobobo&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fredirect&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar.readonly")
+    end
   end
 end
