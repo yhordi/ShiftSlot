@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170922184637) do
+ActiveRecord::Schema.define(version: 20171016203416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20170922184637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "venue_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.string   "gcal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "preferred_days", force: :cascade do |t|
@@ -56,10 +63,18 @@ ActiveRecord::Schema.define(version: 20170922184637) do
     t.datetime "start"
     t.datetime "show_end"
     t.integer  "venue_id"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "headliner"
-    t.string   "info",       default: "No info provided"
+    t.string   "info",          default: "No info provided"
+    t.string   "event_link"
+    t.string   "tickets_link"
+    t.string   "advance_price"
+    t.string   "doors_price"
+    t.boolean  "all_ages"
+    t.string   "poster"
+    t.string   "poster_link"
+    t.text     "other_details"
     t.index ["venue_id"], name: "index_shows_on_venue_id", using: :btree
   end
 
