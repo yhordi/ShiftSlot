@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :organizations, only: [:new, :create]
   resources :venues, only: [:index, :show] do
     resources :shows, only: :show
     resources :shows, shallow: true do
