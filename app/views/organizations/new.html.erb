@@ -6,10 +6,17 @@
           <h1 class="panel-title">Organization Sign-Up</h1>
         </div>
         <div class="panel-body">
+          <% if flash[:errors] %>
+            <div class="errors">
+              <% flash[:errors].each do |error| %>
+                <p> <%= error %> </p>
+              <% end %>
+            </div>
+          <% end %>
           <%= form_for @org do |f| %>
             <div>
-              <%= f.label :org, 'Organizaition Name', required: true %>
-              <%= f.text_field :name %>
+              <%= f.label :org, 'Organizaition Name' %>
+              <%= f.text_field :name, required: true %>
             </div>
             <div>
               <%= f.label :gcal_id, 'Google Calendar ID' %>
