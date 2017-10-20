@@ -8,8 +8,7 @@ class OrganizationsController < ApplicationController
   def create
     @org = Organization.new(org_params)
     if @org.save
-      # need to nest users inside organizations
-      redirect_to new_user_registration_path
+      redirect_to "/users/new?org_id=#{@org.id}"
     else
       flash[:errors] = @org.errors.full_messages
       redirect_to new_organization_path

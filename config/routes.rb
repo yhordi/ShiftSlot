@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  devise_scope :user do
+    get 'users/new', to: 'devise/registrations/new', controller: 'user/registrations', action: 'new', as: 'sign_up'
+  end
   resources :organizations, only: [:new, :create, :show]
   resources :venues, only: [:index, :show] do
     resources :shows, only: :show
@@ -8,9 +11,7 @@ Rails.application.routes.draw do
     end
   end
   get 'shows/' => 'shows#index', as: 'calendar'
-
   post 'users/search', to: 'users#search'
-
   resources :users, only: [:edit, :show, :index, :update] do
     resources :preferred_days, only: [:update]
   end

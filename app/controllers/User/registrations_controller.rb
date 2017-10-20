@@ -5,9 +5,14 @@ class User::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    p "*"*25
+    super
+    p @org = Organization.find(params[:org_id])
+    if params['org_id']
+      p @org
+    end
+  end
 
   # POST /resource
   # def create
