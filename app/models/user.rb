@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   after_save :add_days
+  belongs_to :organization
   has_many :preferred_days
   has_many :shifts
   has_many :shows, through: :shifts

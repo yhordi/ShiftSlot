@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :user, :controllers => {:registrations => "user/registrations"}
+
   devise_scope :user do
     get 'users/new', to: 'devise/registrations/new', controller: 'user/registrations', action: 'new', as: 'sign_up'
+    post '/users', to: 'devise/registrations', controller: 'user/registrations', action: 'create'
   end
   resources :organizations, only: [:new, :create, :show]
   resources :venues, only: [:index, :show] do
