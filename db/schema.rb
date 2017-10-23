@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 20171022220118) do
     t.datetime "start"
     t.datetime "show_end"
     t.integer  "venue_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "headliner"
-    t.string   "info"
+    t.string   "info",          default: "No info provided"
     t.string   "event_link"
     t.string   "tickets_link"
     t.string   "advance_price"
