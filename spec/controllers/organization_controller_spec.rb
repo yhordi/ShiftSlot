@@ -18,7 +18,9 @@ RSpec.describe OrganizationsController, type: :controller do
       expect(response.status).to eq(302)
     end
       context 'on success' do
-        it 'saves an org to the database'
+        it 'saves an org to the database' do
+          expect{post :create, params: {organization: {name: 'PartyTown', gcal_id: '1h5k32bfkii8'}}}.to change{Organization.count}.by(1)
+        end
         it 'redirects to the user signup page'
       end
       context 'on fail' do
