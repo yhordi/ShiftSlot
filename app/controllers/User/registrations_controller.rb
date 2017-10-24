@@ -13,9 +13,6 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    # p params
-    # p user_params
-    p "-3-3-3"*10
     super
   end
 
@@ -44,11 +41,6 @@ class User::RegistrationsController < Devise::RegistrationsController
   # end
 
   protected
-
-  def user_params
-    params.require(:user).permit(:email, :name, :password, :organization_id)
-  end
-
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:organization_id])
