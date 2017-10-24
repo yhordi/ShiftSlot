@@ -31,7 +31,9 @@ RSpec.describe OrganizationsController, type: :controller do
           post :create, params: {organization: {name: '', gcal_id: new_org[:gcal_id]}}
           expect(flash[:errors]).to include("Name can't be blank")
         end
-        it 'redirects to the new organization page'
+        it 'redirects to the new organization page' do
+          expect(post :create, params: {organization: {name: '', gcal_id: new_org[:gcal_id]}}).to redirect_to(new_organization_path)
+        end
       end
   end
 end
