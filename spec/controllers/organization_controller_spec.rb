@@ -14,6 +14,8 @@ RSpec.describe OrganizationsController, type: :controller do
       expect(assigns[:org].name).to eq('PartyTown')
     end
     it 'responds with a status of 302' do
+      post :create, params: {organization: {name: 'PartyTown', gcal_id: '1h5k32bfkii8'}}
+      expect(response.status).to eq(302)
     end
       context 'on success' do
         it 'saves an org to the database'
