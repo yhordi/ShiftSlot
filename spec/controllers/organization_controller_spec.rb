@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe OrganizationsController, type: :controller do
   let(:org) { FactoryGirl.create :organization }
+  let(:new_org) { FactoryGirl.attributes_for :organization }
   describe '#new' do
     it 'assigns the @org instance variable as a new organization' do
       get :new
@@ -10,18 +11,20 @@ RSpec.describe OrganizationsController, type: :controller do
   end
   describe '#create' do
     it 'assigns the @org instance variable' do
-      post :create, params: {organization: {name: 'PartyTown', gcal_id: '1h5k32bfkii8'}}
-      expect(assigns[:org].name).to eq('PartyTown')
+      post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}
+      expect(assigns[:org].name).to eq(new_org[:name])
     end
     it 'responds with a status of 302' do
-      post :create, params: {organization: {name: 'PartyTown', gcal_id: '1h5k32bfkii8'}}
+      post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}
       expect(response.status).to eq(302)
     end
       context 'on success' do
         it 'saves an org to the database' do
-          expect{post :create, params: {organization: {name: 'PartyTown', gcal_id: '1h5k32bfkii8'}}}.to change{Organization.count}.by(1)
+          expect{post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}}.to change{Organization.count}.by(1)
         end
-        it 'redirects to the user signup page'
+        it 'redirects to the user signup page' do
+          expect(post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}).to redirect_to("/users/new?org_id=#{Organization.last.id}")
+        end
       end
       context 'on fail' do
         it 'sends errors back through a flash message'
