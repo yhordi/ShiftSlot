@@ -27,7 +27,10 @@ RSpec.describe OrganizationsController, type: :controller do
         end
       end
       context 'on fail' do
-        it 'sends errors back through a flash message'
+        it 'sends errors back through a flash message' do
+          post :create, params: {organization: {name: '', gcal_id: new_org[:gcal_id]}}
+          expect(flash[:errors]).to include("Name can't be blank")
+        end
         it 'redirects to the new organization page'
       end
   end
