@@ -1,4 +1,3 @@
-# :nocov:
 
 class User::SessionsController < Devise::SessionsController
   # skip_before_action :require_login
@@ -16,9 +15,12 @@ class User::SessionsController < Devise::SessionsController
   end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+    if !user_logged_in?
+      @orgs = Organization.all
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -32,4 +34,3 @@ class User::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 end
-# :nocov:

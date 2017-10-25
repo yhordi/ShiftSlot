@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post '/users', to: 'devise/registrations', controller: 'user/registrations', action: 'create'
     get '*org_name/login', param: :organization, controller: 'user/sessions', action: 'new'
     get 'login', controller: 'user/sessions', action: 'new'
+    post 'sessions', to: 'devise/sessions', controller: 'user/sessions', action: 'create'
   end
   resources :organizations, only: [:new, :create, :show]
   resources :venues, only: [:index, :show] do
