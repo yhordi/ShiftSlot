@@ -7,8 +7,8 @@ class User::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    if params['org_id']
-      @org = Organization.find(params[:org_id])
+    if params['org_name']
+      @org = Organization.find_by(name: params[:org_name])
     else
       @orgs = Organization.all
     end

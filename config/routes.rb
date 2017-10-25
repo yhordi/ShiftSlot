@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     get 'users/new', to: 'devise/registrations/new', controller: 'user/registrations', action: 'new', as: 'sign_up'
     post '/users', to: 'devise/registrations', controller: 'user/registrations', action: 'create'
+    get '*org_name/login', param: :organization, controller: 'user/sessions', action: 'new'
   end
   resources :organizations, only: [:new, :create, :show]
   resources :venues, only: [:index, :show] do
