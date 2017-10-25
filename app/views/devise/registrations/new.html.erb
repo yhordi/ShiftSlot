@@ -15,9 +15,9 @@
       <%= devise_error_messages! %>
 
       <% if @org %>
-      <div>
-        <%= hidden_field_tag 'user[organization_id]', @org.id %>
-      </div>
+        <div>
+          <%= hidden_field_tag 'user[organization_id]', @org.id %>
+        </div>
       <% else %>
         <%= select("user","organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default') %>
       <% end %>

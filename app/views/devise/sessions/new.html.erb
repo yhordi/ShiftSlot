@@ -11,14 +11,22 @@
     </div>
     <div class="panel-body">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <% if @org %>
+          <div>
+            <%= hidden_field_tag 'user[organization_id]', @org.id %>
+          </div>
+        <% else %>
+          <%= f.label :organization %><br />
+          <%= select("user","organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default', required: true, include_blank: "Select Organization")%>
+        <% end %>
         <div class="field">
           <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true %>
+          <%= f.email_field :email, autofocus: true, required: true %>
         </div>
 
         <div class="field">
           <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "off" %>
+          <%= f.password_field :password, autocomplete: "off", required: true %>
         </div>
 
         <% if devise_mapping.rememberable? -%>
