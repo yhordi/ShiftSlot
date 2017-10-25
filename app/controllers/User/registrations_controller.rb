@@ -4,11 +4,12 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    super
-    @org = Organization.find(params[:org_id])
     if params['org_id']
-      @org
+      @org = Organization.find(params[:org_id])
+    else
+      @orgs = Organization.all
     end
+    super
   end
 
   # POST /resource
