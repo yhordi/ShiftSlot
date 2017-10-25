@@ -6,9 +6,14 @@ class User::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def new
+    if params['org_id']
+      @org = Organization.find(params[:org_id])
+    else
+      @orgs = Organization.all
+    end
+    super
+  end
 
   # POST /resource/sign_in
   # def create
