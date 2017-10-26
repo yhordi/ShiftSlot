@@ -1,6 +1,7 @@
 class Show < ApplicationRecord
   validate :assign_venue
   belongs_to :venue
+  belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
   validates_presence_of :start, :info, :venue_id

@@ -9,13 +9,13 @@ Rails.application.routes.draw do
     post 'sessions', to: 'devise/sessions', controller: 'user/sessions', action: 'create'
   end
   resources :organizations, only: [:new, :create, :show]
+    get '/organizations/*id/shows/' => 'shows#index', as: 'calendar'
   resources :venues, only: [:index, :show] do
     resources :shows, only: :show
     resources :shows, shallow: true do
       resources :shifts, only: [:new, :create, :update, :destroy, :edit]
     end
   end
-  get 'shows/' => 'shows#index', as: 'calendar'
   post 'users/search', to: 'users#search'
   resources :users, only: [:edit, :show, :index, :update] do
     resources :preferred_days, only: [:update]
