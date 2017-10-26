@@ -22,6 +22,6 @@ class CalendarsController < ApplicationController
         errors << new_show.errors.full_messages
       end
     end
-    redirect_to calendar_path, flash: {errors: errors}
+    redirect_to calendar_path(current_user.organization), flash: {errors: errors}
   end
 end
