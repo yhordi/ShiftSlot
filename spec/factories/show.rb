@@ -5,5 +5,6 @@ FactoryGirl.define do
     show_end {Faker::Date.forward}
     info {'yo'}
     association :venue
+    association :organization
   end
 end

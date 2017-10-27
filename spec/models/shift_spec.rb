@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Shift, type: :model do
+  let(:org) { FactoryGirl.create :organization }
   let(:venue) { FactoryGirl.create :venue }
-  let(:bad_shift_no_show) { FactoryGirl.build :shift, show_id: nil}
-  let(:user) { FactoryGirl.create :user }
+  let(:bad_shift_no_show) { FactoryGirl.build :shift, show_id: nil }
+  let(:user) { FactoryGirl.create :user, organization: org }
   let(:job) { FactoryGirl.create :job, venue: venue }
   let(:shift) { FactoryGirl.build :shift, job: job }
   describe 'validations' do
