@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let(:org) { FactoryGirl.create :organization }
   let!(:venue) { FactoryGirl.create(:venue)}
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user) { FactoryGirl.create(:user, organization: org) }
   let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
   before(:each) do
@@ -83,7 +84,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#search' do
-    let(:show) { FactoryGirl.create(:show, info: venue.abbreviation) }
+    let(:show) { FactoryGirl.create(:show, info: venue.abbreviation, organization: org) }
     let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
     let(:params) { {"show_id"=>show.id, "search"=>user.name, "controller"=>"users", "action"=>"search", "shift_id"=>shift.id} }
     let(:empty_params) { {"show_id"=>show.id, "search"=>"", "controller"=>"users", "action"=>"search"} }
