@@ -15,6 +15,7 @@ class CalendarsController < ApplicationController
     errors = []
     shows = params[:shows].map do |show|
       new_show = Show.new()
+      new_show.organization = current_user.organization
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
       new_show.save

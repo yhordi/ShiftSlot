@@ -1,6 +1,7 @@
 require 'rails_helper'
 require_relative '../support/response'
 RSpec.describe CalendarsController, type: :controller do
+  let(:org) { FactoryGirl.create :organization }
   let(:user) { FactoryGirl.create(:user)}
   before(:each) do
     sign_in user
@@ -32,7 +33,7 @@ RSpec.describe CalendarsController, type: :controller do
         allow(HTTParty).to receive(:get).and_return(resp_double)
       end
       it 'assigns @google_shows with a conflicts key containing conflicting shows' do
-        FactoryGirl.create(:show, info: "Vic- Four Lights, Coyote Bred, Ol' Doris, The Subjunctives", start: DateTime.parse('2017-10-03T09:00:00-07:00'))
+        FactoryGirl.create(:show, info: "Vic- Four Lights, Coyote Bred, Ol' Doris, The Subjunctives", start: DateTime.parse('2017-10-03T09:00:00-07:00'), organization: org)
         get :sync, params: {token: 'HAM'}
         expect(assigns[:google_shows][:conflicts][0][:info]).to include('Four Lights')
       end
