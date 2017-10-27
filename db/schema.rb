@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171025192604) do
+ActiveRecord::Schema.define(version: 20171027223612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20171025192604) do
     t.string   "gcal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "partnerships", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.integer  "venue_id",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_partnerships_on_organization_id", using: :btree
+    t.index ["venue_id"], name: "index_partnerships_on_venue_id", using: :btree
   end
 
   create_table "preferred_days", force: :cascade do |t|
@@ -102,13 +111,11 @@ ActiveRecord::Schema.define(version: 20171025192604) do
   end
 
   create_table "venues", force: :cascade do |t|
-    t.string   "name",            null: false
+    t.string   "name",         null: false
     t.string   "location"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "abbreviation"
-    t.integer  "organization_id"
-    t.index ["organization_id"], name: "index_venues_on_organization_id", using: :btree
   end
 
 end
