@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe VenuesController, type: :controller do
+  let(:org) { FactoryGirl.create :organization}
   let(:user) { FactoryGirl.create(:user) }
   let(:venue) { FactoryGirl.create(:venue) }
   let(:show) { FactoryGirl.create(:show) }
@@ -10,15 +11,15 @@ RSpec.describe VenuesController, type: :controller do
   end
   describe '#index' do
     it 'assigns the @venues variable' do
-      get :index
+      get :index, params: { organization_id: org.id }
       expect(assigns(:venues)).to be_an(ActiveRecord::Relation)
     end
     it 'responds with a status of 200' do
-      get :index
+      get :index, params: { organization_id: org.id }
       expect(response.status).to eq(200)
     end
     it 'renders the index page' do
-      expect(get :index).to render_template(:index)
+      expect(get :index, params: { organization_id: org.id }).to render_template(:index)
     end
   end
   describe '#show' do
