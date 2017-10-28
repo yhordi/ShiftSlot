@@ -76,14 +76,6 @@ ActiveRecord::Schema.define(version: 20171027223612) do
     t.datetime "updated_at",      null: false
     t.string   "headliner"
     t.string   "info"
-    t.string   "event_link"
-    t.string   "tickets_link"
-    t.string   "advance_price"
-    t.string   "doors_price"
-    t.boolean  "all_ages"
-    t.string   "poster"
-    t.string   "poster_link"
-    t.text     "other_details"
     t.integer  "organization_id"
     t.index ["organization_id"], name: "index_shows_on_organization_id", using: :btree
     t.index ["venue_id"], name: "index_shows_on_venue_id", using: :btree

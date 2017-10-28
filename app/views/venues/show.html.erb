@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <%= link_to 'back to venues', organization_venues_path() %>
+    <%= link_to 'back to venues', organization_venues_path(current_user.organization) %>
     <div class="panel panel-default">
       <div class="panel-heading">
         <h2 class='panel-title'>
