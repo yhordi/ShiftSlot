@@ -29,7 +29,7 @@
           <ul class="nav navbar-nav">
             <% if current_user %>
             <li class='nav-item'>
-              <%= link_to 'Calendar', shows_path(current_user.organization) %>
+              <%= link_to 'Calendar', organization_calendar_path(current_user.organization) %>
             </li>
             <% if current_user.admin %>
             <li class="nav-item">
