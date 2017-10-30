@@ -32,6 +32,9 @@ group :test do
   gem 'simplecov'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'poltergeist'
+  # I added these and didn't commit
 end
 
 group :development do

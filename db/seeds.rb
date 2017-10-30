@@ -27,4 +27,4 @@ end
 Venue.find(2).jobs.delete(Job.find(2))
 User.all.each { |user| user.jobs << Job.find(3)}
 
-# User.create(name: 'admin', admin: true, email: 'admin@email.com', password: ENV['PASSWORD'])
+User.create(name: 'admin', admin: true, email: 'admin@email.com', password: ENV['PASSWORD'], organization: org)
