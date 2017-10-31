@@ -16,7 +16,6 @@ class User::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    p params
     super
     if !user_signed_in?
       @orgs = Organization.all

@@ -33,7 +33,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'selenium-webdriver'
   # I added these and didn't commit
 end
 
