@@ -14,6 +14,8 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    @orgs = Organization.all
+    # find devise failure case
     super
   end
 
