@@ -29,8 +29,11 @@ RSpec.feature "Landing Page", type: :feature do
       end
     end
     describe 'signup' do
-      scenario 'can create an account and see a dashboard' do
+      before(:each) do
         click_on 'Sign up'
+        page.find('#user_organization_id').select org.name
+      end
+      scenario 'can create an account and see a dashboard' do
         page.find('#user_organization_id').select org.name
         page.fill_in 'user[name]', with: user_attrs[:name]
         page.fill_in 'user[email]', with: user_attrs[:email]
@@ -38,6 +41,10 @@ RSpec.feature "Landing Page", type: :feature do
         page.fill_in 'user[password_confirmation]', with: user_attrs[:password]
         click_on 'Sign up'
         expect(page).to have_content('Welcome! You have signed up successfully.')
+      end
+      scenario 'can see errors when form fields are empty' do
+        click_on 'Sign up'
+        expect(page).to have_content('errors prohibited this user from being saved')
       end
     end
   end
