@@ -1,5 +1,6 @@
 class Organization < ApplicationRecord
-  has_many :users, dependent: :destroy
+  has_many :assignments
+  has_many :users, through: :assignments
   has_many :partnerships
   has_many :venues, through: :partnerships
   has_many :shows, through: :venues

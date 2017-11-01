@@ -16,6 +16,12 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:name).is_at_least(3) }
   end
 
+  describe 'associations' do
+    it "has many organizations" do
+      expect(user.organizations).to be_an(ActiveRecord.relation)
+    end
+  end
+
   describe '#authorized?' do
     it 'returns true if the user is authorized for a job' do
       user.jobs << job
