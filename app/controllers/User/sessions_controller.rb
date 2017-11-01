@@ -1,4 +1,3 @@
-
 class User::SessionsController < Devise::SessionsController
   # skip_before_action :require_login
 
@@ -16,11 +15,8 @@ class User::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    @orgs = Organization.all
     super
-    if !user_signed_in?
-      @orgs = Organization.all
-    end
-    session[:organization_id] = params[:organization_id]
   end
 
   # DELETE /resource/sign_out
