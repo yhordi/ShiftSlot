@@ -16,14 +16,14 @@ Rails.application.routes.draw do
         resources :shifts, only: [:new, :create, :update, :destroy, :edit]
       end
     end
+    post '/shows' => 'calendars#create'
+    get '/sync' => 'calendars#sync'
+    get '/callback' => 'omniauths#callback'
+    get '/redirect' => 'omniauths#redirect'
   end
   post 'users/search', to: 'users#search'
   resources :users, only: [:edit, :show, :index, :update] do
     resources :preferred_days, only: [:update]
   end
   root 'landings#index'
-  post '/shows' => 'calendars#create'
-  get '/sync' => 'calendars#sync'
-  get '/callback' => 'omniauths#callback'
-  get '/redirect' => 'omniauths#redirect'
 end
