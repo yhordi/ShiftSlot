@@ -14,12 +14,13 @@ class OmniauthsController < ApplicationController
       "project_id" => ENV['PROJECT_ID']
     }
     req = HTTParty.post(base, body: data)
-    redirect_to sync_path(token: req.parsed_response['access_token'])
+    org = Organization.find(params[:state])
+    redirect_to organization_sync_path(org, token: req.parsed_response['access_token'])
   end
 
   def callback
     base = "https://accounts.google.com/o/oauth2/v2/auth"
-    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => 'http://localhost:3000/redirect', "response_type" => "code", "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
+    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => 'http://localhost:3000/redirect', "response_type" => "code", "state" => params[:organization_id], "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
     redirect_to "#{base}?#{data}"
   end
 end

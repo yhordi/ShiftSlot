@@ -3,8 +3,8 @@ class CalendarsController < ApplicationController
   include Bookable
   def sync
     headers = "Bearer #{params[:token]}"
-    org = Organization.find(params[:organization_id])
-    url = "https://www.googleapis.com/calendar/v3/calendars/#{org.gcal_id}/events?key=#{ENV['CAL_KEY']}"
+    @org = Organization.find(params[:organization_id])
+    url = "https://www.googleapis.com/calendar/v3/calendars/#{@org.gcal_id}/events?key=#{ENV['CAL_KEY']}"
     req = HTTParty.get(url, headers: {"Authorization" => headers})
     @google_shows = build(req.parsed_response)
     @shows = Show.all
@@ -12,11 +12,11 @@ class CalendarsController < ApplicationController
   end
 
   def create
-    p params
     errors = []
+    org = Organization.find(params[:organization_id])
     shows = params[:shows].map do |show|
       new_show = Show.new()
-      new_show.organization = current_user.organization
+      new_show.organization = org
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
       new_show.save
@@ -24,6 +24,6 @@ class CalendarsController < ApplicationController
         errors << new_show.errors.full_messages
       end
     end
-    redirect_to shows_path(current_user.organization), flash: {errors: errors}
+    redirect_to organization_shows_path(org), flash: {errors: errors.uniq!}
   end
 end

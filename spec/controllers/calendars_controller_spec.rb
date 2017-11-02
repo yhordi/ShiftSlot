@@ -48,12 +48,14 @@ RSpec.describe CalendarsController, type: :controller do
           "0"=> {
             "info"=>"#{venue.abbreviation} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"
           }
-        }
+        },
+        organization_id: org.id
+
       }
     }
     describe 'on success' do
       it 'responds with a status of 302' do
-        post :create, params: shows_params, organization_id: org.id
+        post :create, params: shows_params
         expect(response.status).to eq(302)
       end
       it 'saves new shows to the database as parsed from the google response' do
