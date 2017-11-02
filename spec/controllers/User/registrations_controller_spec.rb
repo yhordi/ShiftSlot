@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User::RegistrationsController, type: :controller do
   let(:org) { FactoryGirl.create :organization}
-  let(:user_attrs) { FactoryGirl.attributes_for :user, organization_id: org.id}
+  let(:user_attrs) { FactoryGirl.attributes_for :user }
   before :each do
     request.env['devise.mapping'] = Devise.mappings[:user]
   end
@@ -15,7 +15,7 @@ RSpec.describe User::RegistrationsController, type: :controller do
   describe '#create' do
     it 'associates a user with an organization' do
       post :create, params: { user: user_attrs, organization_id: org.id }
-      expect(User.last.organization).to eq(org)
+      expect(User.last.organizations).to include(org)
     end
   end
 end

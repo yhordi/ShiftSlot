@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it "has many organizations" do
-      expect(user.organizations).to be_an(ActiveRecord.relation)
+      expect(user.organizations).to be_an(ActiveRecord::Relation)
     end
   end
 

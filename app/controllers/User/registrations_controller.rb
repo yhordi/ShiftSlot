@@ -15,8 +15,9 @@ class User::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @orgs = Organization.all
-    # find devise failure case
-    super
+    super do |resource|
+      p resource.organizations << Organization.find(params[:organization_id])
+    end
   end
 
   # GET /resource/edit
