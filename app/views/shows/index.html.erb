@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <h2 class='panel-title'>Upcoming Shows for <%= current_user.organization.name %></h2>
+    <h2 class='panel-title'>Upcoming Shows for <%= @org.name %></h2>
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <%= link_to 'Sync with Google Calendar', callback_path, class: 'btn btn-primary' %>
+          <%= link_to 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary' %>
         </div>
           <% if flash[:errors] %>
           <div class='panel panel-danger'>

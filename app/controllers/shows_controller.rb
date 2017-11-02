@@ -1,6 +1,7 @@
 class ShowsController < ApplicationController
   def index
-    @shows = Show.where(organization_id: params[:organization_id])
+    @org = Organization.find(params[:organization_id])
+    @shows = Show.where(organization_id: @org.id)
     render :index
   end
 
