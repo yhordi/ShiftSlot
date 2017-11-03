@@ -11,15 +11,15 @@ RSpec.describe ShowsController, type: :controller do
   end
   describe '#index' do
     it 'assigns the @shows variable' do
-      get :index, params: {venue_id: venue.id}
+      get :index, params: {venue_id: venue.id, organization_id: org.id}
       expect(assigns(:shows)).to be_an(ActiveRecord::Relation)
     end
     it 'responds with a status of 200' do
-      get :index, params: {venue_id: venue.id}
+      get :index, params: {venue_id: venue.id, organization_id: org.id}
       expect(response.status).to eq(200)
     end
     it 'renders the index page' do
-      expect(get :index, params: {venue_id: venue.id}).to render_template(:index)
+      expect(get :index, params: {venue_id: venue.id, organization_id: org.id}).to render_template(:index)
     end
   end
   describe '#show' do
