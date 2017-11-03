@@ -19,8 +19,7 @@ RSpec.describe OmniauthsController, type: :controller do
       expect(response.status).to eq(302)
     end
     it 'sends a token in params' do
-      get :redirect
-      expect(get :redirect).to redirect_to("http://test.host/sync?token=#{resp_double.parsed_response['access_token']}")
+      expect(get :redirect, params: {state: org.id}).to redirect_to("http://test.host/organizations/#{org.id}/sync?token=#{resp_double.parsed_response['access_token']}")
     end
   end
   describe '/callback' do
