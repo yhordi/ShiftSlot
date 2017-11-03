@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get '/sync' => 'calendars#sync'
     get '/callback' => 'omniauths#callback'
   end
-  get '/redirect' => 'omniauths#redirect', param: :state
+  get '/redirect' => 'omniauths#redirect'
   post 'users/search', to: 'users#search'
   resources :users, only: [:edit, :show, :index, :update] do
     resources :preferred_days, only: [:update]

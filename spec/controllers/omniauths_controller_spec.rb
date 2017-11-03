@@ -1,6 +1,7 @@
 require 'rails_helper'
 require_relative '../support/response'
 RSpec.describe OmniauthsController, type: :controller do
+  let(:org) { FactoryGirl.create(:organization) }
   let(:user) { FactoryGirl.create(:user)}
   before(:each) do
     sign_in user
@@ -14,7 +15,7 @@ RSpec.describe OmniauthsController, type: :controller do
       allow(HTTParty).to receive(:post).and_return(resp_double)
     end
     it 'responds with a status of 302' do
-      get :redirect
+      get :redirect, params: {state: org.id}
       expect(response.status).to eq(302)
     end
     it 'sends a token in params' do

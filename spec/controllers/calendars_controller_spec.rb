@@ -68,7 +68,6 @@ RSpec.describe CalendarsController, type: :controller do
       it 'adds errors to flash when no abbreviation is pulled in the show information from google' do
         # shows_params['shows']['0']['info'] = ''
         post :create, params: bad_params
-        p flash
         expect(flash[:errors]).to_not be_empty
       end
     end
