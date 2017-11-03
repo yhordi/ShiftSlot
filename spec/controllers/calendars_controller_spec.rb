@@ -64,10 +64,11 @@ RSpec.describe CalendarsController, type: :controller do
       end
     end
     describe 'on failure' do
-      let(:bad_params) {{"shows"=>{"0"=>{"info"=>"#{venue.abbreviation} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"}}}}
+      let(:bad_params) {{"shows"=>{"0"=>{"info"=>"", "start"=>"2017-08-04 23:30:00 UTC"}}, organization_id: org.id}}
       it 'adds errors to flash when no abbreviation is pulled in the show information from google' do
-        shows_params['shows']['0']['info'] = ''
-        post :create, params: shows_params
+        # shows_params['shows']['0']['info'] = ''
+        post :create, params: bad_params
+        p flash
         expect(flash[:errors]).to_not be_empty
       end
     end

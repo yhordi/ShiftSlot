@@ -19,11 +19,11 @@ class CalendarsController < ApplicationController
       new_show.organization = org
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
-      new_show.save
+      new_show.save!
       if new_show.errors.any?
         errors << new_show.errors.full_messages
       end
     end
-    redirect_to organization_shows_path(org), flash: {errors: errors.uniq!}
+    redirect_to organization_shows_path(org), flash: {errors: errors.flatten.uniq}
   end
 end

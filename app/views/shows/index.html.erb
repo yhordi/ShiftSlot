@@ -12,11 +12,9 @@
               <h4>Some shows were not added</h4>
             </div>
             <% flash[:errors].each do |error| %>
-              <% error.each do |err| %>
               <p>
-                <%= err %>
+                <%= error %>
               </p>
-              <% end %>
             <% end %>
           </div>
           <% end %>
