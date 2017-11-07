@@ -22,6 +22,7 @@ module Shiftable
   end
 
   def add_worker_to_shift(worker, shift)
+    p current_user.assignments
     if current_user.admin
       shift.user_id = worker.id
       worker = User.find(shift.user_id)
