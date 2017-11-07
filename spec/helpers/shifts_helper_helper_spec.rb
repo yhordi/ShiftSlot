@@ -6,8 +6,8 @@ RSpec.describe ShiftsHelper, type: :helper do
   let!(:door) { FactoryGirl.create :job, title: 'door', venue: venue}
   let(:sound) { FactoryGirl.create :job, title: 'sound', venue: venue}
   let(:bar) { FactoryGirl.create :job, title: 'bar', venue: venue}
-  let!(:user1) { FactoryGirl.create :user, jobs: [door], organization: org}
-  let(:user2) { FactoryGirl.create :user, jobs: [sound], organization: org}
+  let!(:user1) { FactoryGirl.create :user, jobs: [door], organizations: [org]}
+  let(:user2) { FactoryGirl.create :user, jobs: [sound], organizations: [org]}
   let(:shift1) {FactoryGirl.build :shift, job: door, show: show}
   let(:shift2) {FactoryGirl.build :shift, job: bar, show: show}
 

@@ -14,7 +14,6 @@ class User::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    p params
     @orgs = Organization.all
     super do |resource|
       resource.organizations << Organization.find(params[:user][:organization_id])
