@@ -16,7 +16,7 @@ class User::RegistrationsController < Devise::RegistrationsController
   def create
     @orgs = Organization.all
     super do |resource|
-      p resource.organizations << Organization.find(params[:organization_id])
+      resource.organizations << Organization.find(params[:user][:organization_id])
     end
   end
 

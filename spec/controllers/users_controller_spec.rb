@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:org) { FactoryGirl.create :organization }
   let!(:venue) { FactoryGirl.create(:venue)}
-  let!(:user) { FactoryGirl.create(:user, organization: org) }
+  let!(:user) { FactoryGirl.create(:user, organizations: [org]) }
   let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
   before(:each) do
