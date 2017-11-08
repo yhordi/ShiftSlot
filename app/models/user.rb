@@ -47,6 +47,7 @@ class User < ApplicationRecord
     assignment = self.assignments.find do |assign|
       assign.organization_id == org_id
     end
+    return false if !assignment
     assignment.admin
   end
 
