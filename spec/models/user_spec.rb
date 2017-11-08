@@ -58,6 +58,10 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#admin?' do
+    it 'responds true when the user is an admin of the current orgaization'
+  end
+
   describe '#available' do
     it 'returns true if the worker is not currently scheduled' do
       expect(user.available?(show)).to eq(true)
