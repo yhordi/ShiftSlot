@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:org) { FactoryGirl.create :organization}
   let(:venue) { FactoryGirl.create :venue}
-  let(:user) {FactoryGirl.create :user}
+  let(:user) {FactoryGirl.create :user, organizations: [org]}
+  let(:admin) {FactoryGirl.create :user, organizations: [org]}
   let(:new_user) {FactoryGirl.build :user}
   let(:job) {FactoryGirl.create :job, venue: venue}
   let(:job2) {FactoryGirl.create :job, title: 'Hamster', venue: venue}
@@ -59,7 +61,15 @@ RSpec.describe User, type: :model do
   end
 
   describe '#admin?' do
-    it 'responds true when the user is an admin of the current orgaization'
+    it 'responds true when the user is an admin of the current orgaization' do
+      assignment = admin.assignments.find_by(user_id: admin.id)
+      assignment.admin = true
+      assignment.save
+      expect(admin.admin?(org.id)).to be(true)
+    end
+    it 'responds false when the user is not an admin of the current organization' do
+      expect(user.admin?(org.id)).to be(false)
+    end
   end
 
   describe '#available' do
