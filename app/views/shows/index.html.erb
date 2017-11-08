@@ -4,7 +4,9 @@
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <%= link_to 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary' %>
+          <% if current_user.admin?(params[:organization_id]) %>
+            <%= link_to 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary' %>
+          <% end %>
         </div>
           <% if flash[:errors] %>
           <div class='panel panel-danger'>
@@ -24,11 +26,11 @@
             <% shows.each do |show| %>
               <% if show.staffed? %>
               <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show, show.organization), class: 'green' %>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show.organization, show), class: 'green' %>
               </div>
               <% else %>
               <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show, show.organization), class: 'red' %>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show.organization.id, show), class: 'red' %>
               </div>
               <% end %>
             <% end %>

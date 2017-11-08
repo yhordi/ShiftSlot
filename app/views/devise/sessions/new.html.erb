@@ -17,7 +17,7 @@
           </div>
         <% else %>
           <%= f.label :organization %><br />
-          <%= select("user","organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default', required: true, include_blank: "Select Organization")%>
+          <%= select("user","organizations", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default', required: true, include_blank: "Select Organization")%>
         <% end %>
         <div class="field">
           <%= f.label :email %><br />
