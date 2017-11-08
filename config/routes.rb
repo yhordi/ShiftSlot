@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   end
   resources :organizations, only: [:new, :create, :show] do
     get 'shows/' => 'shows#index', as: 'calendar'
+    resources :shows, only: :show
     resources :venues, only: [:index, :show], shallow: true do
-      resources :shows, only: :show
       resources :shows, shallow: true do
         resources :shifts, only: [:new, :create, :update, :destroy, :edit]
       end

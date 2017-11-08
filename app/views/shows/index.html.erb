@@ -24,11 +24,11 @@
             <% shows.each do |show| %>
               <% if show.staffed? %>
               <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show, show.organization), class: 'green' %>
               </div>
               <% else %>
               <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
+                <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show, show.organization), class: 'red' %>
               </div>
               <% end %>
             <% end %>

@@ -14,7 +14,8 @@ org.venues << Venue.create!(name: 'Lucky Liquor', location: 'Tukwila, WA')
   s.save!
 end
 20.times do
-  User.create!(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password, organization: org)
+  u = User.new(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
+  u.organizations << org
 end
 
 Venue.all.each do |venue|
@@ -24,7 +25,8 @@ Venue.all.each do |venue|
   Job.create(title: 'Sound', venue: venue)
 end
 
-Venue.find(2).jobs.delete(Job.find(2))
 User.all.each { |user| user.jobs << Job.find(3)}
 
-User.create(name: 'admin', admin: true, email: 'admin@email.com', password: ENV['PASSWORD'], organization: org)
+a = User.new(name: 'admin', email: 'admin@email.com', password: ENV['PASSWORD'])
+a.organizations << org
+a.assignments.first.admin = true

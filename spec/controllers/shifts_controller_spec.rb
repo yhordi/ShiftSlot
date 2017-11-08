@@ -74,7 +74,8 @@ RSpec.describe ShiftsController, type: :controller do
             "commit"=>"Schedule Worker",
             "controller"=>"shifts",
             "action"=>"update",
-            "id"=>shift_no_user.id
+            "id"=>shift_no_user.id,
+            "organization_id"=>org.id
           }
         }
 

@@ -6,7 +6,7 @@ module Shiftable
     if unschedule_worker?(params)
       remove_worker(shift)
     else
-      add_worker_to_shift(worker, shift)
+      add_worker_to_shift(worker, shift, params[:organization_id])
     end
   end
 
@@ -21,9 +21,9 @@ module Shiftable
     flash[:notice] = 'Worker removed'
   end
 
-  def add_worker_to_shift(worker, shift)
-    p current_user.assignments
-    if current_user.admin
+  def add_worker_to_shift(worker, shift, org_id)
+    p org_id
+    if current_user.admin?(org_id)
       shift.user_id = worker.id
       worker = User.find(shift.user_id)
       flash[:notice] = "#{worker.name} is signed up to work!"

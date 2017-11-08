@@ -28,6 +28,7 @@ class ShiftsController < ApplicationController
   end
 
   def update
+    p params
     shift = Shift.find(params[:id])
     update_shift(params, shift)
     redirect_to show_path(shift.show_id)

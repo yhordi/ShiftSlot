@@ -43,6 +43,18 @@ class User < ApplicationRecord
     clubs.uniq
   end
 
+
+
+  def admin?(org_id)
+    # p org_id
+    assignment = self.assignments.find do |assign|
+      p assign.organization_id
+      assign.organization_id == org_id
+    end
+    p assignment
+    assignment.admin
+  end
+
   private
 
   def remove_jobs
