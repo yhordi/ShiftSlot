@@ -1,10 +1,18 @@
 <div class="container">
   <div class="row">
-    <div class="panel">
+    <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
-            Next week for <%= @org.name %>
+            Shows this week for <%= @org.name %>:
           </div>
+        </div>
+        <div class="panel-body">
+          <%= week_calendar number_of_weeks: 1, events: @org.shows do |date, shows| %>
+            <%= date %>
+            <% shows.each do |show| %>
+              <%= render partial: 'shows/link', locals: {show: show} %>
+            <% end %>
+          <% end %>
         </div>
     </div>
   </div>
