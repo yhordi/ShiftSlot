@@ -51,6 +51,11 @@ class User < ApplicationRecord
     assignment.admin
   end
 
+  def admin_for?(current_user, orgs)
+    shared_orgs = current_user.organizations & orgs
+    !shared_orgs.empty?
+  end
+
   private
 
   def remove_jobs

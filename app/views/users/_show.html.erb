@@ -16,7 +16,7 @@
               <li>
                 <%= link_to 'Set Availability Preferrences', edit_user_path(@user.id) %>
               </li>
-            <% elsif current_user.admin %>
+            <% elsif current_user.admin_for?(current_user, @user.organizations) %>
               <li>
                 <%= link_to 'Admin: Edit Permissions', edit_user_path(@user.id) %>
               </li>
@@ -37,7 +37,7 @@
       <li class='list-group-item'>
         <div>
           Availability:
-          <% if current_user.admin || current_user %>
+          <% if current_user %>
             <%= link_to 'Change', edit_user_path(@user) %>
           <% end %>
           <table class='table'>
@@ -57,19 +57,19 @@
         <div>
         </div>
       </li>
-      <% if current_user.admin %>
-      <li class='list-group-item'>
-        Auhtorized for:
-        <div>
-          <%= render partial: 'jobs', locals: { user: @user } %>
-        </div>
-      </li>
-      <li class='list-group-item'>
-        Verified: Maybe something that cofirms that they have worked and are trustworthy here
-      </li>
-      <li class='list-group-item'>
-        Notes
-      </li>
+      <% if current_user.admin_for?(current_user, @user.organizations) %>
+        <li class='list-group-item'>
+          Authorized for:
+          <div>
+            <%= render partial: 'jobs', locals: { user: @user } %>
+          </div>
+        </li>
+        <li class='list-group-item'>
+          Verified: Maybe something that cofirms that they have worked and are trustworthy here
+        </li>
+        <li class='list-group-item'>
+          Notes
+        </li>
       <% end %>
     </ul>
   </div>
