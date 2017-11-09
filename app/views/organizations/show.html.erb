@@ -1,6 +1,24 @@
 <div class="container">
   <div class="row">
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <%= @org.name %>'s venues:
+        </div>
+      </div>
+      <div class="panel-body">
+        <ul class='list-group'>
+          <% @org.venues.each do |venue| %>
+          <li class='list-group-item'>
+            <%= link_to venue.name, venue_path(venue) %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title">
             Shows this week for <%= @org.name %>:
