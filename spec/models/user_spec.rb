@@ -72,6 +72,11 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#admin_for?' do
+    it 'returns false when an admin is not associated with the same org as a user'
+    it 'returns true when an admin is not associated with the same org as a user'
+  end
+
   describe '#available' do
     it 'returns true if the worker is not currently scheduled' do
       expect(user.available?(show)).to eq(true)

@@ -61,7 +61,7 @@
         </div>
         <div class="panel-body">
           <ul class="list-group">
-            <% @org.shows[0..4].each do |show| %>
+            <% @org.upcoming_shows.each do |show| %>
             <li class="list-group-item">
               <% if show.staffed? %>
                 <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'green' %>

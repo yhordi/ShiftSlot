@@ -6,4 +6,11 @@ class Organization < ApplicationRecord
   has_many :shows, through: :venues, dependent: :destroy
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  def upcoming_shows(index = 4)
+    upcoming = self.shows.order(:start).select do |show|
+      show.start > Time.now
+    end
+    upcoming[0..index]
+  end
 end
