@@ -14,6 +14,24 @@
             <% end %>
           <% end %>
         </div>
+        <div class="panel-heading">
+          <div class="panel-title">
+            Next 5 shows  for <%= @org.name %>:
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% @org.shows[0..4].each do |show| %>
+            <li class="list-group-item">
+              <% if show.staffed? %>
+                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'green' %>
+              <% else %>
+                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'red' %>
+              <% end %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
     </div>
   </div>
 </div>
