@@ -16,7 +16,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @org = Organization.find(params[:id])
+    if current_user.admin?(params[:id])
+      @org = Organization.find(params[:id])
+    else
+      redirect_to organization_shows_path(params[:id])
+    end
   end
 
   private

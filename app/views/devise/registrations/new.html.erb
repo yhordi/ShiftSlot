@@ -19,16 +19,16 @@
           <%= hidden_field_tag 'user[organization_id]', @org.id %>
         </div>
       <% else %>
-        <%= select("user","organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default') %>
+        <%= select_tag("organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }),include_blank: 'select an organiztion', class: 'form-control btn btn-default', required: true) %>
       <% end %>
       <div class="field">
         <%= f.label :email %><br/>
-        <%= f.email_field :email, autofocus: true %>
+        <%= f.email_field :email, autofocus: true, required: true %>
       </div>
 
       <div class="field">
         <%= f.label :name %><br/>
-        <%= f.text_field :name, autofocus: true %>
+        <%= f.text_field :name, autofocus: true, required: true %>
       </div>
 
       <div class="field">
@@ -37,12 +37,12 @@
         <em>(<%= @minimum_password_length %>
           characters minimum)</em>
         <% end %><br/>
-        <%= f.password_field :password, autocomplete: "off" %>
+        <%= f.password_field :password, autocomplete: "off", required: true %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br/>
-        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", required: true %>
       </div>
 
       <div class="actions">

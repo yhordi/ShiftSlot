@@ -16,6 +16,7 @@ end
 20.times do
   u = User.new(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
   u.organizations << org
+  u.save
 end
 
 Venue.all.each do |venue|
