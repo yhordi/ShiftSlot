@@ -5,7 +5,9 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <% if current_user.admin?(params[:organization_id]) %>
-            <%= link_to 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary' %>
+            <%= link_to_if(@org.gcal_id.length > 0, 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') do %>
+              <%= link_to 'Edit your organization info to set up google calendar sync.', class: 'btn btn-primary' %>
+            <% end %>
           <% end %>
         </div>
           <% if flash[:errors] %>
