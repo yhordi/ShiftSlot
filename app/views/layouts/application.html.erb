@@ -32,7 +32,15 @@
                 <ul class='dropdown-menu'>
                   <% current_user.organizations.each do |org| %>
                     <li>
-                      <%= link_to org.name, organization_calendar_path(org) %>
+                      <% if current_user.admin?(org.id) %>
+                      <li class='dropdown-header'>
+                        <%= org.name %>
+                      </li>
+                      <li> <%= link_to 'Shows Month Calendar', organization_calendar_path(org) %> </li>
+                      <li> <%= link_to 'Dashboard', organization_path(org) %> </li>
+                      <% else %>
+                        <%= link_to org.name, organization_calendar_path(org) %>
+                      <% end %>
                     </li>
                   <% end %>
                 </ul>
