@@ -45,6 +45,7 @@
           <div class="panel-title">
             Shows this week for <%= @org.name %>:
           </div>
+          <%= link_to 'go to month', organization_shows_path(@org.id) %>
         </div>
         <div class="panel-body">
           <%= week_calendar number_of_weeks: 1, events: @org.shows do |date, shows| %>
