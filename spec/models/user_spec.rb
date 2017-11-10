@@ -73,8 +73,12 @@ RSpec.describe User, type: :model do
   end
 
   describe '#admin_for?' do
-    it 'returns false when an admin is not associated with the same org as a user'
-    it 'returns true when an admin is not associated with the same org as a user'
+    it 'returns false when an admin is not associated with the same org as a user' do
+      expect(admin.admin_for?(admin, user.organizations)).to eq(true)
+    end
+    it 'returns true when an admin is not associated with the same org as a user' do
+      expect(admin.admin_for?(admin, new_user.organizations)).to eq(false)
+    end
   end
 
   describe '#available' do
