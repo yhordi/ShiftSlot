@@ -43,6 +43,12 @@ class User < ApplicationRecord
     clubs.uniq
   end
 
+  def admin=(org)
+    assignment = self.assignments.find_by(organization_id: org.id)
+    assignment.admin = true
+    assignment.save
+  end
+
   def admin?(org_id)
     assignment = self.assignments.find do |assign|
       assign.organization_id == org_id.to_i

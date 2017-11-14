@@ -2,6 +2,7 @@ module Shiftable
   extend ActiveSupport::Concern
 
   def update_shift(params, shift)
+    p params
     worker = User.find_by(name: params[:worker_name])
     if unschedule_worker?(params)
       remove_worker(shift)
@@ -22,7 +23,6 @@ module Shiftable
   end
 
   def add_worker_to_shift(worker, shift, org_id)
-    p org_id
     if current_user.admin?(org_id)
       shift.user_id = worker.id
       worker = User.find(shift.user_id)

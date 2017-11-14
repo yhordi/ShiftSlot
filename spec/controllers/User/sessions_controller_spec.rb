@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User::SessionsController, type: :controller do
   let(:org) { FactoryGirl.create :organization}
-  let(:user) { FactoryGirl.create :user, organization_id: org.id}
+  let(:user) { FactoryGirl.create :user, organizations: [org]}
   before :each do
     request.env['devise.mapping'] = Devise.mappings[:user]
     setup_controller_for_warden
@@ -24,7 +24,7 @@ RSpec.describe User::SessionsController, type: :controller do
   end
   describe '#create' do
     it 'responds with a status of 302' do
-      post :create, params: {"user"=>{"organization_id"=>user.organization_id, "email"=>user.email, "password"=>user.password, "remember_me"=>"0"}}
+      post :create, params: {"user"=>{"organization_id"=>org.id, "email"=>user.email, "password"=>user.password, "remember_me"=>"0"}}
       expect(response.status).to eq(302)
     end
     it 'sets the @orgs instance variable' do
