@@ -57,8 +57,8 @@ class User < ApplicationRecord
     assignment.admin
   end
 
-  def admin_for?(current_user, orgs)
-    shared_orgs = current_user.organizations & orgs
+  def admin_for?(current_user)
+    shared_orgs = current_user.organizations & self.organizations
     !shared_orgs.empty?
   end
 

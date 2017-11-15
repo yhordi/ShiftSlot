@@ -3,7 +3,7 @@
     <%= @user.name.titleize %>'s Permissions
   </h2>
   <div class="row">
-    <% if @user.admin_for?(current_user, @user.organizations) %>
+    <% if @user.admin_for?(current_user) %>
       <div class="col-lg-4">
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -11,10 +11,11 @@
               User Permissions
             </h3>
           </div>
+          <% if @user.admin_for?(current_user) %>
             <%= form_for @user, method: :patch do |f| %>
               <div class="input-group">
                 <span class='input-group-addon'>
-                  <%= f.check_box :admin= => current_user %>
+                  <%= check_box_tag 'user[set_admin]', 'true', 'false'%>
                 </span>
                 <%= f.label 'make admin?', class: 'form-control' %>
               </div>
@@ -51,6 +52,7 @@
               <% end %>
             <%= f.submit 'Update Permissions', class: 'btn btn-default form-control' %>
           </div>
+          <% end %>
           <% end %>
           </div>
         <% end %>
