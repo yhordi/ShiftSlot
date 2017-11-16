@@ -5,17 +5,18 @@
       </h3>
     </div>
       <%= form_for @user, method: :patch do |f| %>
+      <% current_user.responsible_for(@user).each do |org| %>
         <div class="input-group">
           <span class='input-group-addon'>
-            <%= check_box_tag 'user[set_admin]', 'true', 'false'%>
+            <%= hidden_field_tag 'user[set_admin]', 'false' %>
+            <%= check_box_tag 'user[set_admin]', 'true' %>
           </span>
           <%= f.label 'make admin?', class: 'form-control' %>
         </div>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <% current_user.responsible_for(@user).each do |org| %>
+        <%= hidden_field_tag 'organization_id', org.id %>
           <div class="panel panel-warning">
             <div class="panel-heading">
-
               <%= org.name %>
             </div>
           </div>

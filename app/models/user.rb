@@ -49,6 +49,12 @@ class User < ApplicationRecord
     assignment.save
   end
 
+  def revoke_admin(org)
+    assignment = self.assignments.find_by(organization_id: org.id)
+    assignment.admin = false
+    assignment.save
+  end
+
   def admin?(org_id)
     assignment = self.assignments.find do |assign|
       assign.organization_id == org_id.to_i
@@ -64,8 +70,6 @@ class User < ApplicationRecord
   def responsible_for(user)
      orgs = self.shared_orgs(user)
      orgs.find_all { |org| self.admin?(org.id) }
-    # the orgs that the current_user shares with the passed in user
-    # the orgs that the current_user is an admin for
   end
 
   def shared_orgs(user)
