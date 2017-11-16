@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @venues = Venue.all
     @user = User.find(params[:id])
     render :edit
   end

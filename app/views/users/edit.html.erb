@@ -3,60 +3,11 @@
     <%= @user.name.titleize %>'s Permissions
   </h2>
   <div class="row">
-    <% if @user.admin_for?(current_user) %>
-      <div class="col-lg-4">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class='panel-title'>
-              User Permissions
-            </h3>
-          </div>
-          <% if @user.admin_for?(current_user) %>
-            <%= form_for @user, method: :patch do |f| %>
-              <div class="input-group">
-                <span class='input-group-addon'>
-                  <%= check_box_tag 'user[set_admin]', 'true', 'false'%>
-                </span>
-                <%= f.label 'make admin?', class: 'form-control' %>
-              </div>
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <% @venues.each do |venue| %>
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h2 class='panel-title'>
-                      <a role="button" data-toggle="collapse" href="#jobs<%= venue.id %>" aria-expanded="false" aria-controls="jobs<%= venue.id %>">
-                        <%= venue.name %> <span class='caret'></span>
-                      </a>
-                    </h2>
-                  </div>
-                <div class="collapse" id="jobs<%= venue.id %>">
-                  <% venue.jobs.each do |job| %>
-                    <% if @user.authorized?(job) %>
-                      <div class='input-group'>
-                        <span class='input-group-addon'>
-                          <%= check_box_tag "job_ids[]", job.id, checked: true %>
-                        </span>
-                        <%= f.label job.title, class: 'form-control' %>
-                      </div>
-                    <% else %>
-                      <div class='input-group'>
-                        <span class='input-group-addon'>
-                          <%= check_box_tag "job_ids[]", job.id %>
-                        </span>
-                        <%= f.label job.title, class: 'form-control'  %>
-                      </div>
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-              <% end %>
-            <%= f.submit 'Update Permissions', class: 'btn btn-default form-control' %>
-          </div>
-          <% end %>
-          <% end %>
-          </div>
-        <% end %>
-      </div>
+    <div class="col-lg-4">
+      <% if @user.admin_for?(current_user) %>
+        <%= render partial: 'permissions' %>
+      <% end %>
+    </div>
     <div class="col-lg-8">
       <div class="panel panel-info">
         <div class="panel-heading">
