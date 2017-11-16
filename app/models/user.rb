@@ -57,9 +57,19 @@ class User < ApplicationRecord
     assignment.admin
   end
 
-  def admin_for?(current_user)
-    shared_orgs = current_user.organizations & self.organizations
-    !shared_orgs.empty?
+  def admin_for?(user)
+    !shared_orgs(user).empty?
+  end
+
+  def responsible_for(user)
+     orgs = self.shared_orgs(user)
+     orgs.find_all { |org| self.admin?(org.id) }
+    # the orgs that the current_user shares with the passed in user
+    # the orgs that the current_user is an admin for
+  end
+
+  def shared_orgs(user)
+    user.organizations & self.organizations
   end
 
   private

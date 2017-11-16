@@ -12,10 +12,10 @@
           <%= f.label 'make admin?', class: 'form-control' %>
         </div>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <% @user.organizations.each do |org| %>
+        <% current_user.responsible_for(@user).each do |org| %>
           <div class="panel panel-warning">
             <div class="panel-heading">
-              
+
               <%= org.name %>
             </div>
           </div>
