@@ -68,9 +68,14 @@ RSpec.describe UsersController, type: :controller do
 
     }
     let(:hit_update) { patch :update, params: params}
-    it 'changes the user admin status to true for an organization when passed the set_amin param' do
+    it 'changes the user admin status to true for an organization when passed the set_amin as "true"' do
       hit_update
       expect(user.admin?(org.id)).to eq(true)
+    end
+    it 'changes the user admin status to false for an organization when passed the set_amin as "false"' do
+      params["user"]["set_admin"] = "false"
+      patch :update, params: params
+      expect(user.admin?(org.id)).to eq(false)
     end
     it 'assigns the @user variable' do
       hit_update

@@ -51,8 +51,8 @@ class User < ApplicationRecord
     assignment.save
   end
 
-  def revoke_admin(org)
-    assignment = self.assignments.find_by(organization_id: org.id)
+  def revoke_admin(org_id)
+    assignment = self.assignments.find_by(organization_id: org_id)
     assignment.admin = false
     assignment.save
   end

@@ -140,7 +140,7 @@ RSpec.describe User, type: :model do
   describe '#venues' do
     let(:venue2) { FactoryGirl.create(:venue) }
     let(:org2) { FactoryGirl.create(:organization, venues: [venue]) }
-    it 'returns a collection of venue objest that a user could work at, based on the organizations that they belong to' do
+    it 'returns a collection of venue object that a user could work at, based on the organizations that they belong to' do
       user.organizations << org2
       # user.save
 
