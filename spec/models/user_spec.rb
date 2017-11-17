@@ -73,11 +73,14 @@ RSpec.describe User, type: :model do
   end
 
   describe '#admin_for?' do
+    before(:each) do
+      admin.admin = org
+    end
     it 'returns false when an admin is not associated with the same org as a user' do
-      expect(admin.admin_for?(admin, user.organizations)).to eq(true)
+      expect(admin.admin_for?(user)).to eq(true)
     end
     it 'returns true when an admin is not associated with the same org as a user' do
-      expect(admin.admin_for?(admin, new_user.organizations)).to eq(false)
+      expect(admin.admin_for?(new_user)).to eq(false)
     end
   end
 
@@ -100,16 +103,16 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#venues' do
+  describe '#authorized_venues' do
     it 'returns an array of venue objects associated with the jobs for the user' do
       user.jobs << job
-      expect(user.venues).to eq([job.venue])
+      expect(user.authorized_venues).to eq([job.venue])
     end
 
     it 'returns an array with no duplicate venues' do
       user.jobs << job
       user.jobs << job2
-      expect(user.venues).to eq([job.venue])
+      expect(user.authorized_venues).to eq([job.venue])
     end
   end
 end

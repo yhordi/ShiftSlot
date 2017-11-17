@@ -38,7 +38,7 @@ class User < ApplicationRecord
     !scheduled?(show) && can_work?(show)
   end
 
-  def venues
+  def authorized_venues
     clubs = self.jobs.map do |job|
       job.venue
     end
@@ -69,8 +69,6 @@ class User < ApplicationRecord
     return false if !admin_for_any?
     !shared_orgs(user).empty?
   end
-
-
 
   def responsible_for(user)
      orgs = self.shared_orgs(user)
