@@ -70,7 +70,7 @@ class User < ApplicationRecord
     !shared_orgs(user).empty?
   end
 
-  def responsible_for(user)
+  def orgs_responsible_for(user)
      orgs = self.shared_orgs(user)
      orgs.find_all { |org| self.admin?(org.id) }
   end

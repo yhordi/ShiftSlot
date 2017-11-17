@@ -95,6 +95,13 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#orgs_responsible_for' do
+    it 'returns all the organiztions in common bewtween a user and an admin that the admin is in charge of' do
+      admin.admin = org
+      expect(admin.orgs_responsible_for(user)).to eq([org])
+    end
+  end
+
   describe '#available' do
     it 'returns true if the worker is not currently scheduled' do
       expect(user.available?(show)).to eq(true)
