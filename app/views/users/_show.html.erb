@@ -57,7 +57,7 @@
         <div>
         </div>
       </li>
-      <% if current_user.admin_for?(current_user, @user.organizations) %>
+      <% if current_user.admin_for?(@user) %>
         <li class='list-group-item'>
           Authorized for:
           <div>
