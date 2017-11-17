@@ -4,7 +4,7 @@
   </h2>
   <div class="row">
     <div class="col-lg-4">
-      <% if @user.admin_for?(current_user) %>
+      <% if current_user.admin_for?(@user) %>
         <%= render partial: 'permissions' %>
       <% end %>
     </div>

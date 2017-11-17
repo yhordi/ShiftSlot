@@ -66,8 +66,11 @@ class User < ApplicationRecord
   end
 
   def admin_for?(user)
+    return false if !admin_for_any?
     !shared_orgs(user).empty?
   end
+
+
 
   def responsible_for(user)
      orgs = self.shared_orgs(user)
@@ -89,6 +92,12 @@ class User < ApplicationRecord
   end
 
   private
+
+  def admin_for_any?
+    postings = self.assignments.find { |assign| assign.admin}
+    return true if postings
+    false
+  end
 
   def remove_jobs
     self.jobs.delete_all

@@ -16,10 +16,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    # needs admin check?
     @user = User.find(params[:id])
     @user.adjust_jobs(params[:job_ids])
-    org = Organization.find(params[:organization_id])
     if params[:user][:set_admin] == 'true'
+      org = Organization.find(params[:organization_id])
       @user.admin = org
     else
       @user.revoke_admin(org)

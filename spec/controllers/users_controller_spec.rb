@@ -59,15 +59,18 @@ RSpec.describe UsersController, type: :controller do
     let(:params) {
        {"utf8"=>"✓",
          "authenticity_token"=>"6q5va/I4MW7HpnRCIDtVxFU0AIoVBPZeC+tyFQsn93ZEDQlbY2kn51/bugeXRwRAENaDryVXajnhOt9KswqDAw==",
-          "user"=>{"admin"=>"1"},
+          "user"=>{"set_admin"=>"true"},
           "job_ids"=>[job.id.to_s],
           "commit"=>"Update User",
-          "id"=>user.id}
+          "id"=>user.id,
+          "organization_id" => org.id
+        }
+
     }
     let(:hit_update) { patch :update, params: params}
-    it 'updates the user in the database' do
+    it 'changes the user admin status to true for an organization when passed the set_amin param' do
       hit_update
-      expect(user.reload.admin).to eq(true)
+      expect(user.admin?(org.id)).to eq(true)
     end
     it 'assigns the @user variable' do
       hit_update
