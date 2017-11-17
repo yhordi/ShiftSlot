@@ -84,6 +84,17 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#revoke_admin' do
+    before(:each) do
+      admin.admin = org
+      user.admin = org
+    end
+    it 'sets the admin field to false on an assignment belonging to a user' do
+      user.revoke_admin(org)
+      expect(user.admin?(org.id)).to eq(false)
+    end
+  end
+
   describe '#available' do
     it 'returns true if the worker is not currently scheduled' do
       expect(user.available?(show)).to eq(true)
