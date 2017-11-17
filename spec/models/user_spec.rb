@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:org) { FactoryGirl.create :organization}
   let(:venue) { FactoryGirl.create :venue}
+  let(:org) { FactoryGirl.create :organization, venues: [venue]}
   let(:user) {FactoryGirl.create :user, organizations: [org]}
   let(:admin) {FactoryGirl.create :user, organizations: [org]}
   let(:new_user) {FactoryGirl.build :user}
@@ -131,6 +131,17 @@ RSpec.describe User, type: :model do
       user.jobs << job
       user.jobs << job2
       expect(user.authorized_venues).to eq([job.venue])
+    end
+  end
+
+  describe '#venues' do
+    let(:venue2) { FactoryGirl.create(:venue) }
+    let(:org2) { FactoryGirl.create(:organization, venues: [venue]) }
+    it 'returns a collection of venue objest that a user could work at, based on the organizations that they belong to' do
+      user.organizations << org2
+      # user.save
+
+      expect(user.venues).to eq(org.venues)
     end
   end
 end
