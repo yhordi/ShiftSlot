@@ -132,22 +132,22 @@ RSpec.describe ShiftsController, type: :controller do
     end
 
     context 'a signed in admin' do
-      let!(:admin) { FactoryGirl.create(:admin) }
-      # let!(:assignment) { FactoryGirl.create(:admin_assignment, user_id: admin.id, organization_id: org.id)}
-      let!(:user2) { FactoryGirl.create(:user, jobs: [job]) }
+      let(:admin) { FactoryGirl.create(:admin, organizations: [org]) }
+      let!(:user2) { FactoryGirl.create(:user, jobs: [job], organizations: [org]) }
       let!(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
       let(:patch_params) {
         {
           "worker_name"=>user2.name,
           "job_id"=>job.id,
-          "id"=>shift_no_user.id
+          "id"=>shift_no_user.id,
+          "organization_id" => org.id
         }
       }
       before(:each) do
+        admin.admin = org
         sign_in admin
       end
-      it 'sets the shift id to the passed in user id' do
-        p admin
+      it "sets the shift's user_id to the passed in user's id" do
         patch :update, params: patch_params
         expect(shift_no_user.reload.user.id).to eq(user2.id)
       end
