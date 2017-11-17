@@ -76,6 +76,16 @@ class User < ApplicationRecord
     user.organizations & self.organizations
   end
 
+  def venues
+    clubs = []
+    self.organizations.each do |org|
+      org.venues.each do |venue|
+        clubs << venue
+      end
+    end
+    clubs.uniq
+  end
+
   private
 
   def remove_jobs
