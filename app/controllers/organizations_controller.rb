@@ -16,8 +16,6 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    p params
-    p current_user.admin?(params[:id])
     if current_user.admin?(params[:id])
       @org = Organization.find(params[:id])
     else
