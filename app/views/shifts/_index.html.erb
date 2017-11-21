@@ -31,8 +31,7 @@
             <% else %>
               <% if current_user.admin?(@show.organization_id) %>
                 <%= form_for shift do |f| %>
-                <%= hidden_field_tag 'organization_id', @show.organization.id %>
-
+                  <%= hidden_field_tag 'organization_id', @show.organization.id %>
                   <span class="btn btn-default disabled"><%= shift.job.title %></span>
                   <% if available_workers(shift).class == Array %>
                     <%= select_tag 'worker_name', options_for_select(available_workers(shift)), class: 'form-control btn btn-default' %>

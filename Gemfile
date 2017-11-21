@@ -34,7 +34,7 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'selenium-webdriver'
-  # I added these and didn't commit
+  gem 'chromedriver-helper'
 end
 
 group :development do
