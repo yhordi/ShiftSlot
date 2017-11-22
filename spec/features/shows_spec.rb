@@ -3,11 +3,11 @@ require 'rails_helper'
 RSpec.feature "Shows", type: :feature do
   let!(:org) { FactoryGirl.create :organization }
   let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
+  let!(:show) { FactoryGirl.create :show, organization: org, venue: venue }
+  let!(:job) { FactoryGirl.create :job, venue: venue}
+  let!(:user) { FactoryGirl.create :user, jobs: [job] }
   describe 'shows#show page' do
     context 'a user' do
-      let(:user) { FactoryGirl.create :user }
-      let(:job) { FactoryGirl.create :job, venue: venue}
-      let!(:show) { FactoryGirl.create :show, organization: org, venue: venue }
       let(:shift) { FactoryGirl.create :shift, job: job, user_id: nil }
       before(:each) do
         show.shifts << shift
@@ -30,7 +30,19 @@ RSpec.feature "Shows", type: :feature do
       end
     end
     context 'an admin' do
-
+      let(:admin) { FactoryGirl.create(:admin, organizations: [org])}
+      before(:each) do
+        admin.admin = org
+        login_as(admin)
+        visit show_path(show.id)
+      end
+      scenario 'can create a new shift' do
+        page.find_by_id('get-shift-form').click
+        click_on 'Create Shift'
+        expect(page).to have_content('Select a Worker')
+      end
+      scenario 'can assign a worker to a shift'
+      scenario 'can remove a worker from a shift'
     end
   end
 end
