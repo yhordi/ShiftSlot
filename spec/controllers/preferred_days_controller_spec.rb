@@ -10,7 +10,7 @@ RSpec.describe PreferredDaysController, type: :controller do
         "preferred"=>"true"
       },
       "user_id"=>user.id,
-      "id"=>user.preferred_days[0].id}
+      "id"=>1}
   }
   describe '#update' do
     before(:each) do
@@ -18,8 +18,8 @@ RSpec.describe PreferredDaysController, type: :controller do
     end
     it 'updates a preferred_day in the database' do
       put_update
-      sunday = user.reload.preferred_days.find_by(name: 'Sunday')
-      expect(sunday.preferred).to eq(true)
+      day = user.reload.preferred_days.find_by(id: 1)
+      expect(day.preferred).to eq(true)
     end
 
     it 'renders the _day_form template' do
