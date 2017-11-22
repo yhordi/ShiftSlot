@@ -22,6 +22,12 @@ RSpec.feature "Shows", type: :feature do
         click_on 'Sign Up'
         expect(page).to have_content("You're signed up to work!")
       end
+      scenario 'can unschedule themselves if they are signed up to work' do
+        click_on 'Sign Up'
+        page.find_by_id('unschedule').click
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content('Worker removed')
+      end
     end
     context 'an admin' do
 

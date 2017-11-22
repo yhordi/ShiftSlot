@@ -24,7 +24,7 @@
                   <%= submit_tag 'Remove Worker', class: 'btn btn-warning'%> <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
                 <% else %>
                   <% if shift.user == current_user %>
-                    <%= submit_tag 'Unschedule Me', class: 'btn btn-danger', data: { confirm: 'You will be unscheduled from this shift. Are you sure?' } %>
+                    <%= submit_tag 'Unschedule Me', class: 'btn btn-danger', id: 'unschedule', data: { confirm: 'You will be unscheduled from this shift. Are you sure?' } %>
                   <% end %>
                 <% end %>
               <% end %>
