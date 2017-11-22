@@ -15,7 +15,7 @@ RSpec.describe Shift, type: :model do
       expect(shift).to be_valid
     end
     it {is_expected.to validate_uniqueness_of(:user_id).scoped_to(:show_id)}
-    describe '#authorized?' do
+    xdescribe '#authorized?' do
       before(:each) do
         shift.user = user
       end

@@ -18,7 +18,8 @@ RSpec.describe PreferredDaysController, type: :controller do
     end
     it 'updates a preferred_day in the database' do
       put_update
-      expect(User.find(user.id).preferred_days[0].preferred).to eq(true)
+      sunday = user.reload.preferred_days.find_by(name: 'Sunday')
+      expect(sunday.preferred).to eq(true)
     end
 
     it 'renders the _day_form template' do
