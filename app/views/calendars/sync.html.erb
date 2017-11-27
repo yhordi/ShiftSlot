@@ -31,7 +31,7 @@
       <% end %>
     </ul>
     <% @google_shows[:shows]  %>
-    <%= form_for :shows, url: shows_path do |f| %>
+    <%= form_for :shows, url: organization_shows_path(@org) do |f| %>
       <% @google_shows[:shows].each.with_index do |show, index| %>
         <%= f.hidden_field "#{index}[info]", value: show.info %>
         <%= f.hidden_field "#{index}[start]", value: show.start %>

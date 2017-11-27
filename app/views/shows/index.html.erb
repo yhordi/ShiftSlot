@@ -1,9 +1,14 @@
 <div class="container">
   <div class="row">
+    <h2 class='panel-title'>Upcoming Shows for <%= @org.name %></h2>
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <%= link_to 'Sync with Google Calendar', callback_path, class: 'btn btn-primary' %>
+          <% if current_user.admin?(params[:organization_id]) %>
+            <%= link_to_if(@org.gcal_id, 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') do %>
+              <%= link_to 'Edit your organization info to set up google calendar sync.', class: 'btn btn-primary' %>
+            <% end %>
+          <% end %>
         </div>
           <% if flash[:errors] %>
           <div class='panel panel-danger'>
@@ -11,11 +16,9 @@
               <h4>Some shows were not added</h4>
             </div>
             <% flash[:errors].each do |error| %>
-              <% error.each do |err| %>
               <p>
-                <%= err %>
+                <%= error %>
               </p>
-              <% end %>
             <% end %>
           </div>
           <% end %>
@@ -23,15 +26,7 @@
           <%= month_calendar events: @shows do |date, shows| %>
             <%= date %>
             <% shows.each do |show| %>
-              <% if show.staffed? %>
-              <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'green' %>
-              </div>
-              <% else %>
-              <div>
-                <%= link_to "#{show.headliner} @ #{show.venue.name}", show_path(show), class: 'red' %>
-              </div>
-              <% end %>
+              <%= render partial: 'link', locals: {show: show} %>
             <% end %>
           <% end %>
         </div>

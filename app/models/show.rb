@@ -1,6 +1,7 @@
 class Show < ApplicationRecord
   validate :assign_venue
   belongs_to :venue
+  belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
   validates_presence_of :start, :info, :venue_id
@@ -19,7 +20,7 @@ class Show < ApplicationRecord
     venue_abbreviation = nil
     Venue.abbreviations.each do |abbrev|
       if self.info
-        venue_abbreviation = abbrev if self.info.include? abbrev
+        venue_abbreviation = abbrev if self.info.include?(abbrev)
       end
     end
     return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation

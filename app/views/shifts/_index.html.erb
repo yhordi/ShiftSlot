@@ -7,7 +7,7 @@
   <div id='shifts'>
     <ul class='list-group'>
       <% if shifts.empty? %>
-        <% if current_user.admin %>
+        <% if current_user.admin?(@show.organization_id) %>
           No one is scheduled to work yet. Click the + up above to schedule someone.
         <% else %>
           The show organizer hasn't set up shifts yet. Check back later, or talk to the show organizer.
@@ -20,17 +20,18 @@
               <%= shift.user.name %>: <%= shift.job.title %>
               <%= form_tag shift_path(shift), method: :patch, class: 'inline' do %>
                 <% hidden_field_tag value: 'shift.user.id'%>
-                <% if current_user.admin %>
+                <% if current_user.admin?(@show.organization_id) %>
                   <%= submit_tag 'Remove Worker', class: 'btn btn-warning'%> <%= link_to 'Cancel Shift', shift_path(shift), class: 'btn btn-danger', method: :delete %>
                 <% else %>
                   <% if shift.user == current_user %>
-                    <%= submit_tag 'Unschedule Me', class: 'btn btn-danger', data: { confirm: 'You will be unscheduled from this shift. Are you sure?' } %>
+                    <%= submit_tag 'Unschedule Me', class: 'btn btn-danger', id: 'unschedule', data: { confirm: 'You will be unscheduled from this shift. Are you sure?' } %>
                   <% end %>
                 <% end %>
               <% end %>
             <% else %>
-              <% if current_user.admin %>
+              <% if current_user.admin?(@show.organization_id) %>
                 <%= form_for shift do |f| %>
+                  <%= hidden_field_tag 'organization_id', @show.organization.id %>
                   <span class="btn btn-default disabled"><%= shift.job.title %></span>
                   <% if available_workers(shift).class == Array %>
                     <%= select_tag 'worker_name', options_for_select(available_workers(shift)), class: 'form-control btn btn-default' %>

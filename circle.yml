@@ -1,0 +1,5 @@
+machine:
+  pre:
+    - gem install bundler
+  ruby:
+    version: 2.4.1

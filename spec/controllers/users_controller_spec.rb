@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let(:org) { FactoryGirl.create :organization }
   let!(:venue) { FactoryGirl.create(:venue)}
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user) { FactoryGirl.create(:user, organizations: [org]) }
   let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
   before(:each) do
@@ -58,15 +59,23 @@ RSpec.describe UsersController, type: :controller do
     let(:params) {
        {"utf8"=>"✓",
          "authenticity_token"=>"6q5va/I4MW7HpnRCIDtVxFU0AIoVBPZeC+tyFQsn93ZEDQlbY2kn51/bugeXRwRAENaDryVXajnhOt9KswqDAw==",
-          "user"=>{"admin"=>"1"},
+          "user"=>{"set_admin"=>"true"},
           "job_ids"=>[job.id.to_s],
           "commit"=>"Update User",
-          "id"=>user.id}
+          "id"=>user.id,
+          "organization_id" => org.id
+        }
+
     }
     let(:hit_update) { patch :update, params: params}
-    it 'updates the user in the database' do
+    it 'changes the user admin status to true for an organization when passed the set_amin as "true"' do
       hit_update
-      expect(user.reload.admin).to eq(true)
+      expect(user.admin?(org.id)).to eq(true)
+    end
+    it 'changes the user admin status to false for an organization when passed the set_amin as "false"' do
+      params["user"]["set_admin"] = "false"
+      patch :update, params: params
+      expect(user.admin?(org.id)).to eq(false)
     end
     it 'assigns the @user variable' do
       hit_update
@@ -83,7 +92,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#search' do
-    let(:show) { FactoryGirl.create(:show, info: venue.abbreviation) }
+    let(:show) { FactoryGirl.create(:show, info: venue.abbreviation, organization: org) }
     let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
     let(:params) { {"show_id"=>show.id, "search"=>user.name, "controller"=>"users", "action"=>"search", "shift_id"=>shift.id} }
     let(:empty_params) { {"show_id"=>show.id, "search"=>"", "controller"=>"users", "action"=>"search"} }

@@ -1,0 +1,9 @@
+<% if show.staffed? %>
+  <div>
+    <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show.organization, show), class: 'green' %>
+  </div>
+  <% else %>
+  <div>
+    <%= link_to "#{show.headliner} @ #{show.venue.name}", organization_show_path(show.organization.id, show), class: 'red' %>
+  </div>
+<% end %>

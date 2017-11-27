@@ -11,14 +11,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @venues = Venue.all
     @user = User.find(params[:id])
     render :edit
   end
 
   def update
+    # needs admin check?
     @user = User.find(params[:id])
     @user.adjust_jobs(params[:job_ids])
+    org = Organization.find(params[:organization_id])
+    if params[:user][:set_admin] == 'true'
+      @user.admin = org
+    else
+      @user.revoke_admin(org.id)
+    end
     @user.update!(user_params)
     flash[:notice] = 'User updated'
     redirect_to edit_user_path(@user.id)

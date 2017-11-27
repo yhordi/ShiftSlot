@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   after_save :add_days
+  has_many :assignments
+  has_many :organizations, through: :assignments
   has_many :preferred_days
   has_many :shifts
   has_many :shows, through: :shifts
@@ -7,10 +9,13 @@ class User < ApplicationRecord
   has_many :jobs, through: :authorized_jobs
   validates_presence_of :name, :email
   validates :name, length: { minimum: 3 }
+  validates_uniqueness_of :email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+
 
   def authorized?(job)
     self.jobs.include?(job)
@@ -33,14 +38,64 @@ class User < ApplicationRecord
     !scheduled?(show) && can_work?(show)
   end
 
-  def venues
+  def authorized_venues
     clubs = self.jobs.map do |job|
       job.venue
     end
     clubs.uniq
   end
 
+  def admin=(org)
+    assignment = self.assignments.find_by(organization_id: org.id)
+    assignment.admin = true
+    assignment.save
+  end
+
+  def revoke_admin(org_id)
+    assignment = self.assignments.find_by(organization_id: org_id)
+    assignment.admin = false
+    assignment.save
+  end
+
+  def admin?(org_id)
+    assignment = self.assignments.find do |assign|
+      assign.organization_id == org_id.to_i
+    end
+    return false if !assignment
+    assignment.admin
+  end
+
+  def admin_for?(user)
+    return false if !admin_for_any?
+    !shared_orgs(user).empty?
+  end
+
+  def orgs_responsible_for(user)
+     orgs = self.shared_orgs(user)
+     orgs.find_all { |org| self.admin?(org.id) }
+  end
+
+  def shared_orgs(user)
+    user.organizations & self.organizations
+  end
+
+  def venues
+    clubs = []
+    self.organizations.each do |org|
+      org.venues.each do |venue|
+        clubs << venue
+      end
+    end
+    clubs.uniq
+  end
+
   private
+
+  def admin_for_any?
+    postings = self.assignments.find { |assign| assign.admin}
+    return true if postings
+    false
+  end
 
   def remove_jobs
     self.jobs.delete_all

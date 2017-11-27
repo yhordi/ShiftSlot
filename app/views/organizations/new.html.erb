@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title">Organization Sign-Up</h1>
+        </div>
+        <div class="panel-body">
+          <% if flash[:errors] %>
+            <div class="errors">
+              <% flash[:errors].each do |error| %>
+                <p> <%= error %> </p>
+              <% end %>
+            </div>
+          <% end %>
+          <%= form_for @org do |f| %>
+            <div>
+              <%= f.label :org, 'Organizaition Name' %>
+              <%= f.text_field :name, required: true %>
+            </div>
+            <div>
+              <%= f.label :gcal_id, 'Google Calendar ID' %>
+              <%= f.text_field :gcal_id %>
+              <a data-toggle="modal" data-target="#myModal">what's this?</a>
+            </div>
+            <%= f.submit class: 'btn btn-success' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Google Calendar ID:</h4>
+            </div>
+            <div class="modal-body">
+              <p>
+                ShiftSlot can sync with Google Calendar. In order to do so you'll need to paste your Google Calendar ID into this field. You can leave this field blank, or fill it out later if you decide you want to use this feature.
+                <a target="_blank" href="http://googleappstroubleshootinghelp.blogspot.com/2012/09/how-to-find-calendar-id-of-google.html">How do I find my Google Calendar ID?</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -32,6 +32,9 @@ group :test do
   gem 'simplecov'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end
 
 group :development do

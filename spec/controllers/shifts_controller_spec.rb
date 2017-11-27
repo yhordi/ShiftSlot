@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ShiftsController, type: :controller do
+  let(:org) { FactoryGirl.create(:organization) }
   let!(:venue) { FactoryGirl.create(:venue) }
   let!(:job) { FactoryGirl.create(:job, venue: venue) }
   let!(:user) { FactoryGirl.create(:user) }
   let!(:aut_job) { FactoryGirl.create(:authorized_job, job_id: job.id, user_id: user.id)}
-  let(:show) { FactoryGirl.create(:show, venue_id: venue.id, info: venue.abbreviation) }
+  let(:show) { FactoryGirl.create(:show, venue_id: venue.id, info: venue.abbreviation, organization_id: org.id) }
   let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
   describe '#new' do
     let(:hit_show) { get :new, params: {show_id: show.id} }
@@ -73,7 +74,8 @@ RSpec.describe ShiftsController, type: :controller do
             "commit"=>"Schedule Worker",
             "controller"=>"shifts",
             "action"=>"update",
-            "id"=>shift_no_user.id
+            "id"=>shift_no_user.id,
+            "organization_id"=>org.id
           }
         }
 
@@ -107,7 +109,7 @@ RSpec.describe ShiftsController, type: :controller do
       end
 
       context 'on failure' do
-        let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.abbreviation }
+        let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.abbreviation, organization_id: org.id }
         let(:shift2) { FactoryGirl.create :shift, show: show_tomorrow, job: job, user: user}
         let(:invalid_patch_params) {
           {"utf8"=>"✓",
@@ -130,25 +132,27 @@ RSpec.describe ShiftsController, type: :controller do
     end
 
     context 'a signed in admin' do
-      let!(:admin) { FactoryGirl.create(:user, admin: true) }
-      let!(:user2) { FactoryGirl.create(:user, jobs: [job])}
+      let(:admin) { FactoryGirl.create(:admin, organizations: [org]) }
+      let!(:user2) { FactoryGirl.create(:user, jobs: [job], organizations: [org]) }
       let!(:shift_no_user) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: nil) }
       let(:patch_params) {
         {
           "worker_name"=>user2.name,
           "job_id"=>job.id,
-          "id"=>shift_no_user.id
+          "id"=>shift_no_user.id,
+          "organization_id" => org.id
         }
       }
-      let(:patch_request) { patch :update, params: patch_params }
       before(:each) do
+        admin.admin = org
         sign_in admin
-        patch_request
       end
-      it 'sets the shift id to the passed in user id' do
+      it "sets the shift's user_id to the passed in user's id" do
+        patch :update, params: patch_params
         expect(shift_no_user.reload.user.id).to eq(user2.id)
       end
       it 'sets a flash notice stating the passed in worker has been signed up' do
+        patch :update, params: patch_params
         expect(flash[:notice]).to eq("#{user2.name} is signed up to work!")
       end
     end

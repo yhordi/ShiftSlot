@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ShowsController, type: :controller do
+  let(:org)  { FactoryGirl.create(:organization)}
   let(:venue) { FactoryGirl.create(:venue) }
-  let(:show) { FactoryGirl.create(:show, info: venue.abbreviation) }
+  let(:show) { FactoryGirl.create(:show, info: venue.abbreviation, organization: org) }
   let(:user) { FactoryGirl.create(:user) }
   before(:each) do
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
@@ -10,19 +11,19 @@ RSpec.describe ShowsController, type: :controller do
   end
   describe '#index' do
     it 'assigns the @shows variable' do
-      get :index, params: {venue_id: venue.id}
+      get :index, params: {venue_id: venue.id, organization_id: org.id}
       expect(assigns(:shows)).to be_an(ActiveRecord::Relation)
     end
     it 'responds with a status of 200' do
-      get :index, params: {venue_id: venue.id}
+      get :index, params: {venue_id: venue.id, organization_id: org.id}
       expect(response.status).to eq(200)
     end
     it 'renders the index page' do
-      expect(get :index, params: {venue_id: venue.id}).to render_template(:index)
+      expect(get :index, params: {venue_id: venue.id, organization_id: org.id}).to render_template(:index)
     end
   end
   describe '#show' do
-    let(:hit_show) { get :show, params: {venue_id: show.venue_id, id: show.id} }
+    let(:hit_show) { get :show, params: {venue_id: show.venue_id, id: show.id, organization_id: org.id} }
     it 'assigns the @show variable' do
       hit_show
       expect(assigns(:show)).to eq(show)

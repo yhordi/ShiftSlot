@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default scroll-panel">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <%= @org.name %>'s workers/volunteers
+          </div>
+        </div>
+          <div class="panel-body">
+            <ul class='list-group'>
+              <% @org.users.each do |worker| %>
+              <li class='list-group-item'>
+                <%= link_to worker.name, user_path(worker.id) %>
+                <%= render partial: 'users/jobs', locals: { user: worker } %>
+                <%= render partial: 'preferred_days/index', locals: {user: worker}%>
+              </li>
+              <% end %>
+            </ul>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <%= @org.name %>'s venues:
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class='list-group'>
+            <% @org.venues.each do |venue| %>
+            <li class='list-group-item'>
+              <%= link_to venue.name, venue_path(venue) %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">
+            Shows this week for <%= @org.name %>:
+          </div>
+          <%= link_to 'go to month', organization_shows_path(@org.id) %>
+        </div>
+        <div class="panel-body">
+          <%= week_calendar number_of_weeks: 1, events: @org.shows do |date, shows| %>
+            <%= date %>
+            <% shows.each do |show| %>
+              <%= render partial: 'shows/link', locals: {show: show} %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="panel-heading">
+          <div class="panel-title">
+            Next 5 shows  for <%= @org.name %>:
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% @org.upcoming_shows.each do |show| %>
+            <li class="list-group-item">
+              <% if show.staffed? %>
+                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'green' %>
+              <% else %>
+                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'red' %>
+              <% end %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+    </div>
+  </div>
+</div>
