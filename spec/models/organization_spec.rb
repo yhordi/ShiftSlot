@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
   let(:org) { FactoryGirl.create :organization }
-  let(:venue) {FactoryGirl.create :venue, organizations: [org]}
+  let!(:venue) {FactoryGirl.create :venue, organizations: [org]}
   describe 'validations' do
     it { is_expected.to validate_presence_of :name }
     it { is_expected.to validate_uniqueness_of :name }
@@ -44,6 +44,19 @@ RSpec.describe Organization, type: :model do
     end
     it 'when given an integer as anargument changes the length of the returned array' do
       expect(org.upcoming_shows(3).length).to_not eq(5)
+    end
+  end
+  describe '#authorize_volunteer' do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:job) { FactoryGirl.create(:job, venue: venue)}
+    before(:each) do
+      org.users << user
+    end
+    it 'assigns a newly added user the volunteer job for every associated venue' do
+      expect(user.jobs).to include(venue.jobs.find_by(title: 'volunteer'))
+    end
+    it 'does not assign any other jobs associated with the venue' do
+      expect(user.jobs).to_not include(job)
     end
   end
 end
