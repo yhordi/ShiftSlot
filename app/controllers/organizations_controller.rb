@@ -26,6 +26,7 @@ class OrganizationsController < ApplicationController
 
   def confirm
     @org = Organization.find(params[:organization_id])
+    AdminMailer.confirmation(@org)
     render 'confirm'
   end
 
