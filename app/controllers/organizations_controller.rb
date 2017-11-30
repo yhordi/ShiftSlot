@@ -1,5 +1,5 @@
 class OrganizationsController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
+  skip_before_action :require_login, only: [:new, :create, :confirm]
 
   def new
     @org = Organization.new
@@ -8,7 +8,8 @@ class OrganizationsController < ApplicationController
   def create
     @org = Organization.new(org_params)
     if @org.save
-      redirect_to "/users/new?org_id=#{@org.id}"
+      # redirect_to "/users/new?org_id=#{@org.id}"
+      redirect_to "/organizations/#{@org.id}/confirm"
     else
       flash[:errors] = @org.errors.full_messages
       redirect_to new_organization_path
@@ -21,6 +22,11 @@ class OrganizationsController < ApplicationController
     else
       redirect_to organization_shows_path(params[:id])
     end
+  end
+
+  def confirm
+    @org = Organization.find(params[:organization_id])
+    render 'confirm'
   end
 
   private
