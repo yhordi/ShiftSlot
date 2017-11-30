@@ -1,19 +1,17 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <div class="panel panel-default scroll-panel">
+      <div class="panel panel-default ">
         <div class="panel-heading">
           <div class="panel-title">
             <%= @org.name %>'s workers/volunteers
           </div>
         </div>
-          <div class="panel-body">
+          <div class="panel-body scroll-panel">
             <ul class='list-group'>
               <% @org.users.each do |worker| %>
               <li class='list-group-item'>
                 <%= link_to worker.name, user_path(worker.id) %>
-                <%= render partial: 'users/jobs', locals: { user: worker } %>
-                <%= render partial: 'preferred_days/index', locals: {user: worker}%>
               </li>
               <% end %>
             </ul>

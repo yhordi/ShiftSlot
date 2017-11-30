@@ -22,7 +22,7 @@
                   <%= org.name %>
                 </li>
                 <li> <%= link_to 'Shows Month Calendar', organization_calendar_path(org) %> </li>
-                <li> <%= link_to 'Dashboard', organization_path(org) %> </li>
+                <li> <%= link_to 'Organization Dashboard', organization_path(org) %> </li>
                 <% else %>
                   <%= link_to org.name, organization_calendar_path(org) %>
                 <% end %>
@@ -42,9 +42,16 @@
           </ul>
         </li>
         <ul class='nav navbar-nav navbar-right'>
-          <li class="nav-item">
-            <%= link_to current_user.email, user_path(current_user.id) %>
-          </li>
+          <li class='dropdown'>
+            <a href='#' class='dropdown-toggle', data-toggle='dropdown' role='button' aria-haspopup='true', aria-expanded='false'> <%= current_user.name %> <span class="caret"></span></a>
+            <ul class='dropdown-menu'>
+              <li class="nav-item">
+                <%= link_to 'Dashboard', root_path %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Account Settings', user_path(current_user) %>
+              </li>
+            </ul>
           <li class="nav-item">
             <%= link_to 'Logout', destroy_user_session_path, method: 'DELETE', class: 'nav-link'  %>
           </li>
