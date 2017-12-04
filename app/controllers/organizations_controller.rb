@@ -23,6 +23,11 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def edit
+    @org = Organization.find(params[:id])
+    render 'edit'
+  end
+
   private
 
   def org_params

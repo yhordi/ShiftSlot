@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class='panel-title'>
+            <%= @org.name %> General Preferences
+          </h2>
+        </div>
+        <div class="panel-body">
+          <%= form_for @org do |f| %>
+          <div class="">
+            <%= f.label 'Name' %>
+            <%= f.text_field 'name' %>
+          </div>
+          <div class="">
+            <%= f.label 'Google Calendar ID' %>
+            <%= f.text_field 'gcal_id' %>
+          </div>
+          <%= f.submit %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
