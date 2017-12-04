@@ -28,6 +28,12 @@ class OrganizationsController < ApplicationController
     render 'edit'
   end
 
+  def update
+    @org = Organization.find(params[:id])
+    @org.update(org_params)
+    redirect_to organization_path(@org)
+  end
+
   private
 
   def org_params

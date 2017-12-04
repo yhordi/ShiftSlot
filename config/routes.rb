@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'login', controller: 'user/sessions', action: 'new'
     post 'sessions', to: 'devise/sessions', controller: 'user/sessions', action: 'create'
   end
-  resources :organizations, only: [:new, :create, :show, :edit] do
+  resources :organizations, only: [:new, :create, :show, :edit, :update] do
     get 'shows/' => 'shows#index', as: 'calendar'
     resources :shows, only: :show
     resources :venues, only: [:index, :show], shallow: true do
