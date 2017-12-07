@@ -103,7 +103,13 @@ RSpec.describe OrganizationsController, type: :controller do
       delete :destroy, params: {id: org.id}
       expect(assigns[:org]).to eq org
     end
-    it 'sets a notice of organization deletion'
-    it 'removes an organization from the database'
+    it 'sets a notice of organization deletion' do
+      delete :destroy, params: {id: org.id}
+      expect(flash[:notice]).to eq("Organization Deleted")
+    end
+    it 'removes an organization from the database' do
+      delete :destroy, params: {id: org.id}
+      expect{Organization.find(org.id)}.to raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 end
