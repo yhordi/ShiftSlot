@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe OrganizationsController, type: :controller do
   let(:org) { FactoryGirl.create :organization }
   let(:new_org) { FactoryGirl.attributes_for :organization }
+  let(:user) { FactoryGirl.create :user, organizations: [org]}
   describe '#new' do
     it 'assigns the @org instance variable as a new organization' do
       get :new
@@ -60,5 +61,31 @@ RSpec.describe OrganizationsController, type: :controller do
         expect(assigns[:org]).to eq(org)
       end
     end
+  end
+  describe '#edit' do
+    before(:each) do
+      sign_in user
+      get :edit, params: {id: org.id}
+    end
+    it 'assigns the @org instance variable' do
+      expect(assigns[:org]).to eq org
+    end
+    it 'renders the edit page' do
+      expect(response).to render_template(:edit)
+    end
+    it 'responds with a status of 200' do
+      expect(response.status).to eq(200)
+    end
+  end
+  describe '#update' do
+    it 'assigns the @org instance variable'
+    it 'responds with astatus of 302'
+    it 'updates an organization in the database'
+    it 'redirects to the organization_path'
+  end
+  describe '#destroy' do
+    it 'assigns the @org instance variable'
+    it 'sets a notice of organization deletion'
+    it 'removes an organization from the database'
   end
 end
