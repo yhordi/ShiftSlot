@@ -36,4 +36,17 @@ RSpec.describe OrganizationsController, type: :controller do
         end
       end
   end
+  describe '#show' do
+    let!(:admin) {FactoryGirl.create :user, organizations: [org]}
+    it 'responds with a status of 302' do
+      get :show, params: {id: org.id}
+      expect(response.status).to eq(302)
+    end
+    it 'when the user is an admin, assigns the @org instance variable' do
+      admin.admin = org
+      sign_in admin
+      get :show, params: {id: org.id}
+      expect(assigns[:org]).to eq(org)
+    end
+  end
 end
