@@ -78,13 +78,31 @@ RSpec.describe OrganizationsController, type: :controller do
     end
   end
   describe '#update' do
-    it 'assigns the @org instance variable'
-    it 'responds with astatus of 302'
-    it 'updates an organization in the database'
-    it 'redirects to the organization_path'
+    before(:each) do
+      sign_in user
+      put :update, params: {organization: {gcal_id: '01493280419823'}, id: org.id}
+    end
+    it 'assigns the @org instance variable' do
+      expect(assigns[:org]).to eq org
+    end
+    it 'responds with astatus of 302' do
+      expect(response.status).to eq(302)
+    end
+    it 'updates an organization in the database' do
+      expect(org.reload.gcal_id).to eq('01493280419823')
+    end
+    it 'redirects to the organization_path' do
+      expect(response).to redirect_to(organization_path(org))
+    end
   end
   describe '#destroy' do
-    it 'assigns the @org instance variable'
+    before(:each) do
+      sign_in user
+    end
+    it 'assigns the @org instance variable' do
+      delete :destroy, params: {id: org.id}
+      expect(assigns[:org]).to eq org
+    end
     it 'sets a notice of organization deletion'
     it 'removes an organization from the database'
   end
