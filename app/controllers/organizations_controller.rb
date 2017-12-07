@@ -31,6 +31,7 @@ class OrganizationsController < ApplicationController
   def update
     @org = Organization.find(params[:id])
     @org.update(org_params)
+    flash[:notice] = 'Organization Details Updated'
     redirect_to organization_path(@org)
   end
 
