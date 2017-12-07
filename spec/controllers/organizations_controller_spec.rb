@@ -38,15 +38,27 @@ RSpec.describe OrganizationsController, type: :controller do
   end
   describe '#show' do
     let!(:admin) {FactoryGirl.create :user, organizations: [org]}
-    it 'responds with a status of 302' do
-      get :show, params: {id: org.id}
-      expect(response.status).to eq(302)
+    context 'with a logged in user' do
+      before(:each) do
+        sign_in admin
+      end
+      it 'responds with a status of 302' do
+        get :show, params: {id: org.id}
+        expect(response.status).to eq(302)
+      end
+      it 'redirects to the organization shows path' do
+        expect(get :show, params: {id: org.id}).to redirect_to(organization_shows_path(org))
+      end
     end
-    it 'when the user is an admin, assigns the @org instance variable' do
-      admin.admin = org
-      sign_in admin
-      get :show, params: {id: org.id}
-      expect(assigns[:org]).to eq(org)
+    context 'with a logged in admin' do
+      before(:each) do
+        admin.admin = org
+        sign_in admin
+      end
+      it 'when the current user is an admin, assigns the @org instance variable' do
+        get :show, params: {id: org.id}
+        expect(assigns[:org]).to eq(org)
+      end
     end
   end
 end
