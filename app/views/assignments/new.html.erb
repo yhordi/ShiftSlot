@@ -8,7 +8,11 @@
           </h2>
         </div>
         <div class="panel-body">
-
+          <%= form_tag user_assignments_path(@user.id), method: :post do |f| %>
+            <%= hidden_field_tag "user_id", @user.id %>
+            <%= select_tag("organization_id", options_for_select(@orgs.map {|o| [o.name, o.id] }),include_blank: 'select an organiztion', class: 'form-control btn btn-default', required: true) %>
+            <%= submit_tag %>
+          <% end %>
         </div>
       </div>
     </div>
