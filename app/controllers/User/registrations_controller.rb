@@ -50,6 +50,9 @@ class User::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:sign_up, keys: [:organization_id])
   end
 
+  def after_sign_up_path_for(resource)
+    new_user_assignment_path(resource.id)
+  end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
