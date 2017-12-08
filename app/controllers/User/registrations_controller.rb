@@ -13,12 +13,12 @@ class User::RegistrationsController < Devise::RegistrationsController
   end
 
   # POST /resource
-  def create
-    @orgs = Organization.all
-    super do |resource|
-      resource.organizations << Organization.find(params[:organization_id].to_i)
-    end
-  end
+  # def create
+  #   @orgs = Organization.all
+  #   super do |resource|
+  #     resource.organizations << Organization.find(params[:organization_id].to_i)
+  #   end
+  # end
 
   # GET /resource/edit
   # def edit
