@@ -55,6 +55,7 @@ class Show < ApplicationRecord
     shows.map do |show|
       shifts << show.shifts.select { |shift| current_user.authorized?(shift.job) && shift.user_id == nil }
     end
+    return [] if shifts.empty?
     shifts.flatten!
   end
 
