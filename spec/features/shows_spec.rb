@@ -5,7 +5,7 @@ RSpec.feature "Shows", type: :feature do
   let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
   let!(:show) { FactoryGirl.create :show, organization: org, venue: venue }
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let!(:user) { FactoryGirl.create :user, jobs: [job] }
+  let!(:user) { FactoryGirl.create :user, jobs: [job, Job.find_by(title: 'volunteer')] }
   describe 'shows#show page' do
     context 'a user' do
       let(:shift) { FactoryGirl.create :shift, job: job, user_id: nil }

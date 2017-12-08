@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class='panel-title'>
+            <%= @org.name %> General Preferences
+          </h2>
+        </div>
+        <div class="panel-body">
+          <%= form_for @org do |f| %>
+          <div class="">
+            <%= f.label 'Name' %>
+            <%= f.text_field 'name' %>
+          </div>
+          <div class="">
+            <%= f.label 'Google Calendar ID'%>
+            <%= f.text_field 'gcal_id' %>
+          </div>
+          <%= f.submit %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col col-md-4">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h2 class='panel-title'>
+            Danger Zone!
+          </h2>
+        </div>
+        <div class="panel-body">
+          <div class="">
+            Delete your organization:
+          </div>
+          <%= form_tag @org, method: :delete do |f| %>
+            <%= label_tag 'Password' %>
+            <%= password_field_tag 'password', nil, required: true %>
+            <%= label_tag 'organization name' %>
+            <%= text_field_tag :confirm, nil, required: true %>
+            <%= submit_tag 'DESTROY', data: {confirm: "I understand that by clicking OK I will no longer have access to #{@org.name}'s information, nor will anyone else, because it will no longer exist.'"} %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

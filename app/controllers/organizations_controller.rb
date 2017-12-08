@@ -23,6 +23,25 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def edit
+    @org = Organization.find(params[:id])
+    render 'edit'
+  end
+
+  def update
+    @org = Organization.find(params[:id])
+    @org.update(org_params)
+    flash[:notice] = 'Organization Details Updated'
+    redirect_to organization_path(@org)
+  end
+
+  def destroy
+    @org = Organization.find(params[:id])
+    @org.delete
+    flash[:notice] = 'Organization Deleted'
+    redirect_to root_path
+  end
+
   private
 
   def org_params
