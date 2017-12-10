@@ -13,12 +13,14 @@
   </head>
   <body>
     <%= render partial: 'layouts/navbar', layout: 'layouts/navbar'  %>
-    <div class="container">
-      <div class="row">
-        <div class="notice"><%= notice %></div>
-        <div class="alert red"><%= alert %></div>
+    <% if !flash[:notice].nil? || !flash[:error].nil? %>
+      <div class="container">
+        <div class="row">
+          <div class="notice"><%= notice %></div>
+          <div class="alert red"><%= alert %></div>
+        </div>
       </div>
-    </div>
-        <%= yield %>
+    <% end %>
+    <%= yield %>
   </body>
 </html>
