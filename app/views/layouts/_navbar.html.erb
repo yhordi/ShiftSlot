@@ -26,8 +26,12 @@
                 <% end %>
               </li>
             <% end %>
+            <li class='dropdown-header'>
+              General
+            </li>
             <li>
-              <%= link_to 'Join a new Organization', new_user_assignment_path(current_user) %>
+              <%= link_to 'Join an Organization', new_user_assignment_path(current_user) %>
+              <%= link_to 'Create an Organization', new_organization_path %>
             </li>
           </ul>
 
