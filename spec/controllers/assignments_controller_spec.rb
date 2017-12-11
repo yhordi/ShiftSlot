@@ -1,11 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe AssignmentsController, type: :controller do
+  let(:user) { FactoryGirl.create :user }
+  let(:org) { FactoryGirl.cretae :organization }
+  before(:each) do
+    sign_in user
+  end
   describe 'new' do
-    it 'assigns the @user variable'
-    it 'assigns the @orgs variable'
-    it 'responds with a status of 200'
-    it 'renders the new view'
+    before(:each) do
+      get :new, params: {user_id: user.id}
+    end
+    it 'assigns the @user variable' do
+      expect(assigns[:user]).to eq user
+    end
+    it 'assigns the @orgs variable' do
+      expect(assigns[:user]).to eq user
+    end
+    it 'responds with a status of 200' do
+      expect(response.status).to eq 200
+    end
+    it 'renders the new view' do
+      expect(response).to render_template(:new)
+    end
   end
 
   describe 'create' do
