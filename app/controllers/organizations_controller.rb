@@ -8,7 +8,14 @@ class OrganizationsController < ApplicationController
   def create
     @org = Organization.new(org_params)
     if @org.save
-      redirect_to "/users/new?org_id=#{@org.id}"
+      if current_user
+        Assignment.create(user_id: current_user.id, organization_id: @org.id)
+        current_user.admin = @org
+        flash[:notice] = "You've created #{@org.name} and have been granted admin status"
+        redirect_to organization_path(@org)
+      else
+        redirect_to "/users/new?org_id=#{@org.id}"
+      end
     else
       flash[:errors] = @org.errors.full_messages
       redirect_to new_organization_path

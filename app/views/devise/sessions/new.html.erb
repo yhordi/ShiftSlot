@@ -15,9 +15,6 @@
           <div>
             <%= hidden_field_tag 'user[organization_id]', @org.id %>
           </div>
-        <% else %>
-          <%= f.label :organization %><br />
-          <%= select("user","organizations", options_for_select(@orgs.map {|o| [o.name, o.id] }), class: 'form-control btn btn-default', required: true, include_blank: "Select Organization")%>
         <% end %>
         <div class="field">
           <%= f.label :email %><br />

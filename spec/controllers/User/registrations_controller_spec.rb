@@ -12,10 +12,5 @@ RSpec.describe User::RegistrationsController, type: :controller do
       expect(assigns(:org)).to eq(org)
     end
   end
-  describe '#create' do
-    it 'associates a user with an organization' do
-      post :create, params: { user: user_attrs, organization_id: org.id }
-      expect(User.last.organizations).to include(org)
-    end
-  end
+
 end

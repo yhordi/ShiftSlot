@@ -1,13 +1,11 @@
 <div class="container">
+  <h1 class='heading'>Overview of <%= @org.name %> </h1>
+  <%= link_to 'Edit', edit_organization_path(@org) %>
   <div class="row">
-    <div class="page-header">
-      <h1>Overview of <%= @org.name %> </h1>
-      <%= link_to 'Edit', edit_organization_path(@org) %>
-    </div>
     <div class="col-md-6">
       <div class="panel panel-default ">
         <div class="panel-heading">
-          <div class="panel-title">
+          <div class="panel-title heading">
             <%= @org.name %>'s workers/volunteers
           </div>
         </div>
@@ -25,7 +23,7 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <div class="panel-title">
+          <div class="panel-title heading">
             <%= @org.name %>'s venues:
           </div>
         </div>
@@ -42,9 +40,11 @@
   </div>
   </div>
   <div class="row">
+    <div class="col-md-12">
+
     <div class="panel panel-default">
         <div class="panel-heading">
-          <div class="panel-title">
+          <div class="panel-title heading">
             Shows this week for <%= @org.name %>:
           </div>
           <%= link_to 'go to month', organization_shows_path(@org.id) %>
@@ -58,7 +58,7 @@
           <% end %>
         </div>
         <div class="panel-heading">
-          <div class="panel-title">
+          <div class="panel-title heading">
             Next 5 shows  for <%= @org.name %>:
           </div>
         </div>
@@ -76,5 +76,7 @@
           </ul>
         </div>
     </div>
+  </div>
+
   </div>
 </div>
