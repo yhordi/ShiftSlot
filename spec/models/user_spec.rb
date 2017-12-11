@@ -114,7 +114,8 @@ RSpec.describe User, type: :model do
       expect(user.available?(show)).to eq(true)
     end
     it 'returns false if the worker prefers to not work the day of the show' do
-      user.preferred_days[1].preferred = false
+      day = user.preferred_days.find{ |d| d.name == show.day}
+      day.preferred = false
       expect(user.available?(show)).to eq(false)
     end
     it 'returns false if the worker is scheduled to work on the day of the show' do
