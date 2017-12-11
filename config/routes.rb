@@ -26,5 +26,6 @@ Rails.application.routes.draw do
     resources :assignments, only: [:new, :create]
     resources :preferred_days, only: [:update]
   end
+  resources :assignments, only: :update
   root 'landings#index'
 end

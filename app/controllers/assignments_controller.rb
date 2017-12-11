@@ -16,4 +16,11 @@ class AssignmentsController < ApplicationController
       redirect_back
     end
   end
+
+  def update
+    assignment = Assignment.find(params[:id])
+    assignment.authorized = true
+    assignment.save
+    render json: assignment
+  end
 end
