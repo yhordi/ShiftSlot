@@ -14,18 +14,10 @@ RSpec.feature "Landing Page", type: :feature do
         click_on 'Log in'
       end
       scenario 'can log in and see a dashboard' do
-        page.find('#user_organizations').select org.name
         fill_in 'Email', with: user.email
         fill_in 'Password', with: user.password
         click_on 'Log in'
         expect(page).to have_content('Signed in successfully.')
-      end
-      scenario 'can see errors when form fields are empty' do
-        page.find('#user_organizations').select org.name
-        fill_in 'Email', with: user.email
-        fill_in 'Password', with: 'big ham sandwich'
-        click_on 'Log in'
-        expect(page).to have_content('Invalid Email or password')
       end
     end
     describe 'signup' do
