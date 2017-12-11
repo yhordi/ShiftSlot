@@ -12,10 +12,16 @@
           <div class="panel-body scroll-panel">
             <ul class='list-group'>
               <% @org.users.each do |worker| %>
-                <li class='list-group-item'>
-                  <%= link_to worker.name, user_path(worker.id) %>
-                </li>
-                <% Assignmet.find() %>
+                <% if !Assignment.find_match(user_id: worker.id, organization_id: @org.id).authorized? %>
+                  <li class='list-group-item list-group-item-danger'>
+                    <%= link_to worker.name, user_path(worker.id) %>
+                      <span class='red'>Awaiting authorization</span>
+                  </li>
+                  <% else %>
+                  <li class='list-group-item'>
+                    <%= link_to worker.name, user_path(worker.id) %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           </div>
