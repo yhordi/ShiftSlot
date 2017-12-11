@@ -3,11 +3,19 @@
   <%= link_to 'Edit', edit_organization_path(@org) %>
   <div class="row">
     <div class="col-md-6">
-      <div class="panel panel-default ">
-        <div class="panel-heading">
-          <div class="panel-title heading">
-            <%= @org.name %>'s workers/volunteers
-          </div>
+      <% if @org.any_unauthorized? %>
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <div class="panel-title heading">
+              <%= @org.name %>'s workers/volunteers <span class='badge'> <%= @org.total_unauthorized %> </span>
+            </div>
+          <% else %>
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <div class="panel-title heading">
+                  <%= @org.name %>'s workers/volunteers
+                </div>
+          <% end %>
         </div>
           <div class="panel-body scroll-panel">
             <ul class='list-group'>

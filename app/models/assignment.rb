@@ -9,4 +9,8 @@ class Assignment < ApplicationRecord
   def authorized?
     self.authorized
   end
+
+  # def self.any_unauthorized?(org)
+  #   org.assignments.find { |a| !a.authorized? }
+  # end
 end

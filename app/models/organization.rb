@@ -7,6 +7,14 @@ class Organization < ApplicationRecord
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  def total_unauthorized
+    assignments = self.assignments.to_a.delete_if { |assignment| assignment.authorized }
+    assignments.count
+  end
+
+  def any_unauthorized?
+    self.assignments.find { |a| !a.authorized? }
+  end
 
   def upcoming_shows(index = 4)
     upcoming = self.shows.order(:start).select do |show|
