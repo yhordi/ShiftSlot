@@ -45,10 +45,8 @@ ActiveRecord::Schema.define(version: 20171211193749) do
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.string   "gcal_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.string   "code"
-    t.string   "primary_admin_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "partnerships", force: :cascade do |t|

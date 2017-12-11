@@ -12,9 +12,10 @@
           <div class="panel-body scroll-panel">
             <ul class='list-group'>
               <% @org.users.each do |worker| %>
-              <li class='list-group-item'>
-                <%= link_to worker.name, user_path(worker.id) %>
-              </li>
+                <li class='list-group-item'>
+                  <%= link_to worker.name, user_path(worker.id) %>
+                </li>
+                <% Assignmet.find() %>
               <% end %>
             </ul>
           </div>
