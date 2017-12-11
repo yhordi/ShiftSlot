@@ -26,6 +26,24 @@ RSpec.describe OrganizationsController, type: :controller do
         it 'redirects to the user signup page' do
           expect(post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}).to redirect_to("/users/new?org_id=#{Organization.last.id}")
         end
+        context 'when a user is logged in' do
+          before(:each) do
+            sign_in user
+            post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}
+          end
+          it 'associates a user with an organization' do
+            expect(user.reload.organizations).to include(org)
+          end
+          it 'sets the user as the admin of the organization' do
+            expect(user.reload.admin?(Organization.last.id)).to eq true
+          end
+          it 'responds with a success message in flash' do
+            expect(flash[:notice]).to eq "You've created #{Organization.last.name} and have been granted admin status"
+          end
+          it 'redirects to the organization path' do
+            expect(response).to redirect_to organization_path(Organization.last)
+          end
+        end
       end
       context 'on fail' do
         it 'sends errors back through a flash message' do

@@ -11,7 +11,7 @@ class OrganizationsController < ApplicationController
       if current_user
         Assignment.create(user_id: current_user.id, organization_id: @org.id)
         current_user.admin = @org
-        flash[:notice] = "You've created #{@org.name} and been granted admin status"
+        flash[:notice] = "You've created #{@org.name} and have been granted admin status"
         redirect_to organization_path(@org)
       else
         redirect_to "/users/new?org_id=#{@org.id}"
