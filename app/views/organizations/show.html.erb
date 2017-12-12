@@ -7,7 +7,7 @@
         <div class="panel panel-danger">
           <div class="panel-heading">
             <div class="panel-title heading">
-              <%= @org.name %>'s workers/volunteers <span class='badge'> <%= @org.total_unauthorized %> </span>
+              <%= @org.name %>'s workers/volunteers <span class='badge'> <span id='unauthorized-count'><%= @org.total_unauthorized %></span> </span>
             </div>
           <% else %>
             <div class="panel panel-success">

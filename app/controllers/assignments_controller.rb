@@ -17,6 +17,6 @@ class AssignmentsController < ApplicationController
     assignment = Assignment.find(params[:id])
     assignment.authorized = true
     assignment.save
-    render json: assignment
+    render json: { assignment: assignment, unauthorized_count: Organization.find(assignment.organization_id).total_unauthorized }
   end
 end

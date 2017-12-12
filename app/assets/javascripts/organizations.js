@@ -8,7 +8,15 @@ $(document).ready(()=>{
       url,
       method: 'PUT'
     }).done((response)=>{
-      const id =`#unauthorized-${response.id}`
+      const id =`#unauthorized-${response.assignment.id}`
+      if(response.unauthorized_count > 0){
+        $('#unauthorized-count')[0].innerText = response.unauthorized_count
+      } else {
+        $('.badge').remove()
+        const panel = $(id).parent().parent().parent().parent()
+        panel.removeClass('panel-danger')
+        panel.addClass('panel-success')
+      };
       $(id).parent().removeClass('list-group-item-danger')
       $(id).replaceWith('<p>Worker now authorized to work for this organization.</p>')
     })
