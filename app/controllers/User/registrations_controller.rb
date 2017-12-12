@@ -6,6 +6,9 @@ class User::RegistrationsController < Devise::RegistrationsController
   def new
     if params['org_id']
       @org = Organization.find(params[:org_id])
+      if @org.any_admins?
+        return redirect_to root_path
+      end
     else
       @orgs = Organization.all
     end

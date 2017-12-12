@@ -16,6 +16,10 @@ class Organization < ApplicationRecord
     self.assignments.find { |a| !a.authorized? }
   end
 
+  def any_admins?
+    self.users.find { |user| user.admin?(self.id) }
+  end
+
   def upcoming_shows(index = 4)
     upcoming = self.shows.order(:start).select do |show|
       show.start > Time.now
