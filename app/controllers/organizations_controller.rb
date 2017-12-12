@@ -14,7 +14,7 @@ class OrganizationsController < ApplicationController
         flash[:notice] = "You've created #{@org.name} and have been granted admin status"
         redirect_to organization_path(@org)
       else
-        redirect_to "/users/new?org_id=#{@org.id}"
+        redirect_to "/users/new?org_id=#{@org.id}?admin=true"
       end
     else
       flash[:errors] = @org.errors.full_messages

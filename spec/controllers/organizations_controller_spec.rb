@@ -24,7 +24,7 @@ RSpec.describe OrganizationsController, type: :controller do
           expect{post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}}.to change{Organization.count}.by(1)
         end
         it 'redirects to the user signup page' do
-          expect(post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}).to redirect_to("/users/new?org_id=#{Organization.last.id}")
+          expect(post :create, params: {organization: {name: new_org[:name], gcal_id: new_org[:gcal_id]}}).to redirect_to("/users/new?org_id=#{Organization.last.id}?admin=true")
         end
         context 'when a user is logged in' do
           before(:each) do

@@ -10,6 +10,12 @@ class Assignment < ApplicationRecord
     self.authorized
   end
 
+  def self.create_and_authorize(user_id:, organization_id:)
+    assign = self.create(user_id: resource.id, organization_id: org.id)
+    assign.authorized = true
+    assign.save
+  end
+
   # def self.any_unauthorized?(org)
   #   org.assignments.find { |a| !a.authorized? }
   # end
