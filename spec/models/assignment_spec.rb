@@ -11,4 +11,10 @@ RSpec.describe Assignment, type: :model do
       expect(Assignment.find_match(user_id: user.id, organization_id: org.id)).to eq(user.assignments[0])
     end
   end
+  describe '.create_and_authorize' do
+    it 'creates an assignment that is also authorized' do
+      assign = Assignment.create_and_authorize(user_id: user.id, organization_id: org.id)
+      expect(assign.authorized?).to eq true
+    end
+  end
 end
