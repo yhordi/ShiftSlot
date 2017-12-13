@@ -6,6 +6,7 @@ class ShowsController < ApplicationController
   end
 
   def show
+    p params
     @show = Show.find(params[:id])
     render :show
   end

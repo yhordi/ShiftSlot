@@ -3,7 +3,7 @@
     <%= show.date %>
   </td>
   <td>
-    <%= link_to show.headliner, show_path([show.venue, show]) %>
+    <%= link_to show.headliner, organization_show_path(show.organization, show) %>
   </td>
   <td>
     <%= show.readable(show.doors) %>

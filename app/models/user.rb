@@ -21,6 +21,10 @@ class User < ApplicationRecord
     self.jobs.include?(job)
   end
 
+  def authorized_for_organization?(org)
+    
+  end
+
   def adjust_jobs(job_ids)
     return remove_jobs if job_ids == nil
     self.jobs = job_ids.map do |job_id|

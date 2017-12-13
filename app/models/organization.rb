@@ -7,6 +7,11 @@ class Organization < ApplicationRecord
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  def authorized_user?(user)
+    assign = Assignment.find_match(user_id: user.id, organization_id: self.id)
+    assign.authorized?
+  end
+
   def total_unauthorized
     assignments = self.assignments.to_a.delete_if { |assignment| assignment.authorized }
     assignments.count

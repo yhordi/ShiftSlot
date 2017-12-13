@@ -31,8 +31,12 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
-    @org = Organization.find(params[:id])
-    render 'edit'
+    if current_user.admin?(params[:id])
+      @org = Organization.find(params[:id])
+      render 'edit'
+    else
+      redirect_to organization_shows_path(params[:id])
+    end
   end
 
   def update
