@@ -65,7 +65,7 @@ RSpec.describe AssignmentsController, type: :controller do
     end
     it 'renders the assignment as json' do
       put :update, params: {id: assignment.id}
-      expect(JSON.parse(response.body)["authorized"]).to eq true
+      expect(JSON.parse(response.body)["assignment"]["authorized"]).to eq true
     end
   end
 end

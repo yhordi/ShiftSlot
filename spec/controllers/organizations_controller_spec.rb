@@ -81,18 +81,34 @@ RSpec.describe OrganizationsController, type: :controller do
     end
   end
   describe '#edit' do
-    before(:each) do
-      sign_in user
-      get :edit, params: {id: org.id}
+    let!(:admin) {FactoryGirl.create :user, organizations: [org]}
+    context "when the current user is not an admin" do
+      before(:each) do
+        sign_in user
+        get :edit, params: {id: org.id}
+      end
+      it 'assigns the @org instance variable' do
+        expect(assigns[:org]).to eq org
+      end
+      it 'redirects to the organization_shows_path' do
+        expect(response).to redirect_to organization_shows_path(org.id)
+      end
     end
-    it 'assigns the @org instance variable' do
-      expect(assigns[:org]).to eq org
-    end
-    it 'renders the edit page' do
-      expect(response).to render_template(:edit)
-    end
-    it 'responds with a status of 200' do
-      expect(response.status).to eq(200)
+    context "when the current user is an admin" do
+      before(:each) do
+        admin.admin = org
+        sign_in admin
+        get :edit, params: {id: org.id}
+      end
+      it 'assigns the @org instance variable' do
+        expect(assigns[:org]).to eq org
+      end
+      it 'renders the edit page' do
+        expect(response).to render_template(:edit)
+      end
+      it 'responds with a status of 200' do
+        expect(response.status).to eq(200)
+      end
     end
   end
   describe '#update' do

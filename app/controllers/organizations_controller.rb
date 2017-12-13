@@ -31,11 +31,11 @@ class OrganizationsController < ApplicationController
   end
 
   def edit
+    @org = Organization.find(params[:id])
     if current_user.admin?(params[:id])
-      @org = Organization.find(params[:id])
       render 'edit'
     else
-      redirect_to organization_shows_path(params[:id])
+      redirect_to organization_shows_path(@org.id)
     end
   end
 
