@@ -9,6 +9,8 @@ class Organization < ApplicationRecord
 
   def authorized_user?(user)
     assign = Assignment.find_match(user_id: user.id, organization_id: self.id)
+    p assign
+    return false if !assign
     assign.authorized?
   end
 
