@@ -6,6 +6,9 @@ class User::RegistrationsController < Devise::RegistrationsController
   def new
     if params['org_id']
       @org = Organization.find(params[:org_id])
+      if @org.any_admins?
+        return redirect_to root_path
+      end
     else
       @orgs = Organization.all
     end
@@ -51,7 +54,14 @@ class User::RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    new_user_assignment_path(resource.id)
+    if params[:organization_id]
+      org = Organization.find(params[:organization_id])
+      Assignment.create_and_authorize(user_id: resource.id, organization_id: org.id)
+      resource.admin = org
+      organization_path(org)
+    else
+      new_user_assignment_path(resource.id)
+    end
   end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params

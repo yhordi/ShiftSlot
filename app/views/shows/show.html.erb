@@ -1,5 +1,6 @@
 <div class='container'>
   <%= link_to 'back to show list', venue_path(@show.venue_id)%>
+  <% if @show.organization.authorized_user?(current_user) %>
   <div class='row'>
     <div class="col-lg-6">
       <div class='panel panel-default'>
@@ -49,4 +50,11 @@
     </div>
 
   </div>
+  <% else %>
+  <div class="jumbotron">
+    <h2>
+      Sorry, You aren't authorized to view <%= @show.organization.name %>'s content yet. Check with an admin to get authorization.
+    </h2>
+  </div>
+  <% end %>
 </div>

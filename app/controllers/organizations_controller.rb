@@ -14,7 +14,7 @@ class OrganizationsController < ApplicationController
         flash[:notice] = "You've created #{@org.name} and have been granted admin status"
         redirect_to organization_path(@org)
       else
-        redirect_to "/users/new?org_id=#{@org.id}"
+        redirect_to "/users/new?org_id=#{@org.id}?admin=true"
       end
     else
       flash[:errors] = @org.errors.full_messages
@@ -32,7 +32,11 @@ class OrganizationsController < ApplicationController
 
   def edit
     @org = Organization.find(params[:id])
-    render 'edit'
+    if current_user.admin?(params[:id])
+      render 'edit'
+    else
+      redirect_to organization_shows_path(@org.id)
+    end
   end
 
   def update

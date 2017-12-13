@@ -12,5 +12,32 @@ RSpec.describe User::RegistrationsController, type: :controller do
       expect(assigns(:org)).to eq(org)
     end
   end
+  describe '#create' do
+    context 'when passed an organization_id' do
+      before(:each) do
+        post :create, params: {organization_id: org.id, user: user_attrs}
+      end
+      it 'creates an assignment' do
+        expect(Assignment.last.organization_id).to eq(org.id)
+      end
+      it 'sets the new user as the admin for the new organization' do
+        expect(Assignment.last.admin?).to eq true
+      end
+      it 'redirects to the organization_path' do
+          expect(response).to redirect_to organization_path(org.id)
+      end
+    end
+    context "when no organization_id is passed" do
+    before(:each) do
+      post :create, params: {user: user_attrs}
+    end
+      it 'responds with a status of 302' do
+        expect(response.status).to eq 302
+      end
+      it 'redirects to the new_user_assignment_path' do
+        expect(response).to redirect_to new_user_assignment_path(User.last)
+      end
+    end
+  end
 
 end

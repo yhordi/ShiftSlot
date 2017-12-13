@@ -7,6 +7,25 @@ class Organization < ApplicationRecord
   validates_presence_of :name
   validates_uniqueness_of :name
 
+  def authorized_user?(user)
+    assign = Assignment.find_match(user_id: user.id, organization_id: self.id)
+    p assign
+    return false if !assign
+    assign.authorized?
+  end
+
+  def total_unauthorized
+    assignments = self.assignments.to_a.delete_if { |assignment| assignment.authorized }
+    assignments.count
+  end
+
+  def any_unauthorized?
+    self.assignments.find { |a| !a.authorized? }
+  end
+
+  def any_admins?
+    self.users.find { |user| user.admin?(self.id) }
+  end
 
   def upcoming_shows(index = 4)
     upcoming = self.shows.order(:start).select do |show|

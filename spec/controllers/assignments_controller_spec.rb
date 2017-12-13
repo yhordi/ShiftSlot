@@ -52,4 +52,20 @@ RSpec.describe AssignmentsController, type: :controller do
       it 'redirects to the previous page'
     end
   end
+
+  describe '#update' do
+    let(:assignment) { FactoryGirl.create(:assignment)}
+    it 'responds with a status of 200' do
+      put :update, params: {id: assignment.id}
+      expect(response.status).to eq 200
+    end
+    it 'sets an assignments authorized field to true' do
+      put :update, params: {id: assignment.id}
+      expect(assignment.reload.authorized?).to eq true
+    end
+    it 'renders the assignment as json' do
+      put :update, params: {id: assignment.id}
+      expect(JSON.parse(response.body)["assignment"]["authorized"]).to eq true
+    end
+  end
 end

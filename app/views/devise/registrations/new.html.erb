@@ -10,11 +10,12 @@
       </div>
     </div>
     <div class="panel-body">
-
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <% if @org %>
+        <%= hidden_field_tag :organization_id, @org.id %>
+      <% end %>
       <%= devise_error_messages! %>
 
-      
       <div class="field">
         <%= f.label :email %><br/>
         <%= f.email_field :email, autofocus: true, required: true %>

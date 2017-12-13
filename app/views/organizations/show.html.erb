@@ -3,18 +3,37 @@
   <%= link_to 'Edit', edit_organization_path(@org) %>
   <div class="row">
     <div class="col-md-6">
-      <div class="panel panel-default ">
-        <div class="panel-heading">
-          <div class="panel-title heading">
-            <%= @org.name %>'s workers/volunteers
-          </div>
+      <% if @org.any_unauthorized? %>
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <div class="panel-title heading">
+              <%= @org.name %>'s workers/volunteers <span class='badge'> <span id='unauthorized-count'><%= @org.total_unauthorized %></span> </span>
+            </div>
+          <% else %>
+            <div class="panel panel-success">
+              <div class="panel-heading">
+                <div class="panel-title heading">
+                  <%= @org.name %>'s workers/volunteers
+                </div>
+          <% end %>
         </div>
           <div class="panel-body scroll-panel">
             <ul class='list-group'>
               <% @org.users.each do |worker| %>
-              <li class='list-group-item'>
-                <%= link_to worker.name, user_path(worker.id) %>
-              </li>
+                <% assignment = Assignment.find_match(user_id: worker.id, organization_id: @org.id) %>
+                <% if !assignment.authorized? %>
+                  <li class='list-group-item list-group-item-danger'>
+                    <%= link_to worker.name, user_path(worker.id) %>
+                    <div id="unauthorized-<%= assignment.id%>">
+                      Awaiting authorization
+                      <button class="authorize btn btn-success" type="button" name="assignment_id" value=<%= assignment.id %>>Authorize</button>
+                    </div>
+                  </li>
+                  <% else %>
+                  <li class='list-group-item'>
+                    <%= link_to worker.name, user_path(worker.id) %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
           </div>
