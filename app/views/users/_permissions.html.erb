@@ -6,13 +6,15 @@
     </div>
       <%= form_for @user, method: :patch do |f| %>
       <% current_user.orgs_responsible_for(@user).each do |org| %>
-        <div class="input-group">
-          <span class='input-group-addon'>
-            <%= hidden_field_tag 'user[set_admin]', 'false' %>
-            <%= check_box_tag 'user[set_admin]', 'true' %>
-          </span>
-          <%= f.label 'make admin?', class: 'form-control' %>
-        </div>
+        <% if @user != current_user %>
+          <div class="input-group">
+            <span class='input-group-addon'>
+              <%= hidden_field_tag 'user[set_admin]', 'false' %>
+              <%= check_box_tag 'user[set_admin]', 'true' %>
+            </span>
+              <%= f.label 'make admin?', class: 'form-control' %>
+          </div>
+        <% end %>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <%= hidden_field_tag 'organization_id', org.id %>
           <div class="panel panel-warning">
