@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :user, :controllers => {:registrations => "user/registrations"}
+  resources :venues, only: :new
 
   devise_scope :user do
     get 'users/new', to: 'devise/registrations/new', controller: 'user/registrations', action: 'new', as: 'sign_up'
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
     resources :shows, only: :show
     resources :venues, only: [:index, :show], shallow: true do
       resources :shows, shallow: true do
-        resources :shifts, only: [:new, :create, :update, :destroy, :edit]
+        resources :shifts, except: :index
       end
     end
     post '/shows' => 'calendars#create'
