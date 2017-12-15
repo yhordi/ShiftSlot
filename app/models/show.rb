@@ -17,11 +17,9 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
-    self.organization.venues.each do |venue|
-      regex = Regexp.new("\\b#{venue.name}\\b")
-      return self.venue = Venue.find_by(name: venue.name) if self.info.match(regex)
-    end
+    match_venue_by_name
   end
+
   # def assign_venue
   #   return 'venue already assigned' if self.venue_id
   #   venue_abbreviation = nil
@@ -65,6 +63,15 @@ class Show < ApplicationRecord
     end
     return [] if shifts.empty?
     shifts.flatten!
+  end
+
+  private
+
+  def match_venue_by_name
+    self.organization.venues.each do |venue|
+      regex = Regexp.new("\\b#{venue.name}\\b")
+      return self.venue = Venue.find_by(name: venue.name) if self.info.match(regex)
+    end
   end
 
 
