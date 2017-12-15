@@ -1,12 +1,57 @@
 <div class="container">
   <div class="row">
-    <div class="col-med-6">
+    <div class="col col-med-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-title heading">
             <h2>Create a new Venue</h2>
           </div>
         </div>
+        <div class="panel-body">
+          <%= form_for @venue do |f| %>
+          <div>
+            <%= label_tag "select an organization to manage booking at this venue:" %>
+            <%= select_tag 'organization_id', options_for_select(@orgs.map {|o| [o.name, o.id]}) %>
+          </div>
+          <div>
+            <%= f.label :venue_name %>
+            <%= f.text_field :name %>
+          </div>
+          <div>
+            <%= f.label :hooks %>
+            <%= f.text_field :hooks %>
+            <a data-toggle="modal" data-target="#hooksHelp">what's this?</a>
+          </div>
+          <div>
+            <%= f.label :location %>
+            <%= f.text_field :location %>
+          </div>
+          <%= f.submit %>
+          <% end %>
+        </div>
+        <div class="modal fade" id="hooksHelp" tabindex="-1" role="dialog" aria-labelledby="hooksHelpLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="hooksHelpLabel">What are hooks?:</h4>
+              </div>
+              <div class="modal-body">
+                <p>
+                  Note: if you don't plan to sync with google calendar you can leave this blank. You can also fill it out later.
+                </p>
+                <p>
+                  ShiftSlot can sync with Google Calendar. One of the things that makes this possible are hooks. A hook is a piece of text that ShiftSlot will look for when syncing with google calendar so that it can automatically infer what venue a show is booked at.
+                </p>
+                <p>
+                  A hook can be any piece of text that might be associated with a venue. ShiftSlot will first check the title, and if that isn't found in the google calendar event it will then look for hooks.
+                </p>
+                <h4>Example:</h4>
+                - fill in example here before merge -
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>

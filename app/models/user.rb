@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def authorized_for_organization?(org)
-    
+
   end
 
   def adjust_jobs(job_ids)
@@ -67,6 +67,10 @@ class User < ApplicationRecord
     end
     return false if !assignment
     assignment.admin
+  end
+
+  def all_admin_orgs
+    self.organizations.find_all { |org| self.admin?(org.id) }
   end
 
   def admin_for?(user)

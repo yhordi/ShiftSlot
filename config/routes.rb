@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :user, :controllers => {:registrations => "user/registrations"}
-  resources :venues, only: :new
+  resources :venues, only: [:new, :create]
 
   devise_scope :user do
     get 'users/new', to: 'devise/registrations/new', controller: 'user/registrations', action: 'new', as: 'sign_up'

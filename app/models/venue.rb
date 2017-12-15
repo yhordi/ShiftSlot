@@ -6,6 +6,11 @@ class Venue < ApplicationRecord
   has_many :organizations, through: :partnerships
   after_create :seed_jobs
 
+  def parsed_hooks
+    return self.hooks.split(',') if self.hooks
+    nil
+  end
+
   protected
 
   def seed_jobs
