@@ -17,7 +17,7 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
-    match_venue_by_name
+    match_venue
   end
 
   # def assign_venue
@@ -67,10 +67,18 @@ class Show < ApplicationRecord
 
   private
 
-  def match_venue_by_name
+  def match_venue
     self.organization.venues.each do |venue|
       regex = Regexp.new("\\b#{venue.name}\\b")
-      return self.venue = Venue.find_by(name: venue.name) if self.info.match(regex)
+      return self.venue = venue if self.info.match(regex)
+      match_venue_by_hook(venue)
+    end
+  end
+
+  def match_venue_by_hook(venue)
+    venue.parsed_hooks.each do |hook|
+      regex = Regexp.new("\\b#{hook}\\b")
+      return self.venue = venue if self.info.match(regex)
     end
   end
 

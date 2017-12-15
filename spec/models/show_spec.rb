@@ -61,9 +61,14 @@ RSpec.describe Show, type: :model do
 
   describe '#assign_venue' do
     let(:parsed_show) {FactoryGirl.build :show, venue: nil, info: venue.name + ' asdflkajsdflkjasdlfk', organization: org}
+    let(:hook_show) {FactoryGirl.build :show, venue: nil, info: venue.parsed_hooks[0] + ' as524343dflkajsdflkjasdlfk', organization: org}
     it 'assigns the associated venue based on the info field containing the name of the venue' do
       parsed_show.assign_venue
       expect(parsed_show.venue).to eq(venue)
+    end
+    it 'assigns the associated venue based on the info field containing the one of the hooks of the venue' do
+      hook_show.assign_venue
+      expect(hook_show.venue).to eq(venue)
     end
   end
 
