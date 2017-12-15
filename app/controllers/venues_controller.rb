@@ -12,11 +12,15 @@ class VenuesController < ApplicationController
   end
 
   def create
-    venue = Venue.new(venue_params)
+    @venue = Venue.new(venue_params)
     org = Organization.find(params[:organization_id])
-    venue.organizations << org
-    venue.save
-    redirect_to organization_venues_path(org)
+    @venue.organizations << org
+    if @venue.save
+      redirect_to organization_venues_path(org)
+    else
+      flash[:errors] = @venue.errors.full_messages
+      redirect_to new_venue_path
+    end
   end
 
   def show

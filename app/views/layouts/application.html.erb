@@ -14,11 +14,19 @@
   </head>
   <body>
     <%= render partial: 'layouts/navbar', layout: 'layouts/navbar'  %>
-    <% if !flash[:notice].nil? || !flash[:error].nil? %>
+    <% if !flash[:notice].nil? || !flash[:errors].nil? %>
       <div class="container">
         <div class="row">
           <div class="notice"><%= notice %></div>
-          <div class="alert red"><%= alert %></div>
+          <div class="alert red">
+            <ul>
+              <%= flash[:errors].each do |error| %>
+                <li>
+                  <%= error %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
     <% end %>
