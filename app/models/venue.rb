@@ -6,6 +6,7 @@ class Venue < ApplicationRecord
   has_many :partnerships
   has_many :organizations, through: :partnerships
   after_create :seed_jobs
+
   def parsed_hooks
     return self.hooks.split(',') if self.hooks
     nil
@@ -18,10 +19,10 @@ class Venue < ApplicationRecord
   end
 
 
-  def self.abbreviations
-    Venue.all.map do |venue|
-      venue.abbreviation
-    end
-  end
+  # def self.abbreviations
+  #   Venue.all.map do |venue|
+  #     venue.abbreviation
+  #   end
+  # end
 
 end
