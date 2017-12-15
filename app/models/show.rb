@@ -17,17 +17,25 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
-    venue_abbreviation = nil
-    Venue.abbreviations.each do |abbrev|
-      if self.info
-        venue_abbreviation = abbrev if self.info.include?(abbrev)
-      end
+    self.organization.venues.each do |venue|
+      regex = Regexp.new("\\b#{venue.name}\\b")
+      return self.venue = Venue.find_by(name: venue.name) if self.info.match(regex)
     end
-    return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation
-    return self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for one or more of the shows you are trying to import. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}") if self.info
-    return self.errors.add(:missing_date, "Shifslot couldn't find the date form google calendar.")
-    self.errors.add(:info, "The info for this show has not been set.")
   end
+  # def assign_venue
+  #   return 'venue already assigned' if self.venue_id
+  #   venue_abbreviation = nil
+  #   Venue.abbreviations.each do |abbrev|
+  #     if self.info
+  #       venue_abbreviation = abbrev if self.info.include?(abbrev)
+  #     end
+  #   end
+  #   return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation
+  #   return self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for one or more of the shows you are trying to import. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}") if self.info
+  #   return self.errors.add(:missing_date, "Shifslot couldn't find the date from google calendar.")
+  #   self.errors.add(:info, "The info for this show has not been set.")
+  #   # Leave above line in until show CRUD is built out
+  # end
 
   def day
     self.start.strftime('%A')

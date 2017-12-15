@@ -46,7 +46,7 @@ RSpec.describe CalendarsController, type: :controller do
       {
         "shows"=> {
           "0"=> {
-            "info"=>"#{venue.abbreviation} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"
+            "info"=>"#{venue.hooks} Band!!!", "start"=>"2017-08-04 23:30:00 UTC"
           }
         },
         organization_id: org.id

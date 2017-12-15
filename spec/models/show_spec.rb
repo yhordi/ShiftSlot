@@ -1,8 +1,11 @@
+require_relative '../support/response'
+
 RSpec.describe Show, type: :model do
-  let(:venue) { FactoryGirl.create :venue }
+  let!(:org) { FactoryGirl.create :organization }
+  let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.abbreviation }
+  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks }
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
@@ -53,6 +56,14 @@ RSpec.describe Show, type: :model do
     it 'returns an array containing shifts that the user can work' do
       user.jobs << job2
       expect(Show.available_shifts_for(user)).to eq([shift])
+    end
+  end
+
+  describe '#assign_venue' do
+    let(:parsed_show) {FactoryGirl.build :show, venue: nil, info: venue.name + ' asdflkajsdflkjasdlfk', organization: org}
+    it 'assigns the associated venue based on the info field containing the name of the venue' do
+      parsed_show.assign_venue
+      expect(parsed_show.venue).to eq(venue)
     end
   end
 
