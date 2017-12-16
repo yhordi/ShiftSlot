@@ -17,16 +17,19 @@
     <% if !flash[:notice].nil? || !flash[:errors].nil? %>
       <div class="container">
         <div class="row">
-          <div class="notice"><%= notice %></div>
-          <div class="alert red">
-            <ul>
-              <%= flash[:errors].each do |error| %>
-                <li>
-                  <%= error %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
+          <% if flash[:notice] %>
+            <div class="notice"><%= notice %></div>
+          <% else %>
+            <div class="alert red">
+              <ul>
+                <%= flash[:errors].each do |error| %>
+                  <li>
+                    <%= error %>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
