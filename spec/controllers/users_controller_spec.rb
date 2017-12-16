@@ -92,7 +92,7 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe '#search' do
-    let(:show) { FactoryGirl.create(:show, info: venue.abbreviation, organization: org) }
+    let(:show) { FactoryGirl.create(:show, info: venue.hooks + 'kalsdjf iwrue ham 3', organization: org) }
     let(:shift) { FactoryGirl.create(:shift, job_id: job.id, show_id: show.id, user_id: user.id)}
     let(:params) { {"show_id"=>show.id, "search"=>user.name, "controller"=>"users", "action"=>"search", "shift_id"=>shift.id} }
     let(:empty_params) { {"show_id"=>show.id, "search"=>"", "controller"=>"users", "action"=>"search"} }
