@@ -5,7 +5,7 @@ RSpec.describe Show, type: :model do
   let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks }
+  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks, organization: org }
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do

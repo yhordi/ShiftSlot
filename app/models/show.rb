@@ -1,5 +1,4 @@
 class Show < ApplicationRecord
-  validate :assign_venue
   belongs_to :venue
   belongs_to :organization
   has_many :shifts
