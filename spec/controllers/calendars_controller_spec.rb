@@ -41,7 +41,7 @@ RSpec.describe CalendarsController, type: :controller do
   end
 
   describe '#create' do
-    let(:venue) {FactoryGirl.create(:venue)}
+    let(:venue) {FactoryGirl.create(:venue, organizations: [org])}
     let(:shows_params) {
       {
         "shows"=> {

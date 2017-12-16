@@ -19,7 +19,7 @@ class CalendarsController < ApplicationController
       new_show.organization = org
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
-      new_show.save
+      new_show.save!
       # This isn't saving in some cases where it should. Needs attention.
       if new_show.errors.any?
         errors << new_show.errors.full_messages
