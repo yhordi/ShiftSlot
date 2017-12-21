@@ -57,14 +57,30 @@ RSpec.describe VenuesController, type: :controller do
     end
   end
   describe 'create' do
-    it 'responds with a status of 302'
+    let(:venue_attr) { FactoryGirl.attributes_for :venue }
+    it 'responds with a status of 302' do
+      post :create, params: { venue: venue_attr, organization_id: org.id }
+      expect(response.status).to eq(302)
+    end
     context 'on success' do
-      it 'saves the new venue to the database'
-      it 'redirects to the organization_venues_path'
+      it 'increments the venue count in the database by one' do
+        expect{post :create, params: { venue: venue_attr, organization_id: org.id }}.to change{Venue.count}.by(1)
+      end
+      it 'redirects to the organization_venues_path' do
+        post :create, params: { venue: venue_attr, organization_id: org.id}
+        expect(response).to redirect_to organization_venues_path(org.id)
+      end
     end
     context 'on failure' do
-      it 'responds with an error message in flash'
-      it 'redirects to the new_venue_path'
+      let(:bad_venue_attr) { FactoryGirl.attributes_for :venue, name: '' }
+      it 'responds with an error message in flash' do
+        post :create, params: { venue: bad_venue_attr, organization_id: org.id}
+        expect(flash[:errors]).to include("Name can't be blank")
+      end
+      it 'redirects to the new_venue_path' do
+        post :create, params: { venue: bad_venue_attr, organization_id: org.id}
+        expect(response).to redirect_to new_venue_path
+      end
     end
   end
 end
