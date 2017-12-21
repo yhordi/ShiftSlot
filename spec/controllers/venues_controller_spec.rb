@@ -39,4 +39,32 @@ RSpec.describe VenuesController, type: :controller do
       expect(get :show, params: {id: venue.id}).to render_template(:show)
     end
   end
+  describe 'new' do
+    before(:each) do
+      get :new
+    end
+    it 'assigns the @orgs variable' do
+      expect(assigns[:orgs]).to eq(user.all_admin_orgs)
+    end
+    it 'assigns the @venue variable' do
+      expect(assigns[:venue]).to be_a_new(Venue)
+    end
+    it 'responds with a status of 200' do
+      expect(response.status).to eq(200)
+    end
+    it 'renders the new template' do
+      expect(response).to render_template(:new)
+    end
+  end
+  describe 'create' do
+    it 'responds with a status of 302'
+    context 'on success' do
+      it 'saves the new venue to the database'
+      it 'redirects to the organization_venues_path'
+    end
+    context 'on failure' do
+      it 'responds with an error message in flash'
+      it 'redirects to the new_venue_path'
+    end
+  end
 end
