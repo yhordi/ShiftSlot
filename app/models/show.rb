@@ -3,7 +3,8 @@ class Show < ApplicationRecord
   belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
-  validates_presence_of :start, :info, :venue_id
+  validates_presence_of :start, :info
+  validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
 
   def date
     self.start.strftime('%A, %D')
@@ -60,9 +61,13 @@ class Show < ApplicationRecord
   end
 
   def match_venue_by_hook(venue)
-    venue.parsed_hooks.each do |hook|
-      regex = Regexp.new("\\b#{hook}\\b")
-      return self.venue = venue if self.info.match(regex)
+    if venue.hooks
+      venue.parsed_hooks.each do |hook|
+        regex = Regexp.new("\\b#{hook}\\b")
+        return self.venue = venue if self.info.match(regex)
+      end
+    else
+      nil
     end
   end
 
