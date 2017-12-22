@@ -44,10 +44,12 @@
                 <%= link_to venue.name, venue_path(venue) %>
               </li>
             <% end %>
-            <li role="separator" class="divider"></li>
-            <li>
-              <%= link_to "Create New", new_venue_path %>
-            </li>
+            <% if current_user.admin_for? %>
+              <li role="separator" class="divider"></li>
+              <li>
+                <%= link_to "Create New", new_venue_path %>
+              </li>
+            <% end %>
           </ul>
         </li>
         <ul class='nav navbar-nav navbar-right'>

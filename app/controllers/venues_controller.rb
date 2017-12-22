@@ -6,9 +6,13 @@ class VenuesController < ApplicationController
   end
 
   def new
-    @orgs = current_user.all_admin_orgs
-    @venue = Venue.new
-    render :new
+    if current_user.admin_for?
+      @orgs = current_user.all_admin_orgs
+      @venue = Venue.new
+      render :new
+    elsif
+      redirect_to root_path
+    end
   end
 
   def create

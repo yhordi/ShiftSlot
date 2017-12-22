@@ -73,7 +73,7 @@ class User < ApplicationRecord
     self.organizations.find_all { |org| self.admin?(org.id) }
   end
 
-  def admin_for?(user)
+  def admin_for?(user = self)
     return false if !admin_for_any?
     !shared_orgs(user).empty?
   end
