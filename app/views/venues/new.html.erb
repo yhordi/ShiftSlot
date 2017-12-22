@@ -15,7 +15,7 @@
           </div>
           <div>
             <%= f.label :venue_name %>
-            <%= f.text_field :name %>
+            <%= f.text_field :name, required: true %>
           </div>
           <div>
             <%= f.label :hooks %>
@@ -24,7 +24,7 @@
           </div>
           <div>
             <%= f.label :location %>
-            <%= f.text_field :location %>
+            <%= f.text_field :location, required: true %>
           </div>
           <%= f.submit %>
           <% end %>
@@ -46,8 +46,11 @@
                 <p>
                   A hook can be any piece of text that might be associated with a venue. ShiftSlot will first check the title, and if that isn't found in the google calendar event it will then look for hooks.
                 </p>
+                <p>
+                  Hooks are useful in the case of your organization using a google calendar for booking shows prior to using this app.
+                </p>
                 <h4>Example:</h4>
-                - fill in example here before merge -
+                - fill in example here before deploy -
                 </div>
               </div>
             </div>
