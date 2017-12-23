@@ -17,12 +17,4 @@ class Venue < ApplicationRecord
   def seed_jobs
     self.jobs << Job.create(title: 'volunteer')
   end
-
-
-  # def self.abbreviations
-  #   Venue.all.map do |venue|
-  #     venue.abbreviation
-  #   end
-  # end
-
 end
