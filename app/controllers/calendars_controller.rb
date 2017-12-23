@@ -30,6 +30,11 @@ class CalendarsController < ApplicationController
         errors << error
       end
     end
-    redirect_to organization_shows_path(org), flash: {errors: errors.flatten.uniq}
+    if errors.empty?
+      message = {notice: 'All shows imported successfully!'}
+    else
+      message = {errors: errors.flatten.uniq}
+    end
+    redirect_to organization_shows_path(org), flash: message
   end
 end

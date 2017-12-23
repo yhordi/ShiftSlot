@@ -20,15 +20,19 @@
           <% if flash[:notice] %>
             <div class="notice"><%= notice %></div>
           <% else %>
-            <div class="alert red">
-              <ul>
-                <%= flash[:errors].each do |error| %>
-                  <li>
+          <div class='panel panel-danger'>
+            <div class="panel-heading">
+              <h4>Errors</h4>
+            </div>
+              <ul class='list-group-item'>
+                <% flash[:errors].map do |error| %>
+                  <li class='list-group-item list-group-item-danger'>
                     <%= error %>
                   </li>
                 <% end %>
               </ul>
             </div>
+          </div>
           <% end %>
         </div>
       </div>
