@@ -1,10 +1,10 @@
 class Show < ApplicationRecord
-  validate :assign_venue
   belongs_to :venue
   belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
-  validates_presence_of :start, :info, :venue_id
+  validates_presence_of :start, :info
+  validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
 
   def date
     self.start.strftime('%A, %D')
@@ -17,16 +17,7 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
-    venue_abbreviation = nil
-    Venue.abbreviations.each do |abbrev|
-      if self.info
-        venue_abbreviation = abbrev if self.info.include?(abbrev)
-      end
-    end
-    return self.venue = Venue.find_by(abbreviation: venue_abbreviation) if venue_abbreviation
-    return self.errors.add(:associated_venue, "ShiftSlot wasn't able to automatically infer the venue for one or more of the shows you are trying to import. You should go back to the Google Calendar event and add one of the following to the summary and that should fix the problem: #{Venue.abbreviations.join(', ')}") if self.info
-    return self.errors.add(:missing_date, "Shifslot couldn't find the date form google calendar.")
-    self.errors.add(:info, "The info for this show has not been set.")
+    match_venue
   end
 
   def day
@@ -57,6 +48,27 @@ class Show < ApplicationRecord
     end
     return [] if shifts.empty?
     shifts.flatten!
+  end
+
+  private
+
+  def match_venue
+    self.organization.venues.each do |venue|
+      regex = Regexp.new("\\b#{venue.name}\\b")
+      return self.venue = venue if self.info.match(regex)
+      match_venue_by_hook(venue)
+    end
+  end
+
+  def match_venue_by_hook(venue)
+    if venue.hooks
+      venue.parsed_hooks.each do |hook|
+        regex = Regexp.new("\\b#{hook}\\b")
+        return self.venue = venue if self.info.match(regex)
+      end
+    else
+      nil
+    end
   end
 
 

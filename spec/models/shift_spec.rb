@@ -15,22 +15,10 @@ RSpec.describe Shift, type: :model do
       expect(shift).to be_valid
     end
     it {is_expected.to validate_uniqueness_of(:user_id).scoped_to(:show_id)}
-    xdescribe '#authorized?' do
-      before(:each) do
-        shift.user = user
-      end
-      it 'is valid when the user is associated with a job' do
-        user.jobs << job
-        expect(shift).to be_valid
-      end
-      it 'is invalid when the user is not associated with a job' do
-        expect(shift).to_not be_valid
-      end
-    end
   end
   describe '#remove_worker' do
     let!(:user2) { FactoryGirl.create(:user, jobs: [job]) }
-    let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.abbreviation, organization: org }
+    let(:show_tomorrow) { FactoryGirl.create :show, start: DateTime.tomorrow, venue: venue, info: venue.hooks + 'asdf', organization: org }
     let(:admin) { FactoryGirl.create(:user, organizations: [show_tomorrow.organization]) }
     let(:scheduled_shift) { FactoryGirl.create(:shift, job: job, user: user2)}
     let(:bad_shift) { FactoryGirl.create(:shift, show: show_tomorrow, job: job, user: user2)}
@@ -44,6 +32,11 @@ RSpec.describe Shift, type: :model do
     it 'allows an admin to remove a worker regardless of the day' do
       admin.admin = org
       expect(bad_shift.remove_worker(admin)).to eq(true)
+    end
+  end
+  describe '#start' do
+    it 'returns the start time of the show associated with the shift' do
+      expect(shift.start).to eq(shift.show.start)
     end
   end
 end

@@ -19,12 +19,22 @@ class CalendarsController < ApplicationController
       new_show.organization = org
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
+      new_show.assign_venue
       new_show.save
       # This isn't saving in some cases where it should. Needs attention.
       if new_show.errors.any?
-        errors << new_show.errors.full_messages
+        error = "#{new_show.info} was not saved: "
+        new_show.errors.full_messages.each do |err|
+          error << err + " "
+        end
+        errors << error
       end
     end
-    redirect_to organization_shows_path(org), flash: {errors: errors.flatten.uniq}
+    if errors.empty?
+      message = {notice: 'All shows imported successfully!'}
+    else
+      message = {errors: errors.flatten.uniq}
+    end
+    redirect_to organization_shows_path(org), flash: message
   end
 end
