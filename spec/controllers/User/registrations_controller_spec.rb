@@ -11,6 +11,14 @@ RSpec.describe User::RegistrationsController, type: :controller do
       get :new, params: {org_id: org.id}
       expect(assigns(:org)).to eq(org)
     end
+    context 'when the org has admins' do
+      let(:admin) { FactoryGirl.create :user, organizations: [org]}
+      it 'redirects to root' do
+        admin.admin = org
+        get :new, params: {org_id: org.id}
+        expect(response).to redirect_to root_path
+      end
+    end
   end
   describe '#create' do
     context 'when passed an organization_id' do
