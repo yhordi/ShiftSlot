@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
   resources :organizations do
     get 'shows/' => 'shows#index', as: 'calendar'
-    resources :shows, only: :show
+    resources :shows, only: [:show, :new]
     resources :venues, only: [:index, :show], shallow: true do
       resources :shows, shallow: true do
         resources :shifts, except: :index

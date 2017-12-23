@@ -1,6 +1,20 @@
 <div class="container">
-  <h1 class='heading'>Overview of <%= @org.name %> </h1>
-  <%= link_to 'Edit', edit_organization_path(@org) %>
+  <div class="page-header">
+    <h2 class="heading">
+      <%= @org.name %>
+    </h2>
+    <ul class='nav nav-pills'>
+      <li>
+        <%= link_to 'Settings', edit_organization_path(@org) %>
+      </li>
+      <li>
+        <%= link_to 'Book a Show', new_organization_show_path(@org) %>
+      </li>
+      <li>
+        <%= link_to 'Add a Venue', new_venue_path %>
+      </li>
+    </ul>
+  </div>
   <div class="row">
     <div class="col-md-6">
       <% if @org.any_unauthorized? %>
