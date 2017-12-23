@@ -3,14 +3,6 @@ class Shift < ApplicationRecord
   belongs_to :show
   belongs_to :job
   validates_uniqueness_of :user_id, allow_blank: true, scope: :show_id
-  # validate :authorized
-
-  # def authorized
-  #   user = User.find_by(id: self.user_id)
-  #   if user && !user.authorized?(self.job)
-  #     errors.add(:authorization, "#{user.name} is not authorized to work #{self.job.title}")
-  #   end
-  # end
 
   def start
     self.show.start
