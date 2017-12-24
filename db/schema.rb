@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171223232452) do
+ActiveRecord::Schema.define(version: 20171224044036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,10 +45,8 @@ ActiveRecord::Schema.define(version: 20171223232452) do
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.string   "gcal_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.string   "code"
-    t.string   "primary_admin_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "partnerships", force: :cascade do |t|
@@ -81,8 +79,8 @@ ActiveRecord::Schema.define(version: 20171223232452) do
   end
 
   create_table "shows", force: :cascade do |t|
-    t.datetime "doors"
-    t.datetime "start"
+    t.time     "doors"
+    t.time     "start"
     t.datetime "show_end"
     t.integer  "venue_id"
     t.datetime "created_at",      null: false
@@ -97,6 +95,7 @@ ActiveRecord::Schema.define(version: 20171223232452) do
     t.decimal  "door_price"
     t.boolean  "all_ages"
     t.integer  "booked_by_id"
+    t.date     "date"
     t.index ["organization_id"], name: "index_shows_on_organization_id", using: :btree
     t.index ["venue_id"], name: "index_shows_on_venue_id", using: :btree
   end

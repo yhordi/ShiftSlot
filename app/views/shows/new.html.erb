@@ -1,26 +1,58 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-9">
 
       <div class="panel panel-info">
         <div class="panel-heading">
-          <div class="panel-title">
-            book a show
-          </div>
+          <h1 class="panel-title">
+            Book a Show
+          </h1>
         </div>
         <div class="panel-body">
           <%= form_for [@org, @show] do |f| %>
-          <div class="">
+          <div class='form-group'>
+            <%= f.label 'headliner/title' %>
+            <%= f.text_field :headliner, class: 'form-control' %>
+          </div>
+          <div class='form-group'>
             <%= f.label :venue_id %>
             <%= select_tag "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
           </div>
-          <div class="">
-            <%= f.label 'date/doors' %>
-            <%= f.datetime_select :doors %>
+          <div class='form-group'>
+            <%= f.label :date %>
+            <%= f.date_select :date, required: true, class: 'form-control' %>
           </div>
-          <div class="">
+          <div class='form-group'>
+            <%= f.label :doors %>
+            <%= f.time_select :doors, {ampm: true} %>
+          </div>
+          <div class='form-group'>
+            <%= f.label :start %>
+            <%= f.time_select :start, :ampm => true %>
+          </div>
+          <div class='form-group'>
             <%= f.label :info %>
-            <%= f.text_area :info, placeholder: 'you can put the bands playing, or other info in this field', cols: 30, rows: 2 %>
+            <%= f.text_area :info, placeholder: 'you can put the acts performing, or other info in this field', cols: 30, rows: 2, class: 'form-control' %>
+          </div>
+          <div class='form-group'>
+            <%= f.label :recoup, 'Expenses to Recoup' %>
+            <%= f.number_field :recoup, class: 'form-control' %>
+          </div>
+          <div class='form-group'>
+            <%= f.label :payout  %>
+            <%= f.number_field :payout, class: 'form-control' %>
+          </div>
+          <div class='form-group'>
+            <%= f.label :event_link %>
+            <%= f.text_field :event_link, class: 'form-control' %>
+          </div>
+          <div class='form-group'>
+            <%= f.label :tickets_link %>
+            <%= f.text_field :tickets_link, class: 'form-control'%>
+          </div>
+          <div class='form-group'>
+            <%= f.label :door_price %>
+            <%= f.number_field :door_price, class: 'form-control' %>
           </div>
             <%= f.submit %>
           <% end %>

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
         resources :shifts, except: :index
       end
     end
-    post '/shows' => 'calendars#create'
+    post '/shows' => 'calendars#create' #fix this next
     get '/sync' => 'calendars#sync'
     get '/callback' => 'omniauths#callback'
   end
