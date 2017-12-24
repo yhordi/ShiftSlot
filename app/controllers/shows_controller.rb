@@ -10,4 +10,10 @@ class ShowsController < ApplicationController
     render :show
   end
 
+  def new
+    @org = Organization.find(params[:organization_id])
+    @show = Show.new
+    render :new
+  end
+
 end

@@ -9,12 +9,3 @@ class AddFieldsToShow < ActiveRecord::Migration[5.0]
     add_column :shows, :booked_by_id, :integer
   end
 end
-
-
-# - Expenses to Recoup
-# - Payout
-# - Event link
-# - Tickets link
-# - advance price
-# - doors price
-# - all ages?

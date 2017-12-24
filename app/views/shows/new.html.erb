@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">
+            book a show
+          </div>
+        </div>
+        <div class="panel-body">
+          <%= form_for [@org, @show] do |f| %>
+          <div class="">
+            <%= f.label :venue_id %>
+            <%= select_tag "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
+          </div>
+          <div class="">
+            <%= f.label 'date/doors' %>
+            <%= f.datetime_select :doors %>
+          </div>
+          <div class="">
+            <%= f.label :info %>
+            <%= f.text_area :info, placeholder: 'you can put the bands playing, or other info in this field', cols: 30, rows: 2 %>
+          </div>
+            <%= f.submit %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
