@@ -24,11 +24,11 @@
           </div>
           <div class='form-group'>
             <%= f.label :doors %>
-            <%= f.time_select :doors, {ampm: true} %>
+            <%= f.time_select :doors, ampm: true, ignore_date: true %>
           </div>
           <div class='form-group'>
             <%= f.label :start %>
-            <%= f.time_select :start, :ampm => true %>
+            <%= f.time_select :start, :ampm => true, ignore_date: true %>
           </div>
           <div class='form-group'>
             <%= f.label :info %>

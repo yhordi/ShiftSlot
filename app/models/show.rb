@@ -6,18 +6,22 @@ class Show < ApplicationRecord
   validates_presence_of :start, :info
   validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
 
-  def readable(time)
-    return time.strftime('%I:%M%p') if time
-    'time not set'
-  end
-
   def assign_venue
     return 'venue already assigned' if self.venue_id
     match_venue
   end
 
+  def readable(time)
+    return time.strftime('%I:%M%p') if time
+    'time not set'
+  end
+
   def day
     self.start.strftime('%A')
+  end
+
+  def start_time
+    self.start
   end
 
   def staffed?
@@ -26,10 +30,6 @@ class Show < ApplicationRecord
       return false if !shift.user_id
     end
     true
-  end
-
-  def start_time
-    self.start
   end
 
   def already_working?(user)
