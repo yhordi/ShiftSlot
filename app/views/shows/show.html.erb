@@ -11,7 +11,7 @@
         </div>
           <ul class='list-group'>
             <li class='list-group-item'>
-              info: <%= @show.info %>
+              Info: <%= @show.info %>
             </li>
             <li class='list-group-item'>
               Date: <%= @show.date %>
@@ -25,8 +25,25 @@
             <li class='list-group-item'>
               End: <%= @show.readable(@show.show_end) %>
             </li>
+            <% if current_user.admin?(@show.organization_id) %>
+              <li class='list-group-item'>
+                Expenses to Recoup: <%= @show.recoup %>
+              </li>
+              <li class='list-group-item'>
+                Payout: <%= @show.payout %>
+              </li>
+            <% end %>
             <li class='list-group-item'>
-              Staffed?
+              Event Link: <%= @show.event_link %>
+            </li>
+            <li class='list-group-item'>
+              Tickets Link: <%= @show.tickets_link %>
+            </li>
+            <li class='list-group-item'>
+              Door Price: <%= @show.door_price %>
+            </li>
+            <li class='list-group-item'>
+              All Ages: <%= @show.all_ages %>
             </li>
           </ul>
       </div>
