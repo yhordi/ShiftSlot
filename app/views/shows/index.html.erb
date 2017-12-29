@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <h2 class='panel-title'>Upcoming Shows for <%= @org.name %></h2>
+    <h2 class='panel-title'>Shows for <%= @org.name %></h2>
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -14,7 +14,9 @@
           <%= month_calendar events: @shows do |date, shows| %>
             <%= date %>
             <% shows.each do |show| %>
+            <div class="">
               <%= render partial: 'link', locals: {show: show} %>
+            </div>
             <% end %>
           <% end %>
         </div>

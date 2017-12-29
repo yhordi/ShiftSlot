@@ -7,5 +7,6 @@ class AddFieldsToShow < ActiveRecord::Migration[5.0]
     add_column :shows, :door_price, :decimal
     add_column :shows, :all_ages, :boolean
     add_column :shows, :booked_by_id, :integer
+    add_column :shows, :date, :date
   end
 end

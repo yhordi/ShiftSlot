@@ -6,9 +6,20 @@ class Show < ApplicationRecord
   validates_presence_of :start, :info
   validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
 
+
   def assign_venue
     return 'venue already assigned' if self.venue_id
     match_venue
+  end
+
+  def start_time
+    self.start
+  end
+
+  def format_dates(attrs, params)
+    attrs.map do |attr|
+      date_setup(attr, params)
+    end
   end
 
   def readable(time)
@@ -47,6 +58,15 @@ class Show < ApplicationRecord
   end
 
   private
+
+  def date_setup(attr, params)
+    date = self.date.to_datetime
+    date = date.change(
+      hour: params[:show][attr + "(4i)"].to_i,
+      minute: params[:show][attr + "(5i)"].to_i,
+    )
+    self.write_attribute(attr.to_sym, date)
+  end
 
   def match_venue
     self.organization.venues.each do |venue|

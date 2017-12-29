@@ -19,6 +19,7 @@ class ShowsController < ApplicationController
   def create
     venue = Venue.find(params[:venue_id])
     show = Show.new(show_params)
+    show.format_dates(['doors', 'start'], params)
     show.venue = venue
     show.organization_id = params[:organization_id]
     show.save!
@@ -55,6 +56,6 @@ class ShowsController < ApplicationController
   private
 
   def show_params
-    params.require(:show).permit(:info, :headliner, :date, :doors, :start, :info, :recoup, :payout, :event_link, :tickets_link, :door_price)
+    params.require(:show).permit(:info, :headliner, :date, :info, :recoup, :payout, :event_link, :tickets_link, :door_price)
   end
 end
