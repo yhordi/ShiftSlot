@@ -121,6 +121,7 @@ RSpec.describe User, type: :model do
     end
     it 'returns false if the worker is scheduled to work on the day of the show' do
       user.jobs << job
+      user.shifts << shift
       expect(user.available?(show2)).to eq(false)
     end
   end

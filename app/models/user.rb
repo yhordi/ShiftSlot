@@ -21,10 +21,6 @@ class User < ApplicationRecord
     self.jobs.include?(job)
   end
 
-  def authorized_for_organization?(org)
-
-  end
-
   def adjust_jobs(job_ids)
     return remove_jobs if job_ids == nil
     self.jobs = job_ids.map do |job_id|
@@ -39,6 +35,7 @@ class User < ApplicationRecord
   end
 
   def available?(show)
+    p show
     !scheduled?(show) && can_work?(show)
   end
 
@@ -118,7 +115,11 @@ class User < ApplicationRecord
   end
 
   def scheduled?(show)
+    p self.shifts
     self.shifts.each do |shift|
+      p shift.show.date
+      p '-----'
+      p show.date
       return true if shift.show.date == show.date
     end
     false

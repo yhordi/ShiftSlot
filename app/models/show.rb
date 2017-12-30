@@ -31,10 +31,6 @@ class Show < ApplicationRecord
     self.start.strftime('%A')
   end
 
-  def start_time
-    self.start
-  end
-
   def staffed?
     return false if self.shifts.empty?
     self.shifts.each do |shift|
