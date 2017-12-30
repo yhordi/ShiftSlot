@@ -21,6 +21,39 @@ RSpec.describe Show, type: :model do
     end
   end
 
+  describe '#format_dates' do
+    let(:params) {
+      {"utf8"=>"✓",
+       "authenticity_token"=>"MLJBJQdLumvzOYaoRjAtt7NC1G5HwkvtMATM9aGDt+rNFxoGZFIxKEkbWeuS1cEZQU5zr/KApkXnZbaNJ5Sokw==",
+       "show"=>
+        {"headliner"=>"afafafaf",
+         "date(1i)"=>"2017",
+         "date(2i)"=>"12",
+         "date(3i)"=>"30",
+         "doors(4i)"=>"18",
+         "doors(5i)"=>"00",
+         "start(4i)"=>"23",
+         "start(5i)"=>"30",
+         "info"=>"yayuh",
+         "recoup"=>"",
+         "payout"=>"",
+         "event_link"=>"",
+         "tickets_link"=>"",
+         "door_price"=>""},
+       "venue_id"=>"2",
+       "commit"=>"Create Show",
+       "organization_id"=>"1"}
+    }
+    it 'sets the doors field based on passed in times' do
+      dates = show.format_dates(['doors', 'start'], params)
+      expect(show.doors).to eq(dates[0])
+    end
+    it 'sets the start field based on passed in times' do
+      dates = show.format_dates(['doors', 'start'], params)
+      expect(show.start).to eq(dates[1])
+    end
+  end
+
   describe '#staffed?' do
     it 'returns false when there are no shifts scheduled' do
       expect(show.staffed?).to eq(false)

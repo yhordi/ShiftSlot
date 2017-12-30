@@ -62,8 +62,8 @@ class Show < ApplicationRecord
   def date_setup(attr, params)
     date = self.date.to_datetime
     date = date.change(
-      hour: params[:show][attr + "(4i)"].to_i,
-      minute: params[:show][attr + "(5i)"].to_i,
+      hour: params["show"][attr + "(4i)"].to_i,
+      minute: params["show"][attr + "(5i)"].to_i,
     )
     self.write_attribute(attr.to_sym, date)
   end
