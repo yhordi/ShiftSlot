@@ -10,14 +10,9 @@ RSpec.describe Show, type: :model do
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :info }
+    it { is_expected.to validate_presence_of :date }
     it { is_expected.to validate_presence_of :start }
     it { is_expected.to validate_presence_of(:venue_id).with_message("ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event") }
-  end
-
-  describe '#date' do
-    it 'responds with just the date portion from the start field' do
-      expect(show.date).to eq(show.start.strftime('%A, %D'))
-    end
   end
 
   describe '#readable' do

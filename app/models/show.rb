@@ -3,7 +3,7 @@ class Show < ApplicationRecord
   belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
-  validates_presence_of :start, :info
+  validates_presence_of :start, :info, :date
   validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
 
 
