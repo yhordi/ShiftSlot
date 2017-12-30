@@ -8,8 +8,9 @@ RSpec.describe User, type: :model do
   let(:new_user) {FactoryGirl.build :user}
   let(:job) {FactoryGirl.create :job, venue: venue}
   let(:job2) {FactoryGirl.create :job, title: 'Hamster', venue: venue}
-  let(:show) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
-  let(:show2) {FactoryGirl.create :show, start: DateTime.new(2001,1)}
+  let(:date) {Faker::Date.forward}
+  let(:show) {FactoryGirl.create :show, date: date, start: DateTime.new(2001,1)}
+  let(:show2) {FactoryGirl.create :show, date: date, start: DateTime.new(2001,1)}
   let(:shift) {FactoryGirl.create :shift, show_id: show2.id, user_id: user.id, job_id: job.id}
 
   # let!(:day) {FactoryGirl.create :preferred_day, user_id: user.id}
@@ -105,7 +106,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#available' do
+  describe '#available?' do
     it 'returns true if the worker is not currently scheduled' do
       expect(user.available?(show)).to eq(true)
     end
@@ -120,8 +121,7 @@ RSpec.describe User, type: :model do
     end
     it 'returns false if the worker is scheduled to work on the day of the show' do
       user.jobs << job
-      shift
-      expect(user.available?(show)).to eq(false)
+      expect(user.available?(show2)).to eq(false)
     end
   end
 
