@@ -54,9 +54,40 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe '#create' do
-    it 'responds with a status of 302'
-    it 'increments the number of shows in the database by 1'
-    it 'redirects to the show_path'
+    let(:show_params) {
+      {"utf8"=>"✓",
+        "authenticity_token"=>"fpqwjiefpi1jf094hgf",
+        "show"=>
+          {"headliner"=>
+            "Yayerz",
+            "date(1i)"=>"2017",
+            "date(2i)"=>"1",
+            "date(3i)"=>"31",
+            "doors(4i)"=>"22",
+            "doors(5i)"=>"30",
+            "start(4i)"=>"22",
+            "start(5i)"=>"31",
+            "info"=>"yayayayay",
+            "recoup"=>"",
+            "payout"=>"",
+            "event_link"=>"",
+            "tickets_link"=>"",
+            "door_price"=>""},
+          "venue_id"=>venue.id,
+          "commit"=>"Create Show",
+      "organization_id"=>"1"}
+    }
+    it 'responds with a status of 302' do
+      post :create, params: show_params
+      expect(response.status).to eq(302)
+    end
+    it 'increments the number of shows in the database by 1' do
+      expect{post :create, params: show_params}.to change{Show.count}.by(1)
+    end
+    it 'redirects to the show_path' do
+      post :create, params: show_params
+      expect(response).to redirect_to show_path(Show.last)
+    end
   end
   describe '#edit' do
     it 'assigns the @show variable'
