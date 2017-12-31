@@ -1,10 +1,16 @@
 class Show < ApplicationRecord
+  before_save :assign_headliner
   belongs_to :venue
   belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
   validates_presence_of :start, :info, :date
 
+  def assign_headliner
+    if !self.headliner
+      self.headliner = self.info
+    end
+  end
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
