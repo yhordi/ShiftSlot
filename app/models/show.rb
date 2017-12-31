@@ -79,7 +79,7 @@ class Show < ApplicationRecord
         return self.venue = venue if self.info.match(regex)
       end
     else
-      nil
+      return nil
     end
   end
 end

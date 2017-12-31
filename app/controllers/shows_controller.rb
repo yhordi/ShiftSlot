@@ -56,9 +56,13 @@ class ShowsController < ApplicationController
       new_show.organization = org
       new_show.info = show[1][:info]
       new_show.start = show[1][:start]
+      new_show.date = new_show.start.to_date
       new_show.assign_venue
-      new_show.save
-      
+      if !new_show.venue_id
+        new_show.venue_id = show[1][:venue_id].to_i
+      end
+      new_show.save!
+
       # if new_show.errors.any?
       #   error = "#{new_show.info} was not saved: "
       #   new_show.errors.full_messages.each do |err|
@@ -80,4 +84,6 @@ class ShowsController < ApplicationController
   def show_params
     params.require(:show).permit(:info, :venue_id, :headliner, :date, :info, :recoup, :payout, :event_link, :tickets_link, :door_price)
   end
+
+
 end

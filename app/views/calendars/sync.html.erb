@@ -35,15 +35,15 @@
       <% end %>
     </ul>
     <%= form_for :shows, url: organization_shows_import_path(@org) do |f| %>
+    <p>The following shows did not their venues automatically assigned. Assign them below.</p>
       <% @google_shows[:shows].each.with_index do |show, index| %>
         <%= f.hidden_field "#{index}[info]", value: show.info %>
         <%= f.hidden_field "#{index}[start]", value: show.start %>
         <% if !show.venue %>
-        <div class="">
-          <p>The following show did not get it's venue automatically assigned. Assign it below.</p>
+        <div>
           <%= show.info %>
           <%= f.label :venue_id %>
-          <%= select_tag "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
+          <%= select "shows[#{index}]", "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
         </div>
         <% end %>
       <% end %>
