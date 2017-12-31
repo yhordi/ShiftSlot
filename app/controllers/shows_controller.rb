@@ -31,6 +31,23 @@ class ShowsController < ApplicationController
     render :edit
   end
 
+  def update
+    venue = Venue.find(params[:venue_id])
+    show = Show.find(params[:id])
+    show.format_dates(['doors', 'start'], params)
+    show.venue = venue
+    show.update(show_params)
+    redirect_to show_path(show)
+  end
+
+  def destroy
+    show = Show.find(params[:id])
+    org = Organization.find(show.organization_id)
+    show.delete
+    flash[:notice] = 'Your show has been deleted from the app. It will still be imported if you have it in your google calendar.'
+    redirect_to organization_shows_path(org)
+  end
+
   def import
     errors = []
     org = Organization.find(params[:organization_id])
@@ -61,6 +78,6 @@ class ShowsController < ApplicationController
   private
 
   def show_params
-    params.require(:show).permit(:info, :headliner, :date, :info, :recoup, :payout, :event_link, :tickets_link, :door_price)
+    params.require(:show).permit(:info, :venue_id, :headliner, :date, :info, :recoup, :payout, :event_link, :tickets_link, :door_price)
   end
 end

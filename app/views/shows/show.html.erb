@@ -13,7 +13,7 @@
               <%= link_to 'edit', edit_show_path(@show) %>
             </li>
             <li>
-              <%= link_to 'delete' %>
+              <%= link_to 'delete', show_path(@show), method: :delete %>
             </li>
           </ul>
         </div>
