@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ShowsController, type: :controller do
   let(:org)  { FactoryGirl.create(:organization)}
   let(:venue) { FactoryGirl.create(:venue) }
-  let(:show) { FactoryGirl.create(:show, info: venue.hooks + " adflkj aldfkj  alskdfjoqwiehfcl 918372", organization: org) }
+  let!(:show) { FactoryGirl.create(:show, info: venue.hooks + " adflkj aldfkj  alskdfjoqwiehfcl 918372", organization: org) }
   let(:user) { FactoryGirl.create(:user) }
   let(:show_params) {
     {"utf8"=>"✓",
@@ -142,9 +142,20 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe 'destroy' do
-    it 'responds with a status of 302'
-    it 'responds with a message in flash'
-    it 'removes a show from the database'
+    before(:each) do
+
+    end
+    it 'responds with a status of 302' do
+      delete :destroy, params: {id: show.id}
+      expect(response.status).to eq(302)
+    end
+    it 'responds with a message in flash' do
+      delete :destroy, params: {id: show.id}
+      expect(flash[:notice]).to eq('Your show has been deleted from the app. It will still be imported if you have it in your google calendar.')
+    end
+    it 'removes a show from the database' do
+      expect{delete :destroy, params: {id: show.id}}.to change{Show.all.count}.by(-1)
+    end
   end
   describe '#import' do
     let(:venue) {FactoryGirl.create(:venue, organizations: [org])}
