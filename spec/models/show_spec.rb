@@ -12,7 +12,7 @@ RSpec.describe Show, type: :model do
     it { is_expected.to validate_presence_of :info }
     it { is_expected.to validate_presence_of :date }
     it { is_expected.to validate_presence_of :start }
-    it { is_expected.to validate_presence_of(:venue_id).with_message("ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event") }
+    # it { is_expected.to validate_presence_of(:venue_id).with_message("ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event") }
   end
 
   describe '#readable' do
