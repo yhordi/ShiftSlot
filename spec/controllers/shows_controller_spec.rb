@@ -5,6 +5,29 @@ RSpec.describe ShowsController, type: :controller do
   let(:venue) { FactoryGirl.create(:venue) }
   let(:show) { FactoryGirl.create(:show, info: venue.hooks + " adflkj aldfkj  alskdfjoqwiehfcl 918372", organization: org) }
   let(:user) { FactoryGirl.create(:user) }
+  let(:show_params) {
+    {"utf8"=>"✓",
+      "authenticity_token"=>"fpqwjiefpi1jf094hgf",
+      "show"=>
+        {"headliner"=>
+          "Yayerz",
+          "date(1i)"=>"2017",
+          "date(2i)"=>"1",
+          "date(3i)"=>"31",
+          "doors(4i)"=>"22",
+          "doors(5i)"=>"30",
+          "start(4i)"=>"22",
+          "start(5i)"=>"31",
+          "info"=>"yayayayay",
+          "recoup"=>"",
+          "payout"=>"",
+          "event_link"=>"",
+          "tickets_link"=>"",
+          "door_price"=>""},
+        "venue_id"=>venue.id,
+        "commit"=>"Create Show",
+    "organization_id"=>"1"}
+  }
   before(:each) do
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
     allow(controller).to receive(:current_user).and_return(user)
@@ -54,29 +77,7 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe '#create' do
-    let(:show_params) {
-      {"utf8"=>"✓",
-        "authenticity_token"=>"fpqwjiefpi1jf094hgf",
-        "show"=>
-          {"headliner"=>
-            "Yayerz",
-            "date(1i)"=>"2017",
-            "date(2i)"=>"1",
-            "date(3i)"=>"31",
-            "doors(4i)"=>"22",
-            "doors(5i)"=>"30",
-            "start(4i)"=>"22",
-            "start(5i)"=>"31",
-            "info"=>"yayayayay",
-            "recoup"=>"",
-            "payout"=>"",
-            "event_link"=>"",
-            "tickets_link"=>"",
-            "door_price"=>""},
-          "venue_id"=>venue.id,
-          "commit"=>"Create Show",
-      "organization_id"=>"1"}
-    }
+
     it 'responds with a status of 302' do
       post :create, params: show_params
       expect(response.status).to eq(302)
@@ -104,9 +105,41 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe '#update' do
-    it 'responds with a status of 302'
-    it 'redirects to the show_path'
-    it 'updates a record in the database'
+    let(:show_params) {
+      {"utf8"=>"✓",
+        "authenticity_token"=>"/6Q/LUW+JMZSm6chCIJ4LURMTW9EHohEtzDSwGzIx0ee1ciw==",
+        "show"=>
+          {"headliner"=>
+            'Bent Outta Shape',
+            "date(1i)"=>"2017",
+            "date(2i)"=>"1",
+            "date(3i)"=>"31",
+            "doors(4i)"=>"22",
+            "doors(5i)"=>"00",
+            "start(4i)"=>"22",
+            "start(5i)"=>"00",
+            "info"=>"yayayayay",
+            "recoup"=>"",
+            "payout"=>"",
+            "event_link"=>"",
+            "tickets_link"=>"",
+            "door_price"=>""},
+          "venue_id"=>show.venue_id,
+          "commit"=>"Update Show",
+          "id"=>show.id}
+    }
+    before(:each) do
+      put :update, params: show_params
+    end
+    it 'responds with a status of 302' do
+      expect(response.status).to eq(302)
+    end
+    it 'redirects to the show_path' do
+      expect(response).to redirect_to show_path(show)
+    end
+    it 'updates a record in the database' do
+      expect(show.reload.headliner).to eq('Bent Outta Shape')
+    end
   end
   describe 'destroy' do
     it 'responds with a status of 302'
