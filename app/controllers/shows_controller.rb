@@ -61,15 +61,15 @@ class ShowsController < ApplicationController
       if !new_show.venue_id
         new_show.venue_id = show[1][:venue_id].to_i
       end
-      new_show.save!
+      new_show.save
 
-      # if new_show.errors.any?
-      #   error = "#{new_show.info} was not saved: "
-      #   new_show.errors.full_messages.each do |err|
-      #     error << err + " "
-      #   end
-      #   errors << error
-      # end
+      if new_show.errors.any?
+        error = "#{new_show.info} was not saved: "
+        new_show.errors.full_messages.each do |err|
+          error << err + " "
+        end
+        errors << error
+      end
     end
     if errors.empty?
       message = {notice: 'All shows imported successfully!'}
