@@ -26,6 +26,11 @@ class ShowsController < ApplicationController
     redirect_to show_path(show)
   end
 
+  def edit
+    @show = Show.find(params[:id])
+    render :edit
+  end
+
   def import
     errors = []
     org = Organization.find(params[:organization_id])

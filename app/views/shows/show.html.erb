@@ -8,6 +8,14 @@
           <h2 >
             <%= @show.headliner %> @ <%= @show.venue.name %>:
           </h2>
+          <ul class='nav nav-pills'>
+            <li>
+              <%= link_to 'edit', edit_show_path(@show) %>
+            </li>
+            <li>
+              <%= link_to 'delete' %>
+            </li>
+          </ul>
         </div>
           <ul class='list-group'>
             <li class='list-group-item'>
