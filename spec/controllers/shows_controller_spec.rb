@@ -36,7 +36,7 @@ RSpec.describe ShowsController, type: :controller do
       expect(hit_show).to render_template(:show)
     end
   end
-  xdescribe '#import' do
+  describe '#import' do
     let(:venue) {FactoryGirl.create(:venue, organizations: [org])}
     let(:shows_params) {
       {
@@ -51,19 +51,18 @@ RSpec.describe ShowsController, type: :controller do
     }
     describe 'on success' do
       it 'responds with a status of 302' do
-        post :create, params: shows_params
+        post :import, params: shows_params
         expect(response.status).to eq(302)
       end
       it 'saves new shows to the database as parsed from the google response' do
-        post :create, params: shows_params
+        post :import, params: shows_params
         expect(Show.last.info).to eq(shows_params["shows"]["0"]["info"])
       end
     end
     describe 'on failure' do
       let(:bad_params) {{"shows"=>{"0"=>{"info"=>"", "start"=>"2017-08-04 23:30:00 UTC"}}, organization_id: org.id}}
       it 'adds errors to flash when no abbreviation is pulled in the show information from google' do
-        # shows_params['shows']['0']['info'] = ''
-        post :create, params: bad_params
+        post :import, params: bad_params
         expect(flash[:errors]).to_not be_empty
       end
     end
