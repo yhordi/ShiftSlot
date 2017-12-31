@@ -5,7 +5,7 @@ RSpec.describe Show, type: :model do
   let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks, organization: org }
+  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks, organization: org, headliner: nil }
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
@@ -97,6 +97,17 @@ RSpec.describe Show, type: :model do
     it 'assigns the associated venue based on the info field containing the one of the hooks of the venue' do
       hook_show.assign_venue
       expect(hook_show.venue).to eq(venue)
+    end
+  end
+
+  describe '#assign_headliner' do
+    it 'before save, sets the headliner field equal to the info field if none is set' do
+      show.save
+      expect(show.headliner).to eq(show.info)
+    end
+    it 'leaves the headliner field unchanged if it is set' do
+      show.headliner = 'Jean Claude Jam Band'
+      expect(show.headliner).to eq('Jean Claude Jam Band')
     end
   end
 
