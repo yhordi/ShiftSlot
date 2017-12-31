@@ -36,6 +36,32 @@ RSpec.describe ShowsController, type: :controller do
       expect(hit_show).to render_template(:show)
     end
   end
+  describe '#new' do
+    it 'assigns the @org variable'
+    it 'assigns the @show variable'
+    it 'responds with a status of 200'
+    it 'renders the new template'
+  end
+  describe '#create' do
+    it 'responds with a status of 302'
+    it 'increments the number of shows in the database by 1'
+    it 'redirects to the show_path'
+  end
+  describe '#edit' do
+    it 'assigns the @show variable'
+    it 'renders the edit template'
+    it 'responds with a status of 200'
+  end
+  describe '#update' do
+    it 'responds with a status of 302'
+    it 'redirects to the show_path'
+    it 'updates a record in the database'
+  end
+  describe 'destroy' do
+    it 'responds with a status of 302'
+    it 'responds with a message in flash'
+    it 'removes a show from the database'
+  end
   describe '#import' do
     let(:venue) {FactoryGirl.create(:venue, organizations: [org])}
     let(:shows_params) {
