@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171214203344) do
+ActiveRecord::Schema.define(version: 20171223232452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,14 @@ ActiveRecord::Schema.define(version: 20171214203344) do
     t.string   "headliner"
     t.string   "info"
     t.integer  "organization_id"
+    t.decimal  "recoup"
+    t.decimal  "payout"
+    t.string   "event_link"
+    t.string   "tickets_link"
+    t.decimal  "door_price"
+    t.boolean  "all_ages"
+    t.integer  "booked_by_id"
+    t.date     "date"
     t.index ["organization_id"], name: "index_shows_on_organization_id", using: :btree
     t.index ["venue_id"], name: "index_shows_on_venue_id", using: :btree
   end

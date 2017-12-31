@@ -10,15 +10,15 @@ Rails.application.routes.draw do
     post 'sessions', to: 'devise/sessions', controller: 'user/sessions', action: 'create'
   end
   resources :organizations do
-    get 'shows/' => 'shows#index', as: 'calendar'
-    resources :shows, only: :show
+    get 'shows/' => 'shows#index', as: 'calendar' # calendars/show
+    resources :shows, only: [:show, :new, :create]
     resources :venues, only: [:index, :show], shallow: true do
       resources :shows, shallow: true do
         resources :shifts, except: :index
       end
     end
-    post '/shows' => 'calendars#create'
-    get '/sync' => 'calendars#sync'
+    post '/shows/import' => 'shows#import', as: 'shows_import'
+    get '/sync' => 'calendars#sync' # calendars/new rename this to import
     get '/callback' => 'omniauths#callback'
   end
   get '/redirect' => 'omniauths#redirect'

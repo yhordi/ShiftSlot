@@ -1,55 +1,77 @@
 <div class="container">
-  <h2>Google Calendar Import Results</h2>
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h4>The following shows can be imported from your google calendar:</h4>
-    </div>
-    <ul class='list-group'>
-      <% @google_shows[:shows].each do |show| %>
-        <li class='list-group-item'>
-          <ul class='list-group'>
-            <li class='list-group-item'>
-              <%= show.date %> <%= show.readable(show.start) %>
-            </li>
-            <% if show.readable(show.start) == "12:00AM" %>
-              <li class='list-group-item list-group-item-warning'>
-                <p>
-                  This show is set as an all day event in Google Calendar and it's start and end times will have to be set manually within ShiftSlot. In the meantime it'll be set to 12:00am
-                </p>
-              <% else %>
-                <li class='list-group-item'>
-                  <%= show.readable(show.start) %>
-            <% end %>
-            </li>
-            <li class='list-group-item'>
-              <%= show.info %>
-            </li>
-          </ul>
-        </li>
-      <% end %>
-    </ul>
-    <% @google_shows[:shows]  %>
-    <%= form_for :shows, url: organization_shows_path(@org) do |f| %>
-      <% @google_shows[:shows].each.with_index do |show, index| %>
-        <%= f.hidden_field "#{index}[info]", value: show.info %>
-        <%= f.hidden_field "#{index}[start]", value: show.start %>
-      <% end %>
-      <%= f.submit %>
-    <% end %>
-  </div>
-  <% if @google_shows[:conflicts].any? %>
-    <div class="panel panel-danger">
-      <div class='panel-heading'>
-        <h4>The following shows conflict with shows you've already imported and will be ignored</h3>
+  <div class="row">
+    <h2>Google Calendar Import Results</h2>
+    <div class="panel panel-primary">
+    <% if !@google_shows[:shows].empty? %>
+      <div class="panel-heading">
+        <h4>The following shows can be imported from your google calendar:</h4>
       </div>
-      <ul class="list-group">
-        <% @google_shows[:conflicts].each do |show| %>
-        <li class="list-group-item">
-          <%= show.info %> on <%= show.date %>
-        </li>
+      <ul class='list-group'>
+        <% @google_shows[:shows].each do |show| %>
+          <li class='list-group-item'>
+            <ul class='list-group'>
+              <li class='list-group-item'>
+                <% if show.venue %>
+                  <h4 class='list-group-item-heading'>
+                    <%= show.info %> @ show.venue
+                  </h4>
+                <% else %>
+                  <h4 class='list-group-item-heading'>
+                    <%= show.info %>
+                  </h4>
+                <% end %>
+              </li>
+              <% if show.readable(show.start) == "12:00AM" %>
+                <li class='list-group-item list-group-item-warning'>
+                  <p>
+                    This show is set as an all day event in Google Calendar and it's start and end times will have to be set manually within ShiftSlot. In the meantime it'll be set to 12:00am
+                  </p>
+                <% else %>
+                  <li class='list-group-item'>
+                    <%= show.readable(show.start) %>
+              <% end %>
+            </li>
+
+            </ul>
+          </li>
         <% end %>
       </ul>
-
+      <%= form_for :shows, url: organization_shows_import_path(@org) do |f| %>
+      <% no_venues = @google_shows[:shows].select { |show| !show.venue_id} %>
+      <% if no_venues.any? %>
+      <p>The following shows did not their venues automatically assigned. Assign them below.</p>
+      <% end %>
+        <!-- true -->
+        <% @google_shows[:shows].each.with_index do |show, index| %>
+          <%= f.hidden_field "#{index}[info]", value: show.info %>
+          <%= f.hidden_field "#{index}[start]", value: show.start %>
+          <% if !show.venue %>
+            <div>
+              <%= show.info %>
+              <%= f.label :venue_id %>
+              <%= select "shows[#{index}]", "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
+            </div>
+          <% end %>
+        <% end %>
+        <%= f.submit class: 'btn btn-default' %>
+      <% end %>
+      <% end %>
     </div>
-  <% end %>
+    <% if @google_shows[:conflicts].any? %>
+      <div class="panel panel-danger">
+        <div class='panel-heading'>
+          <h4>The following shows conflict with shows you've already imported and will be ignored</h3>
+        </div>
+        <ul class="list-group">
+          <% @google_shows[:conflicts].each do |show| %>
+          <li class="list-group-item">
+            <%= show.info %> on <%= show.date %>
+          </li>
+          <% end %>
+        </ul>
+
+      </div>
+    <% end %>
+  </div>
+
 </div>

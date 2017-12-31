@@ -5,24 +5,52 @@ RSpec.describe Show, type: :model do
   let!(:venue) { FactoryGirl.create :venue, organizations: [org] }
   let(:bad_show) { FactoryGirl.build :show, venue_id: nil}
   let!(:job) { FactoryGirl.create :job, venue: venue}
-  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks, organization: org }
+  let(:show) { FactoryGirl.create :show, venue: venue, info: venue.hooks, organization: org, headliner: nil }
   let!(:user) { FactoryGirl.create :user}
 
   describe 'validations' do
     it { is_expected.to validate_presence_of :info }
+    it { is_expected.to validate_presence_of :date }
     it { is_expected.to validate_presence_of :start }
-    it { is_expected.to validate_presence_of(:venue_id).with_message("ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event") }
-  end
-
-  describe '#date' do
-    it 'responds with just the date portion from the start field' do
-      expect(show.date).to eq(show.start.strftime('%A, %D'))
-    end
+    # it { is_expected.to validate_presence_of(:venue_id).with_message("ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event") }
   end
 
   describe '#readable' do
     it 'responds with the time formatted HH:MMam/pm' do
       expect(show.readable(show.start)).to eq(show.start.strftime('%I:%M%p'))
+    end
+  end
+
+  describe '#format_dates' do
+    let(:params) {
+      {"utf8"=>"✓",
+       "authenticity_token"=>"MLJBJQdLumvzOYaoRjAtt7NC1G5HwkvtMATM9aGDt+rNFxoGZFIxKEkbWeuS1cEZQU5zr/KApkXnZbaNJ5Sokw==",
+       "show"=>
+        {"headliner"=>"afafafaf",
+         "date(1i)"=>"2017",
+         "date(2i)"=>"12",
+         "date(3i)"=>"30",
+         "doors(4i)"=>"18",
+         "doors(5i)"=>"00",
+         "start(4i)"=>"23",
+         "start(5i)"=>"30",
+         "info"=>"yayuh",
+         "recoup"=>"",
+         "payout"=>"",
+         "event_link"=>"",
+         "tickets_link"=>"",
+         "door_price"=>""},
+       "venue_id"=>"2",
+       "commit"=>"Create Show",
+       "organization_id"=>"1"}
+    }
+    it 'sets the doors field based on passed in times' do
+      dates = show.format_dates(['doors', 'start'], params)
+      expect(show.doors).to eq(dates[0])
+    end
+    it 'sets the start field based on passed in times' do
+      dates = show.format_dates(['doors', 'start'], params)
+      expect(show.start).to eq(dates[1])
     end
   end
 
@@ -69,6 +97,17 @@ RSpec.describe Show, type: :model do
     it 'assigns the associated venue based on the info field containing the one of the hooks of the venue' do
       hook_show.assign_venue
       expect(hook_show.venue).to eq(venue)
+    end
+  end
+
+  describe '#assign_headliner' do
+    it 'before save, sets the headliner field equal to the info field if none is set' do
+      show.save
+      expect(show.headliner).to eq(show.info)
+    end
+    it 'leaves the headliner field unchanged if it is set' do
+      show.headliner = 'Jean Claude Jam Band'
+      expect(show.headliner).to eq('Jean Claude Jam Band')
     end
   end
 
