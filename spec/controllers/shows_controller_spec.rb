@@ -90,9 +90,18 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe '#edit' do
-    it 'assigns the @show variable'
-    it 'renders the edit template'
-    it 'responds with a status of 200'
+    before(:each) do
+      get :edit, params: {id: show.id}
+    end
+    it 'assigns the @show variable' do
+      expect(assigns[:show]).to eq(show)
+    end
+    it 'renders the edit template' do
+      expect(response).to render_template(:edit)
+    end
+    it 'responds with a status of 200' do
+      expect(response.status).to eq(200)
+    end
   end
   describe '#update' do
     it 'responds with a status of 302'
