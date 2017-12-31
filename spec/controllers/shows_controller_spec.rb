@@ -37,10 +37,21 @@ RSpec.describe ShowsController, type: :controller do
     end
   end
   describe '#new' do
-    it 'assigns the @org variable'
-    it 'assigns the @show variable'
-    it 'responds with a status of 200'
-    it 'renders the new template'
+    before(:each) do
+      get :new, params: {organization_id: org.id}
+    end
+    it 'assigns the @org variable' do
+      expect(assigns[:org]).to eq(org)
+    end
+    it 'assigns the @show variable' do
+      expect(assigns[:show]).to be_a_new(Show)
+    end
+    it 'responds with a status of 200' do
+      expect(response.status).to eq(200)
+    end
+    it 'renders the new template' do
+      expect(response).to render_template(:new)
+    end
   end
   describe '#create' do
     it 'responds with a status of 302'
