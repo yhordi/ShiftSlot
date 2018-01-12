@@ -3,7 +3,8 @@ org = Organization.create(name: 'SoundGig Presents')
 org.venues << Venue.create!(name: 'Victory Lounge', location: 'Seattle, WA')
 org.venues << Venue.create!(name: 'Black Lodge', location: 'Seattle, WA')
 20.times do
-  s = Show.new(doors: Faker::Date.forward)
+  s = Show.new(date: Faker::Date.forward)
+  s.doors = Faker::Time.forward
   s.organization = org
   s.start = s.doors + 30.minutes
   s.show_end = s.doors + 4.hours
@@ -32,4 +33,5 @@ a.save!
 a.organizations << org
 assignment = Assignment.find_by(user_id: a.id)
 assignment.admin = true
+assignment.save
 a.save!

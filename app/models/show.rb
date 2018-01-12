@@ -1,23 +1,35 @@
 class Show < ApplicationRecord
+  before_save :assign_headliner
   belongs_to :venue
   belongs_to :organization
   has_many :shifts
   has_many :users, through: :shifts
-  validates_presence_of :start, :info
-  validates_presence_of :venue_id, message: "ShiftSlot couldn't infer what venue this show is being booked at. Either add a hook to your venue in the app, or put the venue name in the google calendar event"
+  validates_presence_of :start, :info, :date
 
-  def date
-    self.start.strftime('%A, %D')
-  end
-
-  def readable(time)
-    return time.strftime('%I:%M%p') if time
-    'time not set'
+  def assign_headliner
+    if !self.headliner
+      self.headliner = self.info
+    end
   end
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
     match_venue
+  end
+
+  def start_time
+    self.start
+  end
+
+  def format_dates(attrs, params)
+    attrs.map do |attr|
+      date_setup(attr, params)
+    end
+  end
+
+  def readable(time)
+    return time.strftime('%I:%M%p') if time
+    'time not set'
   end
 
   def day
@@ -30,10 +42,6 @@ class Show < ApplicationRecord
       return false if !shift.user_id
     end
     true
-  end
-
-  def start_time
-    self.start
   end
 
   def already_working?(user)
@@ -52,6 +60,15 @@ class Show < ApplicationRecord
 
   private
 
+  def date_setup(attr, params)
+    date = self.date.to_datetime
+    date = date.change(
+      hour: params["show"][attr + "(4i)"].to_i,
+      minute: params["show"][attr + "(5i)"].to_i,
+    )
+    self.write_attribute(attr.to_sym, date)
+  end
+
   def match_venue
     self.organization.venues.each do |venue|
       regex = Regexp.new("\\b#{venue.name}\\b")
@@ -67,9 +84,7 @@ class Show < ApplicationRecord
         return self.venue = venue if self.info.match(regex)
       end
     else
-      nil
+      return nil
     end
   end
-
-
 end

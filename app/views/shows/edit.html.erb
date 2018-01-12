@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title heading">
+            Edit your show
+          </div>
+        </div>
+        <div class="panel-body">
+          <%= render partial: 'form', locals: {show: @show, org: @show.organization} %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

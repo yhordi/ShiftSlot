@@ -5,6 +5,7 @@ RSpec.feature "Admins", type: :feature do
     let(:org) { FactoryGirl.create(:organization)}
     let(:venue) { FactoryGirl.create(:venue, organizations: [org])}
     let(:admin) { FactoryGirl.create(:admin, organizations: [org])}
+    let!(:show) { FactoryGirl.create(:show, organization: org, venue: venue, headliner: 'Not my Bag') }
     before(:each) do
       admin.admin = org
       login_as(admin)
@@ -15,8 +16,7 @@ RSpec.feature "Admins", type: :feature do
         expect(page).to have_content("#{org.name}'s workers/volunteers")
       end
       scenario 'can see the next five upcoming shows' do
-        5.times { FactoryGirl.create(:show, organization_id: org.id, venue: venue) }
-        expect(page).to have_content(Show.last.headliner)
+        expect(page).to have_content(show.headliner)
       end
       scenario 'can see a calendar for the next week' do
         expect(page).to have_content(Time.now.day)

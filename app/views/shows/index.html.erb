@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
-    <h2 class='panel-title'>Upcoming Shows for <%= @org.name %></h2>
+    <h2 class='panel-title'>Shows for <%= @org.name %></h2>
     <div class="col-12-lg">
       <div class="panel panel-default">
         <div class="panel-heading">
           <% if current_user.admin?(params[:organization_id]) %>
-            <%= link_to_if(@org.gcal_id, 'Sync with Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') do %>
-              <%= link_to 'Edit your organization info to set up google calendar sync.', class: 'btn btn-primary' %>
+            <%= link_to_if(@org.gcal_id, 'Import from Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') do %>
+              <%= link_to 'Edit your organization info to set up google calendar sync.', edit_organization_path(@org), class: 'btn btn-primary' %>
             <% end %>
           <% end %>
         </div>
@@ -14,7 +14,9 @@
           <%= month_calendar events: @shows do |date, shows| %>
             <%= date %>
             <% shows.each do |show| %>
+            <div class="">
               <%= render partial: 'link', locals: {show: show} %>
+            </div>
             <% end %>
           <% end %>
         </div>

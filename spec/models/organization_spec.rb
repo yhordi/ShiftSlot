@@ -16,21 +16,21 @@ RSpec.describe Organization, type: :model do
   end
 
   describe 'upcoming_shows' do
-    let(:past) { Show.new(doors: Faker::Date.backward) }
+    let(:past) { Show.new(date: Faker::Date.backward) }
     before(:each) do
       4.times do
-        show = Show.new(doors: Faker::Date.forward)
+        show = Show.new(date: Faker::Date.forward)
         show.organization = org
-        show.start = show.doors + 30.minutes
-        show.show_end = show.doors + 4.hours
+        show.start = show.date + 30.minutes
+        show.show_end = show.start + 4.hours
         show.venue_id = venue.id
         show.headliner = Faker::RockBand.name
         show.info = Faker::Lorem.sentence
         show.save!
       end
       past.organization = org
-      past.start = past.doors + 30.minutes
-      past.show_end = past.doors + 4.hours
+      past.start = past.date + 30.minutes
+      past.show_end = past.date + 4.hours
       past.venue_id = venue.id
       past.headliner = Faker::RockBand.name
       past.info = Faker::Lorem.sentence
