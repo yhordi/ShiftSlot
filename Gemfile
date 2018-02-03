@@ -21,7 +21,7 @@ gem "simple_calendar", "~> 2.0"
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'oauth2'
 gem 'httparty'
-gem 'figaro', group: :production
+gem 'dotenv-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -44,7 +44,6 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'dotenv-rails'
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
