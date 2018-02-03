@@ -9,7 +9,7 @@ class OmniauthsController < ApplicationController
       "code" => params[:code],
       "client_id" => ENV['CAL_CLIENT_ID'],
       "client_secret" => ENV['CLIENT_SECRET'],
-      "redirect_uri" => 'http://localhost:3000/redirect',
+      "redirect_uri" => ENV['REDIRECT_URI'],
       'grant_type' => "authorization_code",
       "project_id" => ENV['PROJECT_ID']
     }
