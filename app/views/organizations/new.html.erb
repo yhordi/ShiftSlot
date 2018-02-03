@@ -23,6 +23,9 @@
               <%= f.text_field :gcal_id %>
               <a data-toggle="modal" data-target="#myModal">what's this?</a>
             </div>
+            <div class="">
+              <%= recaptcha_tags %>
+            </div>
             <%= f.submit class: 'btn btn-success' %>
           <% end %>
         </div>
@@ -36,7 +39,7 @@
             </div>
             <div class="modal-body">
               <p>
-                ShiftSlot can sync with Google Calendar. In order to do so you'll need to paste your Google Calendar ID into this field. You can leave this field blank, or fill it out later if you decide you want to use this feature.
+                DIY Booker can sync with Google Calendar. In order to do so you'll need to paste your Google Calendar ID into this field. You can leave this field blank, or fill it out later if you decide you want to use this feature.
                 <a target="_blank" href="http://googleappstroubleshootinghelp.blogspot.com/2012/09/how-to-find-calendar-id-of-google.html">How do I find my Google Calendar ID?</a>
               </div>
             </div>
