@@ -2,33 +2,17 @@ require 'faker'
 org = Organization.create(name: 'SoundGig Presents')
 org.venues << Venue.create!(name: 'Victory Lounge', location: 'Seattle, WA')
 org.venues << Venue.create!(name: 'Black Lodge', location: 'Seattle, WA')
-20.times do
-  s = Show.new(date: Faker::Date.forward)
-  s.doors = Faker::Time.forward
-  s.organization = org
-  s.start = s.doors + 30.minutes
-  s.show_end = s.doors + 4.hours
-  s.venue_id = [1,2].sample
-  s.headliner = Faker::RockBand.name
-  s.info = Faker::Lorem.sentence
-  s.save!
-end
-20.times do
-  u = User.new(name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password)
-  u.organizations << org
-  u.save
-end
 
-Venue.all.each do |venue|
-  Job.create(title: 'Security', venue: venue)
-  Job.create(title: 'Bar', venue: venue)
-  Job.create(title: 'Door', venue: venue)
-  Job.create(title: 'Sound', venue: venue)
-end
+black_lodge = Venue.find_by(name: 'Black Lodge')
+victory_lounge = Venue.find_by(name: 'Victory Lounge')
 
-User.all.each { |user| user.jobs << Job.find(3)}
+Job.create(title: 'volunteer', venue: black_lodge)
+Job.create(title: 'door', venue: black_lodge)
+Job.create(title: 'sound', venue: black_lodge)
+Job.create(title: 'sound', venue: victory_lounge)
+Job.create(title: 'door', venue: victory_lounge)
 
-a = User.new(name: 'admin', email: 'admin@email.com', password: ENV['PASSWORD'])
+a = User.new(name: 'Jordan Kamin', email: 'jordanakamin@gmail.com', password: ENV['PASSWORD'])
 a.save!
 a.organizations << org
 assignment = Assignment.find_by(user_id: a.id)
