@@ -28,7 +28,9 @@
           </th>
         </tr>
         <% @shows.each do |show| %>
-            <%= render partial: 'shows/info', locals: {show: show} %>
+            <% if !show.date.past? %>
+              <%= render partial: 'shows/info', locals: {show: show} %>
+            <% end %>
         <% end %>
       </table>
 

@@ -35,7 +35,6 @@ class User < ApplicationRecord
   end
 
   def available?(show)
-    p show
     !scheduled?(show) && can_work?(show)
   end
 

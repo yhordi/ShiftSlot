@@ -33,6 +33,10 @@ class Organization < ApplicationRecord
     upcoming[0..index]
   end
 
+  def this_week_in_shows
+    self.shows.where(date: Time.now.midnight..Time.now + 7.days)
+  end
+
   private
 
   def authorize_volunteer(worker)
