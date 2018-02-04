@@ -1,76 +1,63 @@
-<div class="col-lg-6">
-  <div class='panel panel-default'>
-    <div class='panel panel-heading'>
-      <h2 class='panel-title'>
-        <%= @user.name %>'s Profile
-      </h2>
-        <div class="btn-group" role='group'>
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Options <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <% if current_user == @user %>
-              <li>
-                <%= link_to 'Account Settings', edit_user_registration_path %>
-              </li>
-              <li>
-                <%= link_to 'Set Availability Preferrences', edit_user_path(@user.id) %>
-              </li>
-            <% elsif current_user.admin_for?(@user) %>
-              <li>
-                <%= link_to 'Admin: Edit Permissions', edit_user_path(@user.id) %>
-              </li>
-            <% end %>
-          </ul>
+<div class="container">
+  <div class="well well-lg">
+    <h2>
+      <%= @user.name.titleize %>'s Profile
+    </h2>
+  <ul class='nav nav-pills'>
+    <% if current_user == @user %>
+    <li>
+      <%= link_to 'Account Settings', edit_user_registration_path %>
+    </li>
+    <li>
+      <%= link_to 'Set Availability Preferrences', edit_user_path(@user.id) %>
+    </li>
+    <% elsif current_user.admin_for?(@user) %>
+    <li>
+      <%= link_to 'Admin: Edit Permissions', edit_user_path(@user.id) %>
+    </li>
+    <% end %>
+  </ul>
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- <div class='panel panel-default'>
+        <div class='panel panel-heading'>
         </div>
-    </div>
-    <ul class='list-group'>
-      <li class='list-group-item'>
-        Email: <%= @user.email %>
-      </li>
-      <li class='list-group-item'>
-        Status:
-      </li>
-      <li class='list-group-item'>
-        Last show worked:
-      </li>
-      <li class='list-group-item'>
-        <div>
-          Availability:
-          <% if current_user %>
-            <%= link_to 'Change', edit_user_path(@user) %>
-          <% end %>
-          <table class='table'>
-            <tr>
-              <th>
-                Preferred
-              </th>
-              <th>
-                Unavailable
-              </th>
-            </tr>
-            <tr>
-              <%= render partial: 'preferred_days/index', locals: {user: @user} %>
-            </tr>
-          </table>
-        </div>
-        <div>
-        </div>
-      </li>
-      <% if current_user.admin_for?(@user) %>
-        <li class='list-group-item'>
-          Authorized for:
-          <div>
-            <%= render partial: 'jobs', locals: { user: @user } %>
+        <ul class='list-group'>
+          <li class='list-group-item'>
+            <div> -->
+              <!-- Availability:
+              <% if current_user %>
+                <%= link_to 'Change', edit_user_path(@user) %>
+              <% end %>
+              <table class='table'>
+                <tr>
+                  <th>
+                    Preferred
+                  </th>
+                  <th>
+                    Unavailable
+                  </th>
+                </tr>
+                <tr>
+                  <%= render partial: 'preferred_days/index', locals: {user: @user} %>
+                </tr>
+              </table> -->
+            <!-- </div>
+            <div>
+            </div>
+          </li>
+        </ul> -->
+          <div class="panel panel-info">
+            <div class="panel panel-heading">
+              <div class='panel-title'>Authorized for:</div>
+            </div>
+            <!-- <li class='list-group-item'> -->
+              <div>
+                <%= render partial: 'jobs', locals: { user: @user } %>
+              </div>
+            <!-- </li> -->
           </div>
-        </li>
-        <li class='list-group-item'>
-          Verified: Maybe something that cofirms that they have worked and are trustworthy here
-        </li>
-        <li class='list-group-item'>
-          Notes
-        </li>
-      <% end %>
-    </ul>
+    </div>
   </div>
+</div>
 </div>
