@@ -83,12 +83,13 @@
           <%= link_to 'go to month', organization_shows_path(@org.id) %>
         </div>
         <div class="panel-body">
-          <%= week_calendar number_of_weeks: 1, events: @org.shows do |date, shows| %>
-            <%= date %>
-            <% shows.each do |show| %>
+          <ul class="list-group">
+            <% @org.this_week_in_shows.each do |show| %>
+            <li class="list-group-item">
               <%= render partial: 'shows/link', locals: {show: show} %>
+            </li>
             <% end %>
-          <% end %>
+          </ul>
         </div>
         <div class="panel-heading">
           <div class="panel-title heading">
