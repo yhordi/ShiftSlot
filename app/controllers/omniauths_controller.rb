@@ -20,7 +20,7 @@ class OmniauthsController < ApplicationController
 
   def callback
     base = "https://accounts.google.com/o/oauth2/v2/auth"
-    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => 'http://localhost:3000/redirect', "response_type" => "code", "state" => params[:organization_id], "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
+    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => ENV['REDIRECT_URI'], "response_type" => "code", "state" => params[:organization_id], "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
     redirect_to "#{base}?#{data}"
   end
 end
