@@ -63,7 +63,7 @@
         </div>
         <div class="panel-body scroll-panel">
           <% current_user.shows.each do |show| %>
-            <% if show.show_end.past? %>
+            <% if show.date.past? %>
               <% show.shifts.each do |shift| %>
                 <% if shift.user == current_user %>
                   <%= render partial: 'event', locals: {show: show, shift: shift} %>
