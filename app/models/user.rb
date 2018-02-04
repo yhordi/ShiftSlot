@@ -114,11 +114,7 @@ class User < ApplicationRecord
   end
 
   def scheduled?(show)
-    p self.shifts
     self.shifts.each do |shift|
-      p shift.show.date
-      p '-----'
-      p show.date
       return true if shift.show.date == show.date
     end
     false
