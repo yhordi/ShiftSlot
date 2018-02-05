@@ -10,4 +10,8 @@ class CalendarsController < ApplicationController
     @shows = Show.all
     render 'sync'
   end
+  def new
+    @org = Organization.find(params[:organization_id])
+    render :new
+  end
 end

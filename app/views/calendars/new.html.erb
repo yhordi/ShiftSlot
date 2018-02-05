@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6-lg">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3>
+            Google Calendar Import
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%= form_tag organization_callback_path(@org), method: :get, class: "navbar-form navbar-left search-form" do %>
+            <%= submit_tag 'Import from Google Calendar', class: 'btn btn-primary' %>
+          <% end %>
+          <%# link_to('Import from Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
