@@ -4,7 +4,10 @@ class CalendarsController < ApplicationController
   def sync
     headers = "Bearer #{params[:token]}"
     @org = Organization.find(params[:organization_id])
-    url = "https://www.googleapis.com/calendar/v3/calendars/#{@org.gcal_id}/events?key=#{ENV['CAL_KEY']}"
+
+    base = "https://www.googleapis.com/calendar/v3/calendars/#{@org.gcal_id}/events?"
+    data = URI.encode_www_form(key: ENV['CAL_KEY'], timeMin: params["state"]["timeMin"], timeMax: params["state"]["timeMax"])
+    url = "#{base}?#{data}"
     req = HTTParty.get(url, headers: {"Authorization" => headers})
     @google_shows = build(req.parsed_response)
     @shows = Show.all

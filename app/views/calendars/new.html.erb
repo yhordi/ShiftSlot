@@ -8,7 +8,15 @@
           </h3>
         </div>
         <div class="panel-body">
-          <%= form_tag organization_callback_path(@org), method: :get, class: "navbar-form navbar-left search-form" do %>
+          <%= form_tag organization_callback_path(@org), method: :post, class: "navbar-form navbar-left search-form" do %>
+          <div class="">
+            <%= label_tag :start_date %>
+            <%= date_field_tag :datetime_ida, Date.today, name: 'timeMin' %>
+          </div>
+          <div class="">
+            <%= label_tag :end_date %>
+            <%= date_field_tag :datetime_ida, Date.tomorrow, name: 'timeMax' %>
+          </div>
             <%= submit_tag 'Import from Google Calendar', class: 'btn btn-primary' %>
           <% end %>
           <%# link_to('Import from Google Calendar', organization_callback_path(@org), class: 'btn btn-primary') %>

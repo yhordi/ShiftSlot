@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
     post '/shows/import' => 'shows#import', as: 'shows_import'
     get '/sync' => 'calendars#sync' # calendars/new rename this to import
-    get '/callback' => 'omniauths#callback'
+    post '/callback' => 'omniauths#callback'
   end
   get '/redirect' => 'omniauths#redirect'
   post 'users/search', to: 'users#search'
