@@ -11,6 +11,16 @@ class CalendarsController < ApplicationController
     req = HTTParty.get(url, headers: {"Authorization" => headers})
     @google_shows = build(req.parsed_response)
     @google_shows[:shows] = @google_shows[:shows].sort_by { |s| s.start }
+    @need_venue = []
+    @google_shows[:shows].map do |show|
+      show.organization = @org
+      show.date = show.start.to_date
+      if show.assign_venue
+        show.save
+      else
+        @need_venue << show
+      end
+    end
     render 'sync'
   end
 

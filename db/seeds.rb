@@ -1,7 +1,7 @@
 require 'faker'
 org = Organization.create(name: 'SoundGig Presents')
-org.venues << Venue.create!(name: 'Victory Lounge', location: 'Seattle, WA')
-org.venues << Venue.create!(name: 'Black Lodge', location: 'Seattle, WA')
+org.venues << Venue.create!(name: 'Victory Lounge', location: 'Seattle, WA', hooks: 'Vic')
+org.venues << Venue.create!(name: 'Black Lodge', location: 'Seattle, WA', hooks: 'BL')
 
 black_lodge = Venue.find_by(name: 'Black Lodge')
 victory_lounge = Venue.find_by(name: 'Victory Lounge')

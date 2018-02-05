@@ -1,7 +1,8 @@
+<% no_venues = @google_shows[:shows].select { |show| !show.venue_id} %>
 <div class="container">
   <div class="row">
     <h2>Google Calendar Import Results</h2>
-    <div class="col-lg-4">
+      <div class="col-lg-4">
       <div class="panel panel-success">
         <% if !@google_shows[:shows].empty? %>
           <div class="panel-heading">
@@ -44,7 +45,6 @@
           </div>
         </div>
         <%= form_for :shows, url: organization_shows_import_path(@org) do |f| %>
-          <% no_venues = @google_shows[:shows].select { |show| !show.venue_id} %>
           <% if no_venues.any? %>
           <div class="col-lg-4">
             <div class="panel panel-warning">
@@ -53,7 +53,7 @@
                   The following shows did not their venues automatically assigned. Assign them below.
                 </h4>
               </div>
-            <% end %>
+              <p>If you don't see the matching venue in the list you may need to <%= link_to 'add it here.', new_venue_path  %> </p>
             <div class="panel-body">
               <% @google_shows[:shows].each.with_index do |show, index| %>
                 <%= f.hidden_field "#{index}[info]", value: show.info %>
@@ -70,6 +70,7 @@
                 <% end %>
               <% end %>
               </div>
+              <% end %>
           </div>
       </div>
     <% if @google_shows[:conflicts].any? %>

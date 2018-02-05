@@ -14,6 +14,7 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
+    p 'assign_venue'
     match_venue
   end
 
@@ -25,6 +26,10 @@ class Show < ApplicationRecord
     attrs.map do |attr|
       date_setup(attr, params)
     end
+  end
+
+  def readable_date
+    self.start.strftime('%a, %b, %d at %l:%m%p')
   end
 
   def readable(time)
@@ -78,6 +83,7 @@ class Show < ApplicationRecord
   end
 
   def match_venue_by_hook(venue)
+    p 'match_venue_by_hook'
     if venue.hooks
       venue.parsed_hooks.each do |hook|
         regex = Regexp.new("\\b#{hook}\\b")
