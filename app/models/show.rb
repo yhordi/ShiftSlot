@@ -5,7 +5,7 @@ class Show < ApplicationRecord
   has_many :shifts, dependent: :destroy
   has_many :users, through: :shifts
   validates_presence_of :start, :info, :date
-
+  validates_uniqueness_of :info, scope: :date
   def assign_headliner
     if !self.headliner
       self.headliner = self.info
@@ -14,7 +14,6 @@ class Show < ApplicationRecord
 
   def assign_venue
     return 'venue already assigned' if self.venue_id
-    p 'assign_venue'
     match_venue
   end
 
@@ -83,7 +82,6 @@ class Show < ApplicationRecord
   end
 
   def match_venue_by_hook(venue)
-    p 'match_venue_by_hook'
     if venue.hooks
       venue.parsed_hooks.each do |hook|
         regex = Regexp.new("\\b#{hook}\\b")

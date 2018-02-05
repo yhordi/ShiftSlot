@@ -22,6 +22,7 @@ gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'oauth2'
 gem 'httparty'
 gem 'dotenv-rails'
+gem 'activerecord-session_store'
 
 group :development, :test do
   gem 'byebug', platform: :mri
