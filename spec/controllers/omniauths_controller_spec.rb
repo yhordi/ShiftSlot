@@ -8,6 +8,7 @@ RSpec.describe OmniauthsController, type: :controller do
     allow(ENV).to receive(:[]).with('CAL_CLIENT_ID').and_return('bobobobobo')
     allow(ENV).to receive(:[]).with('CLIENT_SECRET').and_return('Big Dang Secret™')
     allow(ENV).to receive(:[]).with('PROJECT_ID').and_return('Big Dang Project')
+    allow(ENV).to receive(:[]).with('REDIRECT_URI').and_return('http://localhost:3000/redirect')
   end
   describe '/redirect' do
     let(:resp_double) { double(parsed_response: oauth2_response)}
@@ -15,11 +16,13 @@ RSpec.describe OmniauthsController, type: :controller do
       allow(HTTParty).to receive(:post).and_return(resp_double)
     end
     it 'responds with a status of 302' do
-      get :redirect, params: {state: org.id}
+      state = {org_id: org.id}.to_json
+      get :redirect, params: { state: state }
       expect(response.status).to eq(302)
     end
     it 'sends a token in params' do
-      expect(get :redirect, params: {state: org.id}).to redirect_to("http://test.host/organizations/#{org.id}/sync?token=#{resp_double.parsed_response['access_token']}")
+      state = {org_id: org.id}.to_json
+      expect(get :redirect, params: {state: state}).to redirect_to("http://test.host/organizations/#{org.id}/sync?state%5Borg_id%5D=#{org.id}&token=#{resp_double.parsed_response['access_token']}")
     end
   end
   describe '/callback' do
