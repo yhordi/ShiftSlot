@@ -19,7 +19,7 @@ RSpec.feature "Admins", type: :feature do
         expect(page).to have_content(show.headliner)
       end
       scenario 'can see a calendar for the next week' do
-        expect(page).to have_content(Time.now.day)
+        expect(page).to have_content(show.date)
       end
     end
   end
