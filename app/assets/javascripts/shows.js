@@ -37,6 +37,7 @@ $(document).ready(function(){
       url: url,
       method: 'POST'
     }).done(function(response){
+      $('#get-shift-form').show()
       $('#shifts-container').html('')
       $('#shifts-container').append(response);
     })
@@ -45,7 +46,7 @@ $(document).ready(function(){
   $('#get-shift-form').on('click', function(e){
     e.preventDefault();
     const url = $(this).attr('href');
-    console.log(url)
+    $('#get-shift-form').hide()
     $.ajax({
       url: url
     }).done(function(response){
