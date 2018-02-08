@@ -11,7 +11,7 @@ RSpec.describe CalendarsController, type: :controller do
       let(:resp_double) { double(parsed_response: fake_response)}
       before(:each) do
         allow(HTTParty).to receive(:get).and_return(resp_double)
-        get :sync, params: {token: 'HAM', organization_id: org.id}
+        get :sync, params: {token: 'HAM', organization_id: org.id, state: {timeMax: "2018-03-06T16:00:00-08:00", timeMin: "2018-02-06T16:00:00-08:00"}}
       end
       it 'responds with a 200' do
         expect(response.status).to eq(200)
@@ -20,10 +20,10 @@ RSpec.describe CalendarsController, type: :controller do
         expect(response).to render_template('calendars/sync')
       end
       it 'assigns @google_shows to a hash containing imported values' do
-        expect(assigns[:google_shows][:shows][0][:info]).to include('Four Lights')
+        expect(assigns[:google_shows][:shows][0][:info]).to include('Band!!!')
       end
-      it 'assigns @shows' do
-        expect(assigns[:shows]).to eq(Show.all)
+      it 'assigns @org' do
+        expect(assigns[:org]).to eq(org)
       end
     end
     describe 'on failure' do
@@ -33,12 +33,12 @@ RSpec.describe CalendarsController, type: :controller do
       end
       it 'assigns @google_shows with a conflicts key containing conflicting shows' do
         FactoryGirl.create(:show, info: "Vic- Four Lights, Coyote Bred, Ol' Doris, The Subjunctives", start: DateTime.parse('2017-10-03T09:00:00-07:00'), organization: org)
-        get :sync, params: {token: 'HAM', organization_id: org.id}
+        get :sync, params: {token: 'HAM', organization_id: org.id, state: {timeMax: "2018-03-06T16:00:00-08:00", timeMin: "2018-02-06T16:00:00-08:00"}}
         expect(assigns[:google_shows][:conflicts][0][:info]).to include('Four Lights')
       end
     end
 
   end
 
-  
+
 end

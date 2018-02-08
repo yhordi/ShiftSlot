@@ -14,13 +14,21 @@ class OmniauthsController < ApplicationController
       "project_id" => ENV['PROJECT_ID']
     }
     req = HTTParty.post(base, body: data)
-    org = Organization.find(params[:state])
-    redirect_to organization_sync_path(org, token: req.parsed_response['access_token'])
+    state = JSON.parse(params[:state])
+    org = Organization.find(state["org_id"])
+    redirect_to organization_sync_path(org, token: req.parsed_response['access_token'], state: state)
   end
 
   def callback
+    time_min = DateTime.parse(params[:timeMin])
+    time_min = time_min.new_offset("-0800")
+    time_min = time_min.rfc3339
+    time_max = DateTime.parse(params[:timeMax])
+    time_max = time_max.new_offset("-0800")
+    time_max = time_max.rfc3339
     base = "https://accounts.google.com/o/oauth2/v2/auth"
-    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => ENV['REDIRECT_URI'], "response_type" => "code", "state" => params[:organization_id], "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
+    state = {"organization_id" => params[:organization_id], "timeMin" => time_min, "timeMax" => time_max}.to_json
+    data = URI.encode_www_form("client_id" => ENV['CAL_CLIENT_ID'], "redirect_uri" => ENV['REDIRECT_URI'], "response_type" => "code", "state" => state, "scope" => 'https://www.googleapis.com/auth/calendar.readonly')
     redirect_to "#{base}?#{data}"
   end
 end

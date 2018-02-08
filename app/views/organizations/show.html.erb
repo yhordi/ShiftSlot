@@ -101,9 +101,9 @@
             <% @org.upcoming_shows.each do |show| %>
             <li class="list-group-item">
               <% if show.staffed? %>
-                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'green' %>
+                <%= render partial: 'shows/link', locals: {show: show} %>
               <% else %>
-                <%= link_to "#{show.headliner} on #{show.date} at #{show.venue.name}", show_path(show), class: 'red' %>
+                <%= render partial: 'shows/link', locals: {show: show} %>
               <% end %>
             </li>
             <% end %>

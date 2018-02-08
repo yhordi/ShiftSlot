@@ -2,10 +2,10 @@ class Show < ApplicationRecord
   before_save :assign_headliner
   belongs_to :venue
   belongs_to :organization
-  has_many :shifts
+  has_many :shifts, dependent: :destroy
   has_many :users, through: :shifts
   validates_presence_of :start, :info, :date
-
+  validates_uniqueness_of :info, scope: :date
   def assign_headliner
     if !self.headliner
       self.headliner = self.info
@@ -25,6 +25,10 @@ class Show < ApplicationRecord
     attrs.map do |attr|
       date_setup(attr, params)
     end
+  end
+
+  def readable_date
+    self.start.strftime('%a, %b, %d at %l:%m%p')
   end
 
   def readable(time)

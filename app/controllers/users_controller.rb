@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         @user.revoke_admin(org.id)
       end
     end
-    @user.save!
+    @user.save
     flash[:notice] = 'User updated'
     redirect_to edit_user_path(@user.id)
   end
