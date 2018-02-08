@@ -31,7 +31,7 @@
             </li>
             <li>
               <%= link_to 'Join an Organization', new_user_assignment_path(current_user) %>
-              <%= link_to 'Create an Organization', new_organization_path %>
+              <% link_to 'Create an Organization', new_organization_path %>
             </li>
           </ul>
 
@@ -47,7 +47,7 @@
             <% if current_user.admin_for? %>
               <li role="separator" class="divider"></li>
               <li>
-                <%= link_to "Create New", new_venue_path %>
+                <%= link_to "Add a venue", new_venue_path %>
               </li>
             <% end %>
           </ul>
