@@ -15,7 +15,7 @@ class OmniauthsController < ApplicationController
     }
     req = HTTParty.post(base, body: data)
     state = JSON.parse(params[:state])
-    org = Organization.find(state["org_id"])
+    org = Organization.find(state["organization_id"])
     redirect_to organization_sync_path(org, token: req.parsed_response['access_token'], state: state)
   end
 
