@@ -83,9 +83,10 @@ class Show < ApplicationRecord
 
   def match_venue_by_hook(venue)
     if venue.hooks
-      venue.parsed_hooks.each do |hook|
+      venue.parsed_hooks.map do |hook|
         regex = Regexp.new("\\b#{hook}\\b")
         return self.venue = venue if self.info.match(regex)
+        return nil
       end
     else
       return nil
