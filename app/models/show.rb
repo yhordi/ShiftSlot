@@ -4,7 +4,7 @@ class Show < ApplicationRecord
   belongs_to :organization
   has_many :shifts, dependent: :destroy
   has_many :users, through: :shifts
-  validates_presence_of :start, :info, :date
+  validates_presence_of :start, :info, :date, :venue_id
   validates_uniqueness_of :info, scope: :date
   def assign_headliner
     if !self.headliner
