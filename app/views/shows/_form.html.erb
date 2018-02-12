@@ -5,7 +5,7 @@
 </div>
 <div class='form-group'>
   <%= f.label :venue_id %>
-  <%= select_tag "venue_id", options_for_select(org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
+  <%= select_tag "venue_id", options_for_select(org.venues.map {|v| [v.name, v.id] }, @show.venue.id), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
 </div>
 <div class='form-group'>
   <%= f.label :date %>
