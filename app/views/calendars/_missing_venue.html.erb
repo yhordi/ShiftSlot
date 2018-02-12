@@ -6,17 +6,20 @@
           The following shows did not their venues automatically assigned. Assign them below.
         </h4>
       </div>
-      <p>If you don't see the matching venue in the list you may need to <%= link_to 'add it here.', new_venue_path  %> </p>
+      <p>If you don't see the matching venue in the list you may need to <%= link_to 'add it here', new_venue_path  %> and try your import again. You can also choose the ignore option from the show's dropdown menu and it will not be imported. </p>
     <div class="panel-body">
+      <ul class="list-group">
+
       <% @google_shows[:need_venue].each.with_index do |show, index| %>
         <%= f.hidden_field "#{index}[info]", value: show.info %>
         <%= f.hidden_field "#{index}[start]", value: show.start %>
-            <div>
+            <li class="list-group-item">
               <%= show.info %>
               <%= f.label :venue_id %>
-              <%= select "shows[#{index}]", "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'select a venue', class: 'form-control btn btn-default', required: true %>
-            </div>
+              <%= select "shows[#{index}]", "venue_id", options_for_select(@org.venues.map {|v| [v.name, v.id] }), include_blank: 'ignore', class: 'form-control btn btn-default', required: true %>
+            </li>
         <% end %>
+      </ul>
         <%= f.submit class: 'btn btn-default' %>
     <% end %>
       </div>
