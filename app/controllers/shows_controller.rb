@@ -51,6 +51,9 @@ class ShowsController < ApplicationController
   def import
     errors = []
     org = Organization.find(params[:organization_id])
+    shows = params[:shows].delete_if do |i|
+      params[:shows][i][:venue_id].empty?
+    end
     shows = params[:shows].map do |show|
       new_show = Show.new()
       new_show.organization = org
